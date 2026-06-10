@@ -8,7 +8,7 @@
 - **Domov projektu:** toto repo (`ssra`, private GitHub do publikácie). Dizajn/analýza/písanie = Claude.ai projekt; implementácia = Claude Code v tomto repe.
 
 ## [OVERENÉ]
-- Existuje v1.0 PyTorch skript (~80 riadkov, inference-only, toy slovník, MPS target). Beh skriptu zatiaľ nepotvrdený logom → úloha T0.
+- Existuje v1.0 PyTorch skript: `scripts/v1_legacy.py` (~120 riadkov, MPS target s CPU fallbackom). Obsahuje rekurzívny blok `DFKS_Core`, **plnú tréningovú slučku** (AdamW, CE loss, grad clipping, 5 epoch, dummy korpus 1000 náhodných tokenov, seq_len 8, vocab 100) a nevyužitú funkciu `generate_next_token`. **Korekcia 2026-06-10 po inšpekcii kódu:** pôvodný popis „~80 riadkov, inference-only, očakávaný výstup náhodné slovo" bol nepresný. Beh zatiaľ nepotvrdený logom → úloha T0; očakávaný výstup = 5 riadkov klesajúceho loss. **Pozor na interpretáciu:** pokles loss je artefakt target leakage (bez kauzálnej masky pozícia t vidí svoj target x[t+1] vo vstupe pre 7 z 8 pozícií), nie dôkaz učenia — priamy motivátor diery D1.
 - Mechanizmus v kóde v1.0: rekurzívne pozičné polenie sekvencie (midpoint, threshold=2), **jeden zdieľaný {Q,K,V} softmax attention blok na každej úrovni**, concat pozdĺž sekvenčnej osi, plná attention nad celou spojenou sekvenciou, aditívny šum 0.01 pri každom návrate. Bez kauzálnej masky, bez pozičného kódovania, bez FFN/residual/LN, jedna vrstva.
 - Odvodená zložitosť v1.0: `cost(N) = 2·cost(N/2) + c·N²` ⇒ **Θ(N²), konkrétne ≈ 2cN²** — horšie než flat Transformer; navyše O(log N) sekvenčných závislých krokov. Claim O(N log N)/O(N) je pre v1.0 **falzifikovaný**. (Odvodenie: `01-mechanizmus.md` §3.)
 - SSRA v2 up-pass pri pass-through schedule s_ℓ = min(2^ℓ, m): **Θ(N·m·d)** score-ops na vrstvu; pôvodný bound O(N·m²) v D3 bol voľný. (Odvodenie: `01-mechanizmus.md` §7.)
@@ -50,7 +50,7 @@
 | 2026-06-10 | **Publikačná stratégia rozšírená na dvojstupňovú (rozhodnutie B2):** stupeň 1 = po Gate G0 Zenodo DOI technical note (spec + complexity analýza + novelty téza) — fixácia priority myšlienky (~koniec júna); stupeň 2 = po Gate G2 plný paper s výsledkami (arXiv/Zenodo, ~september). Vedomý trade-off: nápad verejný skôr. |
 
 ## Otvorené úlohy (top)
-- **T0:** Spustiť v1.0 skript, log commitnúť do `logs/` (sanity; očakávaný výstup je náhodné slovo — model je netrénovaný). **[Daniel — jediný blocker mimo dizajnu]**
+- **T0:** Spustiť `scripts/v1_legacy.py`, log commitnúť do `logs/T0-v1-sanity.log` (sanity behu, nie kvality; očakávaný výstup = log tréningu s klesajúcim loss; pokles = target leakage, nie signál — viď [OVERENÉ] vyššie). **[Daniel — jediný blocker mimo dizajnu]** Otvorená podotázka: je `v1_legacy.py` jediná verzia, alebo existoval aj starší inference-only variant?
 - **T1 (= M0, zostávajúce):** novelty téza v1 → `docs/spec.md` → **Gate G0 check** → Zenodo technical note (stupeň 1).
 - **T2:** Overiť [K]-položky v `02-prior-art-mapa.md` v primárnych zdrojoch pred citovaním (rozšírené o #16–20).
 - **T3:** PoC podľa `03-poc-plan.md`.

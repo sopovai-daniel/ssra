@@ -1,0 +1,9 @@
+/Users/ds/Developer/ssra/.venv/lib/python3.11/site-packages/torch/_subclasses/functional_tensor.py:362: UserWarning: Failed to initialize NumPy: No module named 'numpy' (Triggered internally at /Users/runner/work/pytorch/pytorch/torch/csrc/utils/tensor_numpy.cpp:84.)
+  cpu = _conversion_method_template(device=torch.device("cpu"))
+Spúšťam DFKS tréning na zariadení: mps
+----------------------------------------
+Epocha [1/5] -> Priemerná strata (Loss): 4.4759
+Epocha [2/5] -> Priemerná strata (Loss): 3.8978
+Epocha [3/5] -> Priemerná strata (Loss): 3.4497
+Epocha [4/5] -> Priemerná strata (Loss): 3.1217
+Epocha [5/5] -> Priemerná strata (Loss): 2.8845

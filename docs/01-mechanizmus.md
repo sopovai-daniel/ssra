@@ -13,6 +13,8 @@ forward(x), x ∈ R^[B, N, d]:
 ```
 Vlastnosti: jedna vrstva; **rovnaké θ na všetkých úrovniach** (jediný samopodobný prvok); bez kauzálnej masky; bez pozičného kódovania; bez FFN, residual prepojení a normalizácie; Python rekurzia (vetvy sa nespracúvajú batchovane).
 
+**Korekcia 2026-06-10 (inšpekcia `scripts/v1_legacy.py` po prenose do repa):** (i) skript NIE JE inference-only — `__main__` spúšťa plnú tréningovú slučku (AdamW, CE, grad clipping, 5 epoch, dummy korpus; `generate_next_token` existuje, ale sa nevolá); (ii) šum 0.01 sa pridáva len na interných úrovniach rekurzie, nie na base-case; (iii) bez kauzálnej masky trpí tréningový loss target leakage (pozícia t vidí x[t+1] vo vstupe) — klesajúci loss v T0 logu preto nie je signál učenia. Pseudokód vyššie ostáva platný pre forward mechanizmus.
+
 ## 2. Čo je na tom potenciálne cenné [historické, stále platí]
 - **Jedno zdieľané pravidlo naprieč škálami** — málo obsadená os: MEGABYTE/Hourglass majú per-level parametre a 2–3 fixné úrovne; Universal Transformer/MoR zdieľajú v hĺbke, nie v škále sekvencie.
 - Priame napojenie na publikovanú premisu samopodobnosti jazyka (Hurst ≈ 0.7) — motivácia s citáciou, nie mystika.
