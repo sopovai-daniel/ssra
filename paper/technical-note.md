@@ -2,9 +2,9 @@
 
 **Technical note (stage 1 of 2).**
 **Author:** Daniel Sopov (SopovAi).
-**Status:** DRAFT v0.1, 2026-06-11 — pending author review; to be archived on Zenodo with a DOI.
+**Status:** DRAFT v0.2, 2026-06-11 — reviewer-pass edits applied, licenses confirmed; pending final author read-through before Zenodo upload (DOI).
 **Versioning:** This note fixes the design and its complexity analysis *before* any training run. A stage-2 paper with experimental results will follow the evaluation plan in §8 and will cite this note as the prior version.
-**License:** text CC BY 4.0; the reference implementation (to be released with the stage-2 paper) Apache-2.0. *(Both subject to author confirmation.)*
+**License:** text CC BY 4.0; the reference implementation (to be released with the stage-2 paper) Apache-2.0.
 
 ---
 
@@ -82,7 +82,7 @@ Three mechanisms, no causal mask inside nodes:
 
 1. **Local window:** the read-out query at position t attends to tokens [max(1, t−w), t] only.
 2. **Structural gating:** a node u is consumable by the read-out only once span(u) ⊆ [1, t−w−1], and by its parent only when its sibling's span is also complete. Causality is an availability property of summaries, not a mask.
-3. **Bidirectional attention inside nodes is legal.** Proof sketch: a summary S_u can influence the logit at position t only through an ancestor-or-self a that the read-out at t consumes, which requires span(u) ⊆ span(a) ⊆ [1, t−w−1]; hence every token inside u precedes t, and no information flows from positions ≥ t into the prediction at t. ∎
+3. **Bidirectional attention inside nodes is legal.** Proof sketch: a summary S_u can influence the logit at position t only through an ancestor-or-self a that the read-out at t consumes, which requires span(u) ⊆ span(a) ⊆ [1, t−w−1]; hence every token inside u precedes t, and no information flows from positions ≥ t into the prediction at t. ∎ The enumeration of paths is exhaustive: the only cross-node operation in the up-pass is parent composition — attention, normalization, and pooling all act within a single node — so the dataflow graph has no edges besides child-to-parent composition and the structurally gated read-out.
 
 This buys an expressivity asymmetry over a flat causal Transformer: *within* a completed span, attention is unrestricted in both directions, because every consumer of that span sits strictly after it. A lesson encoded from an earlier prototype of this project: a decreasing training loss is *not* evidence of causal correctness (target leakage produces the same curve); only explicit tests are. Two are pre-registered: a **shift test** (perturbing token t must not change any logit at positions < t) and a **completion test** (incremental decoding must reproduce the full batched forward bit-for-bit within tolerance at every position).
 
@@ -179,7 +179,7 @@ All URLs retrieved 2026-06-09 or 2026-06-11.
 11. Bae et al. *Mixture-of-Recursions: Learning Dynamic Recursive Depths for Adaptive Token-Level Computation.* NeurIPS 2025. https://arxiv.org/abs/2507.10524
 12. Hu et al. *R2D2: Recursive Transformer based on Differentiable Tree for Interpretable Hierarchical Language Modeling.* ACL-IJCNLP 2021. https://arxiv.org/abs/2107.00967
 13. Hwang, Wang, Gu. *Dynamic Chunking for End-to-End Hierarchical Sequence Modeling.* 2025. https://arxiv.org/abs/2507.07955
-14. *(reserved)*
+14. Wang et al. *Hierarchical Reasoning Model.* 2025. https://arxiv.org/abs/2506.21734
 15. Li et al. *Fractal Generative Models.* 2025. https://arxiv.org/abs/2502.17437
 16. Lee et al. *Set Transformer: A Framework for Attention-based Permutation-Invariant Neural Networks.* ICML 2019. https://arxiv.org/abs/1810.00825
 17. Jaegle et al. *Perceiver: General Perception with Iterative Attention.* ICML 2021. https://arxiv.org/abs/2103.03206
@@ -187,7 +187,7 @@ All URLs retrieved 2026-06-09 or 2026-06-11.
 19. Bolya et al. *Token Merging: Your ViT But Faster.* ICLR 2023. https://arxiv.org/abs/2210.09461
 20. Xiao et al. *Efficient Streaming Language Models with Attention Sinks.* ICLR 2024. https://arxiv.org/abs/2309.17453
 21. Hu, Ji, Zhu, Wu, Tu. *Generative Pretrained Structured Transformers: Unsupervised Syntactic Language Models at Scale.* 2024. https://arxiv.org/abs/2403.08293
-22. *Linear Attention with Global Context: A Multipole Attention Mechanism for Vision and Physics (MANO).* 2025. https://arxiv.org/abs/2507.02748
+22. Colagrande, Caillon, Feillet, Allauzen. *Linear Attention with Global Context: A Multipole Attention Mechanism for Vision and Physics (MANO).* 2025. https://arxiv.org/abs/2507.02748
 23. Yau et al. *Sequential-Parallel Duality in Prefix Scannable Models.* 2025. https://arxiv.org/abs/2506.10918
-24. *Hierarchical Kernel Transformer: Multi-Scale Attention with an Information-Theoretic Approximation Analysis.* 2026. https://arxiv.org/abs/2604.08829
+24. Cirrincione. *Hierarchical Kernel Transformer: Multi-Scale Attention with an Information-Theoretic Approximation Analysis.* 2026. https://arxiv.org/abs/2604.08829
 25. Nawrot, Chorowski, Łańcucki, Ponti. *Efficient Transformers with Dynamic Token Pooling.* ACL 2023. https://arxiv.org/abs/2211.09761

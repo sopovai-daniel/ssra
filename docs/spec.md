@@ -113,7 +113,7 @@ Three mechanisms, no causal mask inside nodes:
 
 1. **Local window:** read-out query t attends tokens [max(1, t−w), t] only — banded causal by key-set construction (a band mask implements this in batched training).
 2. **Structural gating of summaries:** node u is consumable (by read-out) only if span(u) ⊆ [1, t−w−1]; (by its parent) only when the sibling's span is also complete. Causality is an availability property, not a mask. [OVERENÉ by construction]
-3. **Bidirectional attention inside nodes is legal.** Proof: S_u influences the logit at position t only via some ancestor-or-self a with a ∈ Fenwick(t) (§8). Then span(u) ⊆ span(a) ⊆ [1, t−w−1], so every token inside u precedes t. Hence no information flows from any position ≥ t into the prediction at t. ∎ [OVERENÉ by construction]
+3. **Bidirectional attention inside nodes is legal.** Proof: S_u influences the logit at position t only via some ancestor-or-self a with a ∈ Fenwick(t) (§8). Then span(u) ⊆ span(a) ⊆ [1, t−w−1], so every token inside u precedes t. Hence no information flows from any position ≥ t into the prediction at t. ∎ [OVERENÉ by construction] (Exhaustive: the only cross-node operation in the up-pass is parent composition; Attn_θ, LN_node and Pool_φ act within a single node — cf. the per-node batched tensor shape in §4.)
 
 Verification: shift test + completion test (§14). Lesson encoded from v1.0: a *decreasing training loss is not evidence of causal correctness* (target leakage, `docs/00` T0); only the tests are.
 
