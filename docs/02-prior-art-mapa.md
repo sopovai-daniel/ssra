@@ -24,7 +24,7 @@
 | 19 | ToMe — Token Merging (Bolya et al.) **[K]** | ICLR 2023 | Bezgradientové zlučovanie podobných tokenov | Kotva pre P2/P3 rodinu (token redukcia); ViT doména |
 | 20 | Memory / attention sink tokeny (napr. StreamingLLM, Xiao et al.) **[K]** | 2023+ | Špeciálne perzistentné kľúče vedľa bežných tokenov v jednej attention | Kotva pre D2 heterogénne kľúče (okno RoPE + súhrny NoPE+level v jednom read-oute) |
 
-## Novelty téza v0.2 (v1 finalizovať v spec.md)
+## Novelty téza v0.2 (v1 finalizovaná 2026-06-10 v `docs/spec.md` §17 — tam je záväzné znenie)
 SSRA = kauzálny jazykový blok, v ktorom **jedno zdieľané (θ, φ) attention+pooling pravidlo generuje celú škálovú hierarchiu vrátane token-level read-outu** (samopodobnosť parametrov; token = uzol úrovne 0), s **učenou kompresiou v uzloch** (P1/P3) a **bidirekčnou attention vnútri uzlov legálnou v kauzálnom LM** (štrukturálne hradlovanie spanov). Žiadna z prác 1–20 nekombinuje súčasne: zdieľanie naprieč škálami × učená uzlová kompresia × kauzálne LM nad textom.
 
 **Poctivé vymedzenie voči #2 (z D4):** pozičná Fenwick štruktúra prefixu je prevzatá (citovať); novelty nesie výhradne mechanizmus (softmax + Pool_φ + zdieľanie) a jeho empirické dôsledky na recall.

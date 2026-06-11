@@ -51,7 +51,7 @@
 
 ## Otvorené úlohy (top)
 - ✔ **T0 hotové (2026-06-10):** beh zaznamenaný v `logs/T0-v1-sanity.log` (commit 7a9800d). Loss 4.476 → 2.884 za 5 epoch na náhodnom korpuse = empirické potvrdenie target leakage (na uniformne náhodných dátach niet čo učiť; štartovací loss ≈ ln(100) = 4.605 sedí s teóriou). Podotázka verzie zavretá: `v1_legacy.py` je jediná existujúca verzia — prvý Gemini návrh nebežal, opravený stav = tento súbor; Gemini archív ostáva lokálne mimo repa (FIKCIA pravidlo).
-- **T1 (= M0, zostávajúce):** novelty téza v1 → `docs/spec.md` → **Gate G0 check** → Zenodo technical note (stupeň 1).
+- **T1 (= M0, zostávajúce):** novelty téza v1 → `docs/spec.md` → **Gate G0 check** → Zenodo technical note (stupeň 1). **Stav 2026-06-10:** `docs/spec.md` draft v1 zapísaný (novelty téza v1 = spec §17; veto-register mikro-rozhodnutí MD-1…MD-10 = spec §18); čaká na Danielovo schválenie = formálne prejdenie G0.
 - **T2:** Overiť [K]-položky v `02-prior-art-mapa.md` v primárnych zdrojoch pred citovaním (rozšírené o #16–20).
 - **T3:** PoC podľa `03-poc-plan.md`.
 - **T4 (long-lead, hneď):** arXiv endorsement overiť; Zenodo účet + ORCID; GPG/SSH commit signing setup.
