@@ -28,6 +28,7 @@ wandb/
 .DS_Store
 .idea/
 .vscode/
+*.code-workspace
 
 # Secrets — must never exist in this repo at all (history goes public)
 .env
