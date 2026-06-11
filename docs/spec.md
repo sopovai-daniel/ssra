@@ -1,6 +1,6 @@
 # SSRA v2 — Implementation Specification
 
-**Status:** v1.0 — **APPROVED, Gate G0 passed 2026-06-11** (draft commit 7dd958f). Open item: §18 MD-10 (G1b-D3 threshold X) — to be set by Daniel pre-M1.
+**Status:** v1.0 — **APPROVED, Gate G0 passed 2026-06-11** (draft commit 7dd958f, G0 logged 7ed62aa). All §18 micro-decisions closed; **G1b-D3 threshold X = 5 %** (set by Daniel 2026-06-11).
 **Authority:** Once approved, this file is the **single source of truth for implementation** (M1+). Design rationale and history live in `docs/00`–`03`; on conflict regarding *what to build*, this spec wins. On conflict regarding *project state/decisions*, `docs/00` D-log wins.
 **Language:** English (feeds the Zenodo technical note and Claude Code implementation). Epistemic markers follow project convention: [OVERENÉ] / [HYPOTÉZA] / [ŠPEKULÁCIA].
 **Traceability:** Every normative choice cites its D-log entry (D1–D6, Q1–Q5) in `docs/00`. Spec-level micro-decisions not covered by the D-log are consolidated in §18 (veto register).
@@ -237,7 +237,7 @@ Config validation rules: reject (P2 ∧ m_schedule=linear), (P2 ∧ k=4), (hybri
 3. **Gradient flow check.** One backward pass: every parameter group (θ, φ, e_ℓ for materialized levels, embeddings, FFN, LNs) has nonzero grad; additionally ∂loss/∂S_root ≠ 0 path exists (deep-summary reachability).
 4. **Throughput/VRAM curves.** Forward+backward wall-clock and peak memory vs N ∈ {1k, 2k, 4k, 8k} (16k if VRAM allows), SSRA vs flat baseline, same d, h, L. **G1a criterion (proposal, §18 MD-7):** log-log slope of SSRA wall-clock ≤ 1.5 over the range, and strictly below flat's slope. Plot artifact committed to repo.
 5. **P-C collapse diagnostics (P1).** Logged during any training: entropy of Q_φ attention maps + per-query participation rates. Thresholds informative, not gating (M3 prediction P-C).
-6. **G1b-D3 (P3 stability micro-gate).** On the 10M smoke run: P3 loss within X% of P1 without divergence after standard stabilization (§5.3). **X = TBD by Daniel pre-M1** (proposal on file: 5%). Fail ⇒ P3 → appendix, hybrid takes the challenger slot.
+6. **G1b-D3 (P3 stability micro-gate).** On the 10M smoke run: P3 loss within **X = 5%** of P1 (relative), without divergence, after standard stabilization (§5.3). X set by Daniel 2026-06-11 (D-log). Fail ⇒ P3 → appendix, hybrid takes the challenger slot.
 7. **P3 determinism.** Two inference passes, identical seeds-independent outputs (bitwise).
 
 ## 15. Ablation registry (M3; axes fixed in `03`)
@@ -284,7 +284,7 @@ Choices made while drafting this spec, inside the boundaries of closed D-log ite
 | MD-7 | test tolerances atol 1e−4 fp32; G1a slope ≤ 1.5 (N 1k–8k) | concrete, falsifiable; slope expected 1.0–1.3 given QKVO terms [HYPOTÉZA] | Daniel sets other numbers |
 | MD-8 | P3 context slot = score-softmax-weighted sum, no extra projection; ties → lower index | minimal φ, deterministic | learned W_ctx projection |
 | MD-9 | P2 restricted to fixed-m × k=2 | structural (pairwise halving) | generalized P2 (rejected: stops being a clean control) |
-| MD-10 | G1b-D3 X: **proposal 5%** | needs a number to be falsifiable | explicitly reserved to Daniel (pre-M1) — not auto-accepted |
+| MD-10 | G1b-D3 X = **5%** | needs a number to be falsifiable | **closed — confirmed by Daniel 2026-06-11** |
 
 ## 19. Gate G0 self-check
 
