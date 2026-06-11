@@ -48,3 +48,12 @@ M0 je kompletne uzavreté: po G0 prebehol T2-subset, novelty sken a dvojkolový 
 | prior-art mapa | `docs/02-prior-art-mapa.md` | #1–#25, T2-subset ✔ |
 | tento HO | `docs/handover/HO-03-2026-06-11-stage1-published.md` | finálny |
 | Zadanie pre CC (M1) | TBD (docs/ alebo GitHub issue) | neexistuje — next step §4.1 |
+
+---
+
+## Addendum (2026-06-11, po finalizácii): M1 reporting a deľba práce s CC
+Upresnenie k §4 na základe Danielovej otázky: „Zadanie pre CC" má od CC explicitne vyžadovať nielen implementáciu, ale aj **spustenie celej M1 verifikačnej suity a smoke runov + štruktúrovaný report**. Konkrétne výstupy, ktoré Zadanie predpíše:
+- `results/M1-report.md` — tabuľka test → výsledok → kritérium → pass/fail (shift, completion, gradient flow, throughput/VRAM slope vs G1a, P3 determinizmus, G1b-D3 P3 vs P1) + cesty k logom a grafom;
+- riadok v `results/runs.md` pre každý smoke run (config commitnutý pred spustením, podľa disciplíny v `03`);
+- throughput/VRAM graf ako artefakt v repe.
+Deľba práce sa tým upresňuje: **CC** implementuje, spúšťa testy aj smoke runy a generuje report; **Daniel** spúšťa a superviduje CC sedenia (schvaľovanie akcií, bdelý laptop počas runov), číta report a robí **gate rozhodnutia** (G1a, G1b-D3) + D-log zápisy; **Claude.ai chat** interpretuje report voči predikciám a pripravuje ďalší krok. Gate rozhodnutia ostávajú u Daniela by design (D-log governance), nie pre technické obmedzenie CC.
