@@ -1,8 +1,9 @@
 # SSRA: Scale-Shared Recursive Attention — Design and Complexity Analysis
 
 **Technical note (stage 1 of 2).**
-**Author:** Daniel Sopov (SopovAi).
-**Status:** DRAFT v0.2, 2026-06-11 — reviewer-pass edits applied, licenses confirmed; pending final author read-through before Zenodo upload (DOI).
+**Author:** Daniel Sopov (SopovAi). ORCID: [0009-0004-8584-5156](https://orcid.org/0009-0004-8584-5156).
+**Status:** v1.0, 2026-06-11 — approved by the author; stage-1 publication.
+**DOI:** [10.5281/zenodo.20647034](https://doi.org/10.5281/zenodo.20647034)
 **Versioning:** This note fixes the design and its complexity analysis *before* any training run. A stage-2 paper with experimental results will follow the evaluation plan in §8 and will cite this note as the prior version.
 **License:** text CC BY 4.0; the reference implementation (to be released with the stage-2 paper) Apache-2.0.
 
