@@ -1,6 +1,6 @@
 # SSRA v2 — Implementation Specification
 
-**Status:** DRAFT v1 (2026-06-10) — pending Daniel's approval. Approval of this document = formal passage of **Gate G0**.
+**Status:** v1.0 — **APPROVED, Gate G0 passed 2026-06-11** (draft commit 7dd958f). Open item: §18 MD-10 (G1b-D3 threshold X) — to be set by Daniel pre-M1.
 **Authority:** Once approved, this file is the **single source of truth for implementation** (M1+). Design rationale and history live in `docs/00`–`03`; on conflict regarding *what to build*, this spec wins. On conflict regarding *project state/decisions*, `docs/00` D-log wins.
 **Language:** English (feeds the Zenodo technical note and Claude Code implementation). Epistemic markers follow project convention: [OVERENÉ] / [HYPOTÉZA] / [ŠPEKULÁCIA].
 **Traceability:** Every normative choice cites its D-log entry (D1–D6, Q1–Q5) in `docs/00`. Spec-level micro-decisions not covered by the D-log are consolidated in §18 (veto register).
@@ -296,4 +296,4 @@ Choices made while drafting this spec, inside the boundaries of closed D-log ite
 | derived complexity ≤ O(N log N) | ✔ Θ(N·(w + m·log N)·d) [OVERENÉ] | §10 |
 | defined decode state | ✔ O(m·d·log N) with explicit retention rule | §9–§10 |
 
-Formal G0 passage = Daniel approves this document (then: D-log entry + Zenodo stage-1 preparation per `03`).
+Formal G0 passage = Daniel approves this document. **Approved 2026-06-11** — D-log entry in `docs/00`; next: Zenodo stage-1 technical note per `03`.

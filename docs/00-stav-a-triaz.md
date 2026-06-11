@@ -4,7 +4,7 @@
 ## Identita
 - **DFKS** — interný kódový názov. **SSRA (Scale-Shared Recursive Attention)** — pracovný technický názov pre publikáciu (finálny TBD; vyhnúť sa kolízii s „Fractal Generative Models", Li et al. 2025).
 - Autor myšlienky: Daniel Sopov. Asistencia: Gemini (exploračná fáza, jún 2026), Claude (triáž, formalizácia, PoC).
-- Fáza / TRL: **M0 dizajn uzavretý (D1–D6, Q1–Q5)**. Žiadny tréning neprebehol. Žiadne meranie neexistuje. Ďalej: novelty téza v1 → `spec.md` → Gate G0 → Zenodo DOI (stupeň 1 publikácie).
+- Fáza / TRL: **M0 uzavreté, Gate G0 prejdený (2026-06-11)** — `docs/spec.md` v1.0 schválený, jediný zdroj pravdy pre implementáciu. Žiadny tréning neprebehol. Žiadne meranie neexistuje. Ďalej: Zenodo DOI technical note (stupeň 1) → M1 implementácia.
 - **Domov projektu:** toto repo (`ssra`, private GitHub do publikácie). Dizajn/analýza/písanie = Claude.ai projekt; implementácia = Claude Code v tomto repe.
 
 ## [OVERENÉ]
@@ -48,10 +48,11 @@
 | 2026-06-10 | Inovačná stratégia potvrdená Danielom: maximálna os A v jadre (jedno pravidlo všade: uzly, škály, read-out; bidirekčná intra-uzlová attention), každá ďalšia odvážna voľba ako ablácia s predikciou. |
 | 2026-06-10 | **Repo:** samostatné private GitHub repo `ssra` (lokálne `/Users/ds/Developer/ssra`); docs presunuté zo `sopovaidoc/DFKS` (rozhodnutie A1 — všetko v jednom repe). História písaná ako publikovateľná od prvého commitu: žiadne secrets, žiadne klientske referencie, signed commits, commit messages anglicky. Private repo nie je dôkaz priority — prioritu fixuje až verejný DOI. |
 | 2026-06-10 | **Publikačná stratégia rozšírená na dvojstupňovú (rozhodnutie B2):** stupeň 1 = po Gate G0 Zenodo DOI technical note (spec + complexity analýza + novelty téza) — fixácia priority myšlienky (~koniec júna); stupeň 2 = po Gate G2 plný paper s výsledkami (arXiv/Zenodo, ~september). Vedomý trade-off: nápad verejný skôr. |
+| 2026-06-11 | **Gate G0 prejdený:** `docs/spec.md` v1 schválený Danielom (draft commit 7dd958f). Spec = jediný zdroj pravdy pre implementáciu; jazyk EN (MD-1). Mikro-rozhodnutia MD-1…MD-9 prijaté vo veto režime; **MD-10 (X pre G1b-D3) ostáva otvorené — stanoví Daniel pred M1 (návrh 5 %)**. Ďalej: Zenodo technical note (stupeň 1) + príprava M1. |
 
 ## Otvorené úlohy (top)
 - ✔ **T0 hotové (2026-06-10):** beh zaznamenaný v `logs/T0-v1-sanity.log` (commit 7a9800d). Loss 4.476 → 2.884 za 5 epoch na náhodnom korpuse = empirické potvrdenie target leakage (na uniformne náhodných dátach niet čo učiť; štartovací loss ≈ ln(100) = 4.605 sedí s teóriou). Podotázka verzie zavretá: `v1_legacy.py` je jediná existujúca verzia — prvý Gemini návrh nebežal, opravený stav = tento súbor; Gemini archív ostáva lokálne mimo repa (FIKCIA pravidlo).
-- **T1 (= M0, zostávajúce):** novelty téza v1 → `docs/spec.md` → **Gate G0 check** → Zenodo technical note (stupeň 1). **Stav 2026-06-10:** `docs/spec.md` draft v1 zapísaný (novelty téza v1 = spec §17; veto-register mikro-rozhodnutí MD-1…MD-10 = spec §18); čaká na Danielovo schválenie = formálne prejdenie G0.
+- **T1 (= M0, zostávajúce):** ✔ spec.md v1 schválený, **Gate G0 prejdený (2026-06-11)**. Zostáva: Zenodo technical note (stupeň 1) — závislé od T4 (účet/ORCID) a od T2-subsetu (overiť [K] položky citované v note, Pravidlo W) + rýchly novelty sken arXiv pred uploadom.
 - **T2:** Overiť [K]-položky v `02-prior-art-mapa.md` v primárnych zdrojoch pred citovaním (rozšírené o #16–20).
 - **T3:** PoC podľa `03-poc-plan.md`.
 - **T4 (long-lead, hneď):** arXiv endorsement overiť; Zenodo účet + ORCID; GPG/SSH commit signing setup.
