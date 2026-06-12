@@ -1,0 +1,11 @@
+platform : macOS-26.5.1-arm64-arm-64bit
+python   : 3.11.15  torch: 2.12.0
+device   : mps (available=True)
+dtype    : torch.float32
+judged on: CPU fp32 (AP-2); the numbers below are informative
+
+[OK ] p1      shift max-delta 0.000e+00 | completion max-delta N=257 3.278e-07 N=1000 3.576e-07 | zero-grad params: none
+[OK ] p2      shift max-delta 0.000e+00 | completion max-delta N=257 2.831e-07 N=1000 3.278e-07 | zero-grad params: none
+[OK ] p3      shift max-delta 0.000e+00 | completion max-delta N=257 3.241e-07 N=1000 3.725e-07 | zero-grad params: none
+[OK ] hybrid  shift max-delta 0.000e+00 | completion max-delta N=257 3.129e-07 N=1000 3.129e-07 | zero-grad params: none
+[OK ] p3 determinism (bitwise, MPS): True
