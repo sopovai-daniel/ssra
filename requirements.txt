@@ -4,3 +4,7 @@ PyYAML==6.0.3
 numpy==2.4.6
 pytest==9.0.3
 matplotlib==3.11.0
+# baseline (b), AP-5: MIT, https://github.com/fla-org/flash-linear-attention
+# tag v0.5.0 = 3a9ce1c83a13994d824dbb3421e2989d330bb38b; Triton-bound kernels
+# (no macOS build) => local check is import-only, execution deferred to M2 GPU
+flash-linear-attention==0.5.0
