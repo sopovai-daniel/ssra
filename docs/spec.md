@@ -1,6 +1,6 @@
 # SSRA v2 — Implementation Specification
 
-**Status:** v1.0 — **APPROVED, Gate G0 passed 2026-06-11** (draft commit 7dd958f, G0 logged 7ed62aa). All §18 micro-decisions closed; **G1b-D3 threshold X = 5 %** (set by Daniel 2026-06-11).
+**Status:** v1.1, 2026-06-12 — v1.0 **APPROVED, Gate G0 passed 2026-06-11** (draft commit 7dd958f, G0 logged 7ed62aa); v1.1 = decoder-retention correction in §9/§10/§18 MD-2 (M1 finding, D-log 2026-06-12), no other normative change. All §18 micro-decisions closed; **G1b-D3 threshold X = 5 %** (set by Daniel 2026-06-11).
 **Authority:** Once approved, this file is the **single source of truth for implementation** (M1+). Design rationale and history live in `docs/00`–`03`; on conflict regarding *what to build*, this spec wins. On conflict regarding *project state/decisions*, `docs/00` D-log wins.
 **Language:** English (feeds the Zenodo technical note and Claude Code implementation). Epistemic markers follow project convention: [OVERENÉ] / [HYPOTÉZA] / [ŠPEKULÁCIA].
 **Traceability:** Every normative choice cites its D-log entry (D1–D6, Q1–Q5) in `docs/00`. Spec-level micro-decisions not covered by the D-log are consolidated in §18 (veto register).
@@ -152,9 +152,8 @@ Per layer, the decoder maintains:
 - **W:** ring buffer of the last w+1 token states z (window keys).
 - **Node store:** retained summary blocks under the rule below.
 
-**Retention rule [OVERENÉ by derivation — §18 MD-2]:** at time t, retain node u iff
-`u ∈ Frontier(t) := fenwick_blocks(t)` (needed to build future parents) **or** `u ∈ Fenwick(t) := fenwick_blocks(t − w − 1)` (needed by the read-out *now*).
-The naive rule "free children when the parent forms" is **incorrect**: a parent completes at t = end(parent), but the read-out keeps consuming its children until t = end(parent) + w + 1, because the read-out frontier lags the tree frontier by w+1 positions. Both sets have ≤ ⌊log₂ t⌋ + 1 members ⇒ per-layer state ≤ (w+1)·d + 2·m·d·(⌊log₂ N⌋ + 1) = **O(m·d·log N)** — same class as recorded in `01` §7, with an explicit constant 2 on the log term.
+**Retention rule [OVERENÉ by derivation; corrected 2026-06-12, spec v1.1 — see D-log]:** at time t, retain node u (level ℓ, size s = 2^ℓ, end e = end(u)) iff **t ∈ [e, e + s + w]** — the interval closure of the v1.0 pointwise rule `u ∈ Frontier(t) := fenwick_blocks(t)` ∪ `u ∈ Fenwick(t) := fenwick_blocks(t − w − 1)`. The pointwise form is falsified: u ∈ fenwick_blocks(p) holds exactly for p ∈ [e, e+s−1] (for blocks with lowbit(e) = s; blocks with lowbit(e) > s never appear in any decomposition and are consumed by their parent within their completion step — they may optionally be dropped immediately, a memory refinement, not required). Hence Frontier needs u for t ∈ [e, e+s−1] and the read-out for t ∈ [e+w+1, e+s+w]; for s ≤ w these intervals are **disjoint**, so the pointwise rule evicts u inside the re-entry gap [e+s, e+w] although the read-out requires it again at t = e+w+1 (at w = 64: all levels ℓ ≤ 6, including level-0 blocks one step after leaving the local window). Found in M1 implementation; certified by the completion test (§14.2).
+The naive rule "free children when the parent forms" is **incorrect**: a parent completes at t = end(parent), but the read-out keeps consuming its children until t = end(parent) + w + 1, because the read-out frontier lags the tree frontier by w+1 positions. Per-level retained count under the closure ≤ 2 + ⌈w/2^ℓ⌉ ⇒ per-layer state ≤ (w+1)·d + Σ_ℓ (2 + ⌈w/2^ℓ⌉)·s_ℓ·d = **O((m·log N + w·log m)·d)** — at fixed w, m this is unchanged **O(m·d·log N)** in N (the class recorded in `01` §7 stands); the v1.0 explicit bound with constant 2 on the log term held only for levels with 2^ℓ > w (true count ≈ 1.5× the v1.0 estimate at m = 16, w = 64, N = 8k, by direct count).
 
 **Per-token step (per layer):**
 1. Compute z_t; read-out y_t over W ∪ Fenwick(t) (all retained by the rule).
@@ -173,7 +172,7 @@ Assumptions: binary tree, pass-through schedule, score-ops accounting.
 | read-out, training | Θ(N·(w + m·log N)·d) | position t: ≤ (w+1) + m(⌊log₂t⌋+1) keys; sum over t |
 | **training total** | **Θ(N·(w + m·log N)·d)** | read-out dominates; with w, m, d constants: **Θ(N log N)** ⇒ G0 criterion met; same class as #2, **not better** |
 | activation memory (tree) | O(N·d·log m) | ≈ 5× flat token activations at m=16; score matrices N·(w + m log N) vs N² flat |
-| decode state | O(m·d·log N) | retention rule §9; explicit bound (w+1)·d + 2·m·d·(⌊log₂N⌋+1) |
+| decode state | O(m·d·log N) at fixed w, m; explicit O((m·log N + w·log m)·d) | corrected retention rule §9 (interval closure); bound (w+1)·d + Σ_ℓ (2 + ⌈w/2^ℓ⌉)·s_ℓ·d |
 | decode compute / token | O((w + m·log N + m²)·d) amortized | read-out + amortized 1 node completion |
 | decode worst-case latency | O(log N) sequential completions at t = 2^k | accepted for PoC; documented limitation |
 
@@ -276,7 +275,7 @@ Choices made while drafting this spec, inside the boundaries of closed D-log ite
 | id | decision | rationale | alternative |
 |---|---|---|---|
 | MD-1 | spec.md in English | feeds Zenodo note + CC; avoids double translation | Slovak + translation pass pre-Zenodo |
-| MD-2 | decode retention rule = Frontier(t) ∪ Fenwick(t−w−1); constant 2 on the log term | naive child-freeing breaks read-out for w+1 steps after each merge; [OVERENÉ] §9 | none correct found; refinement, class unchanged |
+| MD-2 | decode retention rule **(corrected 2026-06-12, v1.1)** = interval closure: retain u iff t ∈ [end(u), end(u)+2^ℓ+w]; v1.0 pointwise union Frontier(t) ∪ Fenwick(t−w−1) falsified (re-entry gap for 2^ℓ ≤ w; M1 finding, completion-test certified) | naive child-freeing breaks read-out for w+1 steps after each merge; closure derivation in §9 | v1.0 pointwise form — falsified |
 | MD-3 | P1 reuses Attn_θ projections; φ_P1 = {Q_φ, LN_pool} | "φ is small" (Q4 record) + maximal axis A | `pool_own_proj: true` (config exists) |
 | MD-4 | e_ℓ parameters shared between up-pass input and read-out key tag; e_0 read-out-only; init zeros | one coordinate system, ablation-friendly init | separate read-out e'_ℓ table |
 | MD-5 | read-out: e_ℓ added to summary **keys only**, not values | coordinate modulates addressing, not content | add to K and V |
