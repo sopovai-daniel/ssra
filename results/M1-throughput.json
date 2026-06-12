@@ -1,0 +1,95 @@
+{
+  "meta": {
+    "device": "mps",
+    "dtype": "float32",
+    "torch": "2.12.0",
+    "platform": "macOS-26.5.1-arm64-arm-64bit",
+    "size": {
+      "d": 192,
+      "h": 8,
+      "n_layers": 2
+    },
+    "params": {
+      "ssra": 951168,
+      "flat": 937728
+    },
+    "batch": 1,
+    "warmup": 2,
+    "iters": 5
+  },
+  "rows": [
+    {
+      "n": 1024,
+      "ssra": {
+        "sec": 0.5108438750030473,
+        "peak_bytes": 1253801984,
+        "swap_bound": false
+      },
+      "flat": {
+        "sec": 0.04625041699910071,
+        "peak_bytes": 1203470336,
+        "swap_bound": false
+      }
+    },
+    {
+      "n": 2048,
+      "ssra": {
+        "sec": 1.0538962909922702,
+        "peak_bytes": 2403762176,
+        "swap_bound": false
+      },
+      "flat": {
+        "sec": 0.16073654098727275,
+        "peak_bytes": 1296465920,
+        "swap_bound": false
+      }
+    },
+    {
+      "n": 4096,
+      "ssra": {
+        "sec": 1.9851003750081873,
+        "peak_bytes": 4625367040,
+        "swap_bound": false
+      },
+      "flat": {
+        "sec": 0.5235586250055349,
+        "peak_bytes": 3308355584,
+        "swap_bound": false
+      }
+    },
+    {
+      "n": 8192,
+      "ssra": {
+        "sec": 4.008887167001376,
+        "peak_bytes": 8337326080,
+        "swap_bound": false
+      },
+      "flat": {
+        "sec": 2.6541161250061123,
+        "peak_bytes": 11957010432,
+        "swap_bound": false
+      }
+    },
+    {
+      "n": 16384,
+      "ssra": {
+        "sec": 152.56825908299652,
+        "peak_bytes": 17941069824,
+        "swap_bound": true
+      },
+      "flat": {
+        "oom": "MPS backend out of memory (MPS allocated: 20.05 GiB, other allocations: 8.03 GiB, max allowed: 20.13 GiB). Tried to allo"
+      }
+    }
+  ],
+  "g1a": {
+    "slope_ssra": 0.9830221455986786,
+    "slope_flat": 1.9231517081636844,
+    "range": [
+      1024,
+      8192
+    ],
+    "criterion": "slope_ssra <= 1.5 and slope_ssra < slope_flat",
+    "passes": true
+  }
+}

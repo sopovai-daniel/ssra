@@ -1,0 +1,19 @@
+platform: macOS-26.5.1-arm64-arm-64bit
+torch 2.12.0 | device mps | dtype fp32 | B=1, warmup 2, iters 5 (median)
+AP-6 size selection: {'d': 256, 'h': 8, 'n_layers': 4} (largest candidate fitting both at 8k)
+
+params: ssra 3,256,832 | flat 3,220,992
+N=  1024 ssra     1702.6 ms  peak   2466.2 MiB
+N=  1024 flat      118.6 ms  peak   1186.2 MiB
+N=  2048 ssra     2840.3 ms  peak   4544.9 MiB
+N=  2048 flat      340.5 ms  peak   2304.9 MiB
+N=  4096 ssra     5808.8 ms  peak   9729.7 MiB
+N=  4096 flat     1467.2 ms  peak   4239.7 MiB
+N=  8192 ssra   165628.9 ms  peak  18719.7 MiB
+N=  8192 flat    35964.3 ms  peak  16977.7 MiB
+N= 16384 ssra  OOM/err: MPS backend out of memory (MPS allocated: 19.64 GiB, other allocations: 21.78 MiB, max allowed: 20.13 GiB). Tried to all
+N= 16384 flat  OOM/err: MPS backend out of memory (MPS allocated: 14.58 GiB, other allocations: 5.78 MiB, max allowed: 20.13 GiB). Tried to allo
+
+log-log slope over N 1024..8192: SSRA 2.084 | flat 2.684
+G1a criterion (slope <= 1.5 and < flat): FAIL (gate decision: Daniel)
+wrote results/M1-throughput.json and results/M1-throughput.png
