@@ -1,6 +1,6 @@
 # SSRA v2 — Implementation Specification
 
-**Status:** v1.1, 2026-06-12 — v1.0 **APPROVED, Gate G0 passed 2026-06-11** (draft commit 7dd958f, G0 logged 7ed62aa); v1.1 = decoder-retention correction in §9/§10/§18 MD-2 (M1 finding, D-log 2026-06-12), no other normative change. All §18 micro-decisions closed; **G1b-D3 threshold X = 5 %** (set by Daniel 2026-06-11).
+**Status:** v1.2, 2026-06-12 — v1.0 **APPROVED, Gate G0 passed 2026-06-11** (draft commit 7dd958f, G0 logged 7ed62aa); v1.1 = decoder-retention correction in §9/§10/§18 MD-2 (M1 finding, D-log 2026-06-12); v1.2 = post-M1 editorial batch (§3/§12 stack-level inventory: ln_f + token embedding + untied unembedding; §13 `summary_pos_override` flag + linear-schedule scope; §6 M1 NoPE-watch record; §18 MD-11…MD-13) — **no normative change**: v1.2 records the M1-confirmed implementation (D-log 2026-06-12, M1 closure). **M1 closed 2026-06-12: gates G1a + G1b-D3 passed.** All §18 micro-decisions closed; **G1b-D3 threshold X = 5 %** (set by Daniel 2026-06-11).
 **Authority:** Once approved, this file is the **single source of truth for implementation** (M1+). Design rationale and history live in `docs/00`–`03`; on conflict regarding *what to build*, this spec wins. On conflict regarding *project state/decisions*, `docs/00` D-log wins.
 **Language:** English (feeds the Zenodo technical note and Claude Code implementation). Epistemic markers follow project convention: [OVERENÉ] / [HYPOTÉZA] / [ŠPEKULÁCIA].
 **Traceability:** Every normative choice cites its D-log entry (D1–D6, Q1–Q5) in `docs/00`. Spec-level micro-decisions not covered by the D-log are consolidated in §18 (veto register).
@@ -43,7 +43,7 @@ x ← x + SSRA_mix_i(LN₁(x))      # this spec
 x ← x + FFN_i(LN₂(x))           # standard MLP, d → 4d → d, GELU; NOT inside nodes
 ```
 
-Each layer builds its own tree over its own current activations Z = LN₁(x); summaries are per-layer activations, not persistent state (Q4). Token/positional embeddings at the stack input: token embedding only; **no global absolute positional embedding** — all positional information enters via §6 (slot-RoPE, window RoPE, e_ℓ). Unembedding: tied or untied = config flag.
+Each layer builds its own tree over its own current activations Z = LN₁(x); summaries are per-layer activations, not persistent state (Q4). Token/positional embeddings at the stack input: token embedding only; **no global absolute positional embedding** — all positional information enters via §6 (slot-RoPE, window RoPE, e_ℓ). Stack output: a final pre-norm LayerNorm **ln_f** is applied after the last block, before unembedding (standard pre-norm convention; MD-11, confirmed D-log 2026-06-12). Unembedding: tied or untied = config flag.
 
 ## 4. Up-pass
 
@@ -105,7 +105,7 @@ Config `hybrid(k_sel)`: k_sel slots via P3 selection (verbatim) + (s_ℓ − k_s
 
 Fenwick property bonus (recorded in D2): block level ≈ log distance from query ⇒ e_ℓ doubles as a log-scaled distance code ("recent fine, old coarse").
 
-Mixed key types (RoPE-rotated query attending NoPE summary keys): the sink/memory-token precedent (#20, **verified in T2 2026-06-11**) confirms heterogeneous persistent keys inside one softmax (including a learnable dedicated sink token). Nuance from T2: #20 assigns positions *within the cache*, i.e. the directly precedented treatment of special keys is a fixed virtual position, not pure NoPE. Pure-NoPE summary keys therefore carry the marker [HYPOTÉZA], checked in the M1 smoke run. Contingency config `summary_pos ∈ {none (default), virtual}` where `virtual` rotates every summary key at the fixed virtual position t−w−1 (constant phase wrt query); flip only if T2 verification or M1 smoke surfaces a problem — do not enable silently.
+Mixed key types (RoPE-rotated query attending NoPE summary keys): the sink/memory-token precedent (#20, **verified in T2 2026-06-11**) confirms heterogeneous persistent keys inside one softmax (including a learnable dedicated sink token). Nuance from T2: #20 assigns positions *within the cache*, i.e. the directly precedented treatment of special keys is a fixed virtual position, not pure NoPE. Pure-NoPE summary keys therefore carry the marker [HYPOTÉZA]; the M1 smoke runs (2026-06-12) surfaced no positional pathology, so the marker stands pending larger-scale M2 evidence (a smoke run can fail to falsify, not confirm). Contingency config `summary_pos ∈ {none (default), virtual}` where `virtual` rotates every summary key at the fixed virtual position t−w−1 (constant phase wrt query); flip only on positive evidence of a problem — do not enable silently; enabling requires the explicit `summary_pos_override: true` flag (§13, MD-13).
 
 ## 7. Causality (D1)
 
@@ -199,6 +199,14 @@ Honest accounting (carry into the paper): QKVO projections add Θ(N·d²) terms 
 
 L_max = ⌈log₂ N_max⌉ from config. Parameter-match note for baselines: SSRA overhead vs flat at equal d, h, L is e_ℓ + LN_node + φ — at d = 512, m = 16, N_max = 32k: ≈ (16·512) + (15·512) + (2·512) + (2·512) ≈ 26k params/layer, ≪ 1% of a layer. [OVERENÉ by arithmetic]
 
+Stack-level parameters (outside layers; recorded post-M1, MD-11, D-log 2026-06-12):
+
+| tensor | shape | notes |
+|---|---|---|
+| token embedding | vocab × d | stack input lookup (§3) |
+| ln_f | 2d | final pre-norm LN before unembedding (§3) |
+| unembedding | vocab × d if `tied_embeddings: false`; weight-shared with the token embedding if true | §13 flag |
+
 ## 13. Configuration surface
 
 Fixed by this spec (changing them = D-log change): tree arity default k=2; schedule default fixed m=16; w default 64; pre-norm residual + LN_node in every node; level-wise batching; pool default P1; read-out shares θ; e_ℓ default ON; no global positional embedding; no inference-time stochasticity.
@@ -216,6 +224,7 @@ model:
   pool_own_proj: false           # P1 contingency
   p1_diversity_loss: 0.0         # [K] verify before use
   summary_pos: none | virtual    # default none; see §6
+  summary_pos_override: false    # must be true to enable summary_pos: virtual (MD-13)
   level_emb: on | off
   readout_params: shared | separate
   rope_base: 10000
@@ -227,7 +236,7 @@ p3:
   lambda_lb: float
 ```
 
-Config validation rules: reject (P2 ∧ m_schedule=linear), (P2 ∧ k=4), (hybrid ∧ k_sel ≥ s_ℓ at any lossy level), (summary_pos=virtual without explicit override flag).
+Config validation rules: reject (m_schedule=linear ∧ pool ≠ p1) — the strict form of the "P1 only" scope, so P2 × linear, P3 × linear and hybrid × linear are all rejected (MD-12); reject any expanding schedule, i.e. linear parameters yielding s_ℓ > k·s_{ℓ−1} at any level — Pool_φ never expands (MD-12); reject (P2 ∧ k=4), (hybrid ∧ k_sel ≥ s_ℓ at any lossy level), (summary_pos: virtual ∧ summary_pos_override ≠ true) (MD-13).
 
 ## 14. Verification tests (M1 acceptance; run before any training conclusions)
 
@@ -284,6 +293,9 @@ Choices made while drafting this spec, inside the boundaries of closed D-log ite
 | MD-8 | P3 context slot = score-softmax-weighted sum, no extra projection; ties → lower index | minimal φ, deterministic | learned W_ctx projection |
 | MD-9 | P2 restricted to fixed-m × k=2 | structural (pairwise halving) | generalized P2 (rejected: stops being a clean control) |
 | MD-10 | G1b-D3 X = **5%** | needs a number to be falsifiable | **closed — confirmed by Daniel 2026-06-11** |
+| MD-11 | stack output: final LayerNorm `ln_f` after the last block, before unembedding (§3, §12) | standard pre-norm convention; used by the M1 implementation — **confirmed, D-log 2026-06-12 (M1 closure)** | no final LN — rejected |
+| MD-12 | `m_schedule: linear` strictly requires `pool: p1` (P2/P3/hybrid × linear rejected); expanding schedules with s_ℓ > k·s_{ℓ−1} rejected — Pool_φ never expands (§13) | enforces the "P1 only" YAML scope as a hard rule — **confirmed, D-log 2026-06-12 (M1 closure)** | per-pool linear support — rejected |
+| MD-13 | virtual-summary-pos gate flag named `summary_pos_override` (§6, §13) | spec demanded "an explicit override flag" without naming it; M1 implemented this name — **confirmed, D-log 2026-06-12 (M1 closure)** | other flag name |
 
 ## 19. Gate G0 self-check
 
