@@ -1,0 +1,13 @@
+# M2 Phase-0 data pipeline config (assignment AP-9). Quota-independent, no GPU.
+# Small shard: end-to-end exercise of stream -> split -> tokenizer -> pack ->
+# GCS. NOT the full M2 corpus (that is sized at the GPU calibration step).
+# Run: .venv/bin/python scripts/data_pipeline.py experiments/M2-phase0-data.yaml
+dataset: HuggingFaceFW/fineweb-edu      # config sample-10BT (smallest sample)
+n_docs: 6000                            # small Phase-0 shard
+val_permille: 50                        # ~5% of docs held out, document-disjoint
+vocab: 16384                            # byte-level BPE (AP-9)
+retrieval_date: "2026-06-14"            # Pravidlo W: license + version verified live
+out_dir: data/phase0                    # gitignored (shards never committed)
+tokenizer_out: artifacts/tokenizer/fineweb-edu-bpe-16384.json
+gcs_bucket: gs://ssra-poc-ew3
+gcs_prefix: phase0/data

@@ -1,4 +1,7 @@
 # Pinned environment for M1 verification (Python 3.11.15, macOS arm64 / MPS).
+# This is the CPU/MPS dev + Phase-0 environment. GPU (L4 / CUDA) pins live in
+# requirements-gpu.txt + docker/Dockerfile (built and verified on the box in
+# Phase 1 — torch CUDA wheel build hash recorded there, not here).
 torch==2.12.0
 PyYAML==6.0.3
 numpy==2.4.6
@@ -8,3 +11,10 @@ matplotlib==3.11.0
 # tag v0.5.0 = 3a9ce1c83a13994d824dbb3421e2989d330bb38b; Triton-bound kernels
 # (no macOS build) => local check is import-only, execution deferred to M2 GPU
 flash-linear-attention==0.5.0
+
+# --- M2 Phase-0 data pipeline (AP-9): FineWeb-Edu streaming + byte-level BPE ---
+# Platform-neutral; same pins used on the GPU box.
+datasets==5.0.0
+pyarrow==24.0.0
+tokenizers==0.22.2
+huggingface_hub==1.19.0

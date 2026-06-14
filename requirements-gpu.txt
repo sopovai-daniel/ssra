@@ -1,0 +1,35 @@
+# M2 GPU environment pins for the training box (1x NVIDIA L4 24GB @ europe-west3).
+# Built and VERIFIED ON THE BOX in Phase 1 (calibration) — this file is the pin
+# manifest; the exact resolved torch CUDA build (torch==2.12.0+cuXXX) and the
+# driver/CUDA versions are recorded in results/M2-calibration.md once measured.
+# Do NOT treat the CUDA build as verified until that report exists (AP-16, §7).
+#
+# Install on the box (CUDA 12.4 wheels):
+#   pip install torch==2.12.0 --index-url https://download.pytorch.org/whl/cu124
+#   pip install -r requirements-gpu.txt
+#
+# torch is intentionally NOT pinned here with a +cuXXX local tag — the CUDA
+# build is selected by the --index-url above and its build hash is captured in
+# the calibration report. The version (2.12.0) matches the CPU/MPS dev pin so
+# correctness tests (spec §14) run against the same torch minor on both.
+
+# --- model + harness ---
+PyYAML==6.0.3
+numpy==2.4.6
+pytest==9.0.3
+matplotlib==3.11.0
+
+# --- M2 data pipeline (AP-9) ---
+datasets==5.0.0
+pyarrow==24.0.0
+tokenizers==0.22.2
+huggingface_hub==1.19.0
+
+# --- google cloud storage for checkpoint/shard I/O (AP-11) ---
+# Checkpoints/shards are also reachable via `gcloud storage` (gsutil) on the
+# box; the python client is optional. Pin captured on the box in Phase 1.
+google-cloud-storage
+
+# --- baseline (b), AP-15: GatedDeltaNet, MIT (provenance fixed in M1) ---
+# Triton-bound kernels — GPU execution happens in Phase 4, not Phase 0.
+flash-linear-attention==0.5.0

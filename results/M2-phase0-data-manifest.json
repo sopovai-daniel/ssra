@@ -1,0 +1,54 @@
+{
+  "commit": "c5fca94",
+  "config": "experiments/M2-phase0-data.yaml",
+  "gcs": {
+    "dst": "gs://ssra-poc-ew3/phase0/data",
+    "uploaded": [
+      "gs://ssra-poc-ew3/phase0/data/train.bin",
+      "gs://ssra-poc-ew3/phase0/data/val.bin",
+      "gs://ssra-poc-ew3/phase0/data/fineweb-edu-bpe-16384.json",
+      "gs://ssra-poc-ew3/phase0/data/shards_meta.json",
+      "gs://ssra-poc-ew3/phase0/data/M2-phase0-data-manifest.json"
+    ]
+  },
+  "provenance": {
+    "dataset_config": "sample-10BT",
+    "dataset_license": "odc-by",
+    "dataset_repo": "HuggingFaceFW/fineweb-edu",
+    "dataset_sha": "87f09149ef4734204d70ed1d046ddc9ca3f2b8f9",
+    "dataset_url": "https://huggingface.co/datasets/HuggingFaceFW/fineweb-edu",
+    "n_docs_streamed": 6000,
+    "n_train_docs": 5722,
+    "n_val_docs": 278,
+    "retrieval_date": "2026-06-14",
+    "train_chars": 27848707,
+    "val_chars": 1428957,
+    "val_permille": 50
+  },
+  "shards": {
+    "tokenizer_sha256": "019568a206fe6ccc4bc2e90c750d660979d3fd3add159e302a0dfa4be0d669a0",
+    "train": {
+      "dtype": "uint16",
+      "n_docs": 5722,
+      "n_tokens": 6526278,
+      "path": "data/phase0/train.bin"
+    },
+    "val": {
+      "dtype": "uint16",
+      "n_docs": 278,
+      "n_tokens": 334393,
+      "path": "data/phase0/val.bin"
+    },
+    "vocab": 16384
+  },
+  "tokenizer": {
+    "eot_id": 0,
+    "eot_token": "<|endoftext|>",
+    "n_train_docs": 5722,
+    "requested_vocab": 16384,
+    "tokenizer_path": "artifacts/tokenizer/fineweb-edu-bpe-16384.json",
+    "tokenizer_sha256": "019568a206fe6ccc4bc2e90c750d660979d3fd3add159e302a0dfa4be0d669a0",
+    "train_chars": 27848707,
+    "vocab_size": 16384
+  }
+}
