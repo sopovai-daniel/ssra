@@ -149,6 +149,7 @@ def main(path: str, resume_flag: bool):
     t = raw.pop("training")
     device = t.get("device", "cpu")
     precision = t.get("precision", "fp32")
+    t["precision"] = precision  # ensure recorded in meta via **t (no duplicate)
 
     train_ids, val_ids, vocab = load_data(data_cfg)
     raw.setdefault("model", {})["vocab"] = vocab
@@ -183,7 +184,7 @@ def main(path: str, resume_flag: bool):
     meta = dict(run=run_name, arch=arch, pool=cfg.pool, params=n_params,
                 vocab=vocab, data=data_cfg,
                 train_tokens=len(train_ids), val_tokens=len(val_ids),
-                precision=precision, torch=torch.__version__,
+                torch=torch.__version__,
                 commit=commit, config=str(Path(path)),
                 resumed_from=start_step if start_step else None, **t)
     log.write(json.dumps({"meta": meta}) + "\n")
