@@ -2,6 +2,8 @@
   - tokenized data shards (M2 path): packed uint16 .bin from data_pipeline.py
   - checkpoint / resume to a dir (+ optional GCS), Spot-preemption-safe (AP-11)
   - bf16 autocast option (AP-16); loss/eval accumulation stays fp32
+  - throughput logging (M2 calibration): steady-state tok/s + peak VRAM (cuda)
+    in the JSONL records and the final summary
 The M1 char-level path (data: {url, val_frac}) is unchanged and still valid.
 
 One run = one YAML in experiments/ committed BEFORE launch + a row in
@@ -196,9 +198,26 @@ def main(path: str, resume_flag: bool):
                         run_name=run_name, extra={"arch": arch, "vocab": vocab},
                         gcs_dir=gcs_ckpt)
 
+    # Throughput accounting (M2 deliverable 2: cost+throughput logging).
+    # Steady-state tok/s excludes the first MEAS_SKIP steps (CUDA context init,
+    # allocator growth, autotune); per-step wall time is sampled without extra
+    # device syncs — the .item() sync every log_every steps bounds the drift.
+    MEAS_SKIP = 10
+    tokens_per_step = t["batch_size"] * t["seq_len"]
+    train_time, meas_steps = 0.0, 0
+
+    def tok_per_s() -> float | None:
+        return round(tokens_per_step * meas_steps / train_time, 1) \
+            if train_time > 0 else None
+
+    def peak_vram_gib() -> float | None:
+        return round(torch.cuda.max_memory_allocated() / 2**30, 3) \
+            if device == "cuda" else None
+
     t0 = time.time()
     rec = {"step": start_step, "val_loss": float("nan"), "val_bpc": float("nan")}
     for step in range(start_step, t["steps"]):
+        step_t0 = time.perf_counter()
         for group in opt.param_groups:
             group["lr"] = lr_at(step, t)
         if arch == "ssra":
@@ -218,11 +237,18 @@ def main(path: str, resume_flag: bool):
         total.backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
         opt.step()
+        if step >= start_step + MEAS_SKIP:
+            train_time += time.perf_counter() - step_t0
+            meas_steps += 1
 
         if diag:
             rec = {"step": step, "train_loss": round(loss.item(), 5),
                    "lr": round(lr_at(step, t), 6),
                    "elapsed_s": round(time.time() - t0, 1)}
+            if tok_per_s() is not None:
+                rec["tok_per_s"] = tok_per_s()
+            if peak_vram_gib() is not None:
+                rec["peak_vram_gib"] = peak_vram_gib()
             if torch.is_tensor(lb):
                 rec["lb_loss"] = round(lb.item(), 6)
                 rec["tau"] = round(tau_at(step, cfg.p3), 4)
@@ -253,7 +279,10 @@ def main(path: str, resume_flag: bool):
     if ckpt_every:
         checkpoint(t["steps"])  # final checkpoint at run end (AP-11)
     summary = {"final_val_loss": rec["val_loss"], "final_val_bpc": rec["val_bpc"],
-               "wall_clock_s": round(time.time() - t0, 1), "run": run_name}
+               "wall_clock_s": round(time.time() - t0, 1), "run": run_name,
+               "tok_per_s": tok_per_s(), "meas_steps": meas_steps,
+               "tokens_per_step": tokens_per_step,
+               "peak_vram_gib": peak_vram_gib()}
     log.write(json.dumps({"summary": summary}) + "\n")
     log.close()
     print(json.dumps({"summary": summary}))

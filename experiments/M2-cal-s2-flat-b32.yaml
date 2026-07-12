@@ -1,0 +1,35 @@
+# M2 Phase 1 calibration measurement run (launch-flow assignment §5 step 3;
+# M2-assignment §4 Phase 1 + §5 configs). Purpose: measured tok/s + peak VRAM
+# for the S2 (main comparison, ~84M params) config, arch=flat, batch 32, bf16 autocast (AP-16).
+# SHORT MEASUREMENT RUN ONLY - no quality conclusions (spec §16).
+arch: flat
+run_name: M2-cal-s2-flat-b32
+model:
+  d: 640
+  h: 10
+  n_layers: 15
+  n_max: 32768             # e_l table headroom for M3 length extrapolation (assignment §5)
+  m: 16
+  w: 64
+  pool: p1
+  tied_embeddings: true    # AP-9: 16k tied
+data:
+  train_bin: data/phase0/train.bin
+  val_bin: data/phase0/val.bin
+  vocab: 16384
+training:
+  steps: 120
+  batch_size: 32
+  seq_len: 1024            # train ctx per M2-assignment §5
+  lr: 3.0e-4
+  warmup_steps: 20
+  weight_decay: 0.01
+  lr_min_frac: 0.1
+  seed: 1337
+  device: cuda
+  precision: bf16          # AP-16
+  val_every: 10000         # > steps: val only at step 0 and the final step
+  val_batches: 4
+  log_every: 10
+  ckpt_dir: checkpoints/M2-cal-s2-flat-b32
+  ckpt_every: 0
