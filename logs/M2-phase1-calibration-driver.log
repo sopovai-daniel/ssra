@@ -1,0 +1,25 @@
+=== START M2-cal-s1-ssra-b16 20:05:40Z
+=== DONE M2-cal-s1-ssra-b16 {"summary": {"final_val_loss": 7.24613, "final_val_bpc": 10.45396, "wall_clock_s": 211.6, "run": "M2-cal-s1-ssra-b16", "tok_per_s": 9456.6, "meas_steps": 110, "tokens_per_step": 16384, "peak_vram_gib": 54.673}}
+=== START M2-cal-s1-ssra-b32 20:09:16Z
+=== FAILED M2-cal-s1-ssra-b32     v_g = v_sum[:, :, idx]
+=== START M2-cal-s1-ssra-b64 20:09:22Z
+=== FAILED M2-cal-s1-ssra-b64     v_g = v_sum[:, :, idx]
+=== START M2-cal-s1-flat-b16 20:09:27Z
+=== DONE M2-cal-s1-flat-b16 {"summary": {"final_val_loss": 7.31658, "final_val_bpc": 10.55559, "wall_clock_s": 7.7, "run": "M2-cal-s1-flat-b16", "tok_per_s": 300978.2, "meas_steps": 110, "tokens_per_step": 16384, "peak_vram_gib": 6.345}}
+=== START M2-cal-s1-flat-b32 20:09:39Z
+=== DONE M2-cal-s1-flat-b32 {"summary": {"final_val_loss": 7.20444, "final_val_bpc": 10.39381, "wall_clock_s": 13.9, "run": "M2-cal-s1-flat-b32", "tok_per_s": 325414.4, "meas_steps": 110, "tokens_per_step": 32768, "peak_vram_gib": 12.336}}
+=== START M2-cal-s1-flat-b64 20:09:57Z
+=== DONE M2-cal-s1-flat-b64 {"summary": {"final_val_loss": 7.15807, "final_val_bpc": 10.32691, "wall_clock_s": 26.1, "run": "M2-cal-s1-flat-b64", "tok_per_s": 341948.0, "meas_steps": 110, "tokens_per_step": 65536, "peak_vram_gib": 24.335}}
+=== START M2-cal-s2-ssra-b16 20:10:27Z
+=== FAILED M2-cal-s2-ssra-b16     return _VF.einsum(equation, operands)  # type: ignore[attr-defined]
+=== START M2-cal-s2-ssra-b32 20:10:33Z
+=== FAILED M2-cal-s2-ssra-b32     k_g = k_sum[:, :, idx]  # [B,h,N,k_max,dh]
+=== START M2-cal-s2-ssra-b64 20:10:39Z
+=== FAILED M2-cal-s2-ssra-b64     return _VF.einsum(equation, operands)  # type: ignore[attr-defined]
+=== START M2-cal-s2-flat-b16 20:10:45Z
+=== DONE M2-cal-s2-flat-b16 {"summary": {"final_val_loss": 7.09318, "final_val_bpc": 10.23329, "wall_clock_s": 17.0, "run": "M2-cal-s2-flat-b16", "tok_per_s": 128729.9, "meas_steps": 110, "tokens_per_step": 16384, "peak_vram_gib": 10.846}}
+=== START M2-cal-s2-flat-b32 20:11:06Z
+=== DONE M2-cal-s2-flat-b32 {"summary": {"final_val_loss": 6.9453, "final_val_bpc": 10.01995, "wall_clock_s": 31.6, "run": "M2-cal-s2-flat-b32", "tok_per_s": 135492.9, "meas_steps": 110, "tokens_per_step": 32768, "peak_vram_gib": 20.578}}
+=== START M2-cal-s2-flat-b64 20:11:42Z
+=== DONE M2-cal-s2-flat-b64 {"summary": {"final_val_loss": 6.83638, "final_val_bpc": 9.86281, "wall_clock_s": 60.5, "run": "M2-cal-s2-flat-b64", "tok_per_s": 140443.9, "meas_steps": 110, "tokens_per_step": 65536, "peak_vram_gib": 40.011}}
+=== ALL DONE 20:12:48Z

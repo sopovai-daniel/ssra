@@ -1,0 +1,45 @@
+[resume] from step 60 (/workspace/ssra/checkpoints/M2-cal-s1-ssra-b16/latest.pt)
+{
+  "meta": {
+    "run": "M2-cal-s1-ssra-b16",
+    "arch": "ssra",
+    "pool": "p1",
+    "params": 24159744,
+    "vocab": 16384,
+    "data": {
+      "train_bin": "data/phase0/train.bin",
+      "val_bin": "data/phase0/val.bin",
+      "vocab": 16384
+    },
+    "train_tokens": 6526278,
+    "val_tokens": 334393,
+    "torch": "2.12.0+cu126",
+    "commit": "accdb1b",
+    "config": "experiments/M2-cal-s1-ssra-b16.yaml",
+    "resumed_from": 60,
+    "steps": 120,
+    "batch_size": 16,
+    "seq_len": 1024,
+    "lr": 0.0003,
+    "warmup_steps": 20,
+    "weight_decay": 0.01,
+    "lr_min_frac": 0.1,
+    "seed": 1337,
+    "device": "cuda",
+    "precision": "bf16",
+    "val_every": 10000,
+    "val_batches": 4,
+    "log_every": 10,
+    "ckpt_dir": "checkpoints/M2-cal-s1-ssra-b16",
+    "ckpt_every": 30,
+    "gcs_ckpt_dir": "gs://ssra-poc-ew3/m2/calibration/ckpt/M2-cal-s1-ssra-b16"
+  }
+}
+{'step': 60, 'train_loss': 7.35087, 'lr': 0.000207, 'elapsed_s': 3.0, 'peak_vram_gib': 54.664, 'p1_attn_entropy': 3.4657, 'p1_participation_min': 0.0571, 'p1_participation_max': 0.0728}
+{'step': 70, 'train_loss': 7.41796, 'lr': 0.000165, 'elapsed_s': 20.2, 'tok_per_s': 9138.4, 'peak_vram_gib': 54.674, 'p1_attn_entropy': 3.4657, 'p1_participation_min': 0.0578, 'p1_participation_max': 0.0722}
+{'step': 80, 'train_loss': 7.33734, 'lr': 0.000123, 'elapsed_s': 37.5, 'tok_per_s': 9452.2, 'peak_vram_gib': 54.674, 'p1_attn_entropy': 3.4657, 'p1_participation_min': 0.0579, 'p1_participation_max': 0.0719}
+{'step': 90, 'train_loss': 7.35967, 'lr': 8.6e-05, 'elapsed_s': 65.0, 'tok_per_s': 9459.5, 'peak_vram_gib': 54.674, 'p1_attn_entropy': 3.4657, 'p1_participation_min': 0.057, 'p1_participation_max': 0.0717}
+{'step': 100, 'train_loss': 7.3202, 'lr': 5.6e-05, 'elapsed_s': 82.4, 'tok_per_s': 9458.3, 'peak_vram_gib': 54.674, 'p1_attn_entropy': 3.4657, 'p1_participation_min': 0.0566, 'p1_participation_max': 0.0718}
+{'step': 110, 'train_loss': 7.23545, 'lr': 3.7e-05, 'elapsed_s': 99.7, 'tok_per_s': 9455.5, 'peak_vram_gib': 54.674, 'p1_attn_entropy': 3.4657, 'p1_participation_min': 0.0572, 'p1_participation_max': 0.0719}
+{'step': 119, 'val_loss': 7.24613, 'val_bpc': 10.45396}
+{"summary": {"final_val_loss": 7.24613, "final_val_bpc": 10.45396, "wall_clock_s": 137.6, "run": "M2-cal-s1-ssra-b16", "tok_per_s": 9458.4, "meas_steps": 50, "tokens_per_step": 16384, "peak_vram_gib": 54.674}}

@@ -1,0 +1,50 @@
+{
+  "meta": {
+    "run": "M2-cal-s1-flat-b16",
+    "arch": "flat",
+    "pool": "p1",
+    "params": 24021504,
+    "vocab": 16384,
+    "data": {
+      "train_bin": "data/phase0/train.bin",
+      "val_bin": "data/phase0/val.bin",
+      "vocab": 16384
+    },
+    "train_tokens": 6526278,
+    "val_tokens": 334393,
+    "torch": "2.12.0+cu126",
+    "commit": "accdb1b",
+    "config": "experiments/M2-cal-s1-flat-b16.yaml",
+    "resumed_from": null,
+    "steps": 120,
+    "batch_size": 16,
+    "seq_len": 1024,
+    "lr": 0.0003,
+    "warmup_steps": 20,
+    "weight_decay": 0.01,
+    "lr_min_frac": 0.1,
+    "seed": 1337,
+    "device": "cuda",
+    "precision": "bf16",
+    "val_every": 10000,
+    "val_batches": 4,
+    "log_every": 10,
+    "ckpt_dir": "checkpoints/M2-cal-s1-flat-b16",
+    "ckpt_every": 0
+  }
+}
+{'step': 0, 'train_loss': 9.80172, 'lr': 1.5e-05, 'elapsed_s': 0.7, 'peak_vram_gib': 6.152}
+{'step': 0, 'val_loss': 9.72854, 'val_bpc': 14.03532}
+{'step': 10, 'train_loss': 9.00747, 'lr': 0.000165, 'elapsed_s': 1.4, 'tok_per_s': 287154.4, 'peak_vram_gib': 6.345}
+{'step': 20, 'train_loss': 8.37943, 'lr': 0.0003, 'elapsed_s': 1.9, 'tok_per_s': 301197.7, 'peak_vram_gib': 6.345}
+{'step': 30, 'train_loss': 7.75144, 'lr': 0.000293, 'elapsed_s': 2.5, 'tok_per_s': 301502.8, 'peak_vram_gib': 6.345}
+{'step': 40, 'train_loss': 7.53712, 'lr': 0.000274, 'elapsed_s': 3.1, 'tok_per_s': 301657.7, 'peak_vram_gib': 6.345}
+{'step': 50, 'train_loss': 7.54573, 'lr': 0.000244, 'elapsed_s': 3.6, 'tok_per_s': 301135.4, 'peak_vram_gib': 6.345}
+{'step': 60, 'train_loss': 7.38796, 'lr': 0.000207, 'elapsed_s': 4.2, 'tok_per_s': 301142.2, 'peak_vram_gib': 6.345}
+{'step': 70, 'train_loss': 7.46149, 'lr': 0.000165, 'elapsed_s': 4.8, 'tok_per_s': 301036.4, 'peak_vram_gib': 6.345}
+{'step': 80, 'train_loss': 7.37613, 'lr': 0.000123, 'elapsed_s': 5.4, 'tok_per_s': 301001.6, 'peak_vram_gib': 6.345}
+{'step': 90, 'train_loss': 7.40707, 'lr': 8.6e-05, 'elapsed_s': 5.9, 'tok_per_s': 300954.0, 'peak_vram_gib': 6.345}
+{'step': 100, 'train_loss': 7.38335, 'lr': 5.6e-05, 'elapsed_s': 6.5, 'tok_per_s': 300905.6, 'peak_vram_gib': 6.345}
+{'step': 110, 'train_loss': 7.29233, 'lr': 3.7e-05, 'elapsed_s': 7.1, 'tok_per_s': 300858.7, 'peak_vram_gib': 6.345}
+{'step': 119, 'val_loss': 7.31658, 'val_bpc': 10.55559}
+{"summary": {"final_val_loss": 7.31658, "final_val_bpc": 10.55559, "wall_clock_s": 7.7, "run": "M2-cal-s1-flat-b16", "tok_per_s": 300978.2, "meas_steps": 110, "tokens_per_step": 16384, "peak_vram_gib": 6.345}}

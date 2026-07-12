@@ -1,0 +1,26 @@
+=== nvidia-smi
+NVIDIA A100 80GB PCIe, 81920 MiB, 550.127.05
+=== pip pins
+datasets                          5.0.0
+fla-core                          0.5.0
+google-cloud-storage              3.12.1
+numpy                             2.4.6
+pyarrow                           24.0.0
+pytest                            9.0.3
+PyYAML                            6.0.3
+tokenizers                        0.22.2
+torch                             2.12.0+cu126
+transformers                      5.13.1
+triton                            3.7.0
+=== python: Python 3.11.10
+=== gcloud: Google Cloud SDK 575.0.1
+=== commit: accdb1bbcbccaefb063194427d87732e0def34bb
+=== os: PRETTY_NAME="Ubuntu 22.04.5 LTS"
+=== cgroup cpus: 26 (OMP_NUM_THREADS=26 for all runs)
+=== runpod env (non-secret keys):
+RUNPOD_GPU_COUNT=1
+RUNPOD_MEM_GB=117
+RUNPOD_CPU_COUNT=31
+RUNPOD_DC_ID=CA-MTL-3
+RUNPOD_GPU_NAME=NVIDIA+A100+80GB+PCIe
+RUNPOD_POD_ID=e8r68jb8fduz8n
