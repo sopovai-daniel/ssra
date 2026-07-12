@@ -122,8 +122,11 @@ implementation memory/throughput, not hardware choice or budget arithmetic.**
 ## 6. AP-19 tier comparison + HW recommendation (§7 vi)
 
 - **Secure on-demand: $1.39/hr** (booked; console 2026-07-12).
-- **Community: not captured** — Daniel to supply the console value of the day
-  (requested; will be appended to this section). Preemption risk is mitigated:
+- **Community: not captured on deploy day** (confirmed by Daniel, 2026-07-12).
+  Per Pravidlo W it is not reconstructed from memory or a later page-load; the
+  Secure-vs-Community comparison is carried over to the pre-flight of the next
+  launch (Phase 2+), where both console values of that day will be recorded.
+  Preemption risk is mitigated either way:
   AP-11 is now GPU-verified bit-for-bit, max loss = 1 checkpoint interval
   (≤30 min wall-clock per AP-11; calibration used 30-step intervals).
 - **Recommendation (numbers only, decision Daniel's):** A100 PCIe 80 GB is the
@@ -190,7 +193,9 @@ Per-run wall-clock + EUR: `results/runs.md` rows (config commit `2b22848`).
    cu124 pin (verified 2026-07-12); update requirements-gpu.txt + Dockerfile
    comments; RunPod official image + pod_bootstrap.sh is the standing launch path
    for M2 (AP-18 image line amended)."*
-4. **AP-19 Community price** — pending Daniel's console value (§6).
+4. **AP-19 Community price** — not captured on deploy day (§6); proposed D-log:
+   *"AP-19 tier comparison deferred to the next launch pre-flight: record both
+   Secure and Community console prices of that day before deploying Phase 2+."*
 
 ## 10. Definition-of-done check (launch-flow §9)
 
