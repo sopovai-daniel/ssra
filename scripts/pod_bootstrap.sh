@@ -29,23 +29,37 @@ BUCKET=gs://ssra-poc-ew3
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PY=python3.11
 TORCH_PIN=2.12.0
-TORCH_INDEX=https://download.pytorch.org/whl/cu124
+# Pin-manifest correction (Phase 1, 2026-07-12, verified on download.pytorch.org):
+# the cu124 wheel index ends at torch 2.6.0 - torch 2.12.0 was never published
+# for cu124. The version pin (2.12.0, matching the dev/test environment) is the
+# load-bearing part; cu126 is the lowest CUDA build that provides it and runs
+# on 12.4-era drivers via CUDA minor-version compatibility. Verified by the
+# spec SS14 pytest pass on the box (results/M2-calibration.md).
+TORCH_CUDA=cu126
+TORCH_INDEX=https://download.pytorch.org/whl/${TORCH_CUDA}
 
 log() { echo "[bootstrap] $*"; }
 
 # ---- 1. SA key file ---------------------------------------------------------
 if [[ ! -s $KEY_FILE ]]; then
+    # Secret env vars are absent in SSH sessions and (observed 2026-07-12) the
+    # start-command decode may be skipped by RunPod's command handling, so the
+    # authoritative fallback is the container's PID-1 environment.
+    if [[ -z ${GCP_SA_KEY_B64:-} && -r /proc/1/environ ]]; then
+        GCP_SA_KEY_B64=$(tr '\0' '\n' < /proc/1/environ \
+            | sed -n 's/^GCP_SA_KEY_B64=//p')
+    fi
     if [[ -z ${GCP_SA_KEY_B64:-} ]]; then
-        log "FATAL: $KEY_FILE missing and GCP_SA_KEY_B64 is not set."
-        log "Either the pod start command did not run the decode step or the"
-        log "secret env var is absent in this SSH session (known RunPod issue)."
+        log "FATAL: $KEY_FILE missing and GCP_SA_KEY_B64 not present in the"
+        log "session env or /proc/1/environ - secret not wired to the pod."
         exit 1
     fi
     mkdir -p "$KEY_DIR"
     chmod 700 "$KEY_DIR"
     printf '%s' "$GCP_SA_KEY_B64" | base64 -d > "$KEY_FILE"
     chmod 600 "$KEY_FILE"
-    log "SA key decoded from GCP_SA_KEY_B64 -> $KEY_FILE"
+    unset GCP_SA_KEY_B64
+    log "SA key decoded -> $KEY_FILE"
 else
     chmod 700 "$KEY_DIR" && chmod 600 "$KEY_FILE"
     log "SA key file already present: $KEY_FILE"
@@ -88,8 +102,8 @@ log "AP-17 sanity gate PASSED"
 # ---- 4. project environment (pins per requirements-gpu.txt) -----------------
 cd "$REPO_ROOT"
 have_torch=$($PY -c "import torch; print(torch.__version__)" 2>/dev/null || echo none)
-if [[ $have_torch != ${TORCH_PIN}+cu124 ]]; then
-    log "torch is '$have_torch' - installing ${TORCH_PIN} cu124 wheels"
+if [[ $have_torch != ${TORCH_PIN}+${TORCH_CUDA} ]]; then
+    log "torch is '$have_torch' - installing ${TORCH_PIN} ${TORCH_CUDA} wheels"
     $PY -m pip install --no-cache-dir "torch==${TORCH_PIN}" --index-url "$TORCH_INDEX"
 fi
 $PY -m pip install --no-cache-dir -r requirements-gpu.txt
