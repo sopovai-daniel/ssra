@@ -23,6 +23,13 @@ One row per run. A run without a committed config in `experiments/` does not exi
 | M2-cal-s2-flat-b16 | 2026-07-12 | `experiments/M2-cal-s2-flat-b16.yaml` (commit 2b22848) | flat pre-norm Transformer | 84.3M params, FineWeb-Edu BPE-16k, 120x16x1024 tok | RunPod A100 PCIe 80GB Secure $1.39/hr, CA-MTL-3, bf16 | DONE | 128,730 tok/s, peak VRAM 10.85 GiB; wall 17.0s (~0.01 EUR) | `logs/M2-cal-s2-flat-b16.log` | Phase 1 calibration measurement only (no quality conclusions); launch subset depends on booked GPU VRAM |
 | M2-cal-s2-flat-b32 | 2026-07-12 | `experiments/M2-cal-s2-flat-b32.yaml` (commit 2b22848) | flat pre-norm Transformer | 84.3M params, FineWeb-Edu BPE-16k, 120x32x1024 tok | RunPod A100 PCIe 80GB Secure $1.39/hr, CA-MTL-3, bf16 | DONE | 135,493 tok/s, peak VRAM 20.58 GiB; wall 31.6s (~0.01 EUR) | `logs/M2-cal-s2-flat-b32.log` | Phase 1 calibration measurement only (no quality conclusions); launch subset depends on booked GPU VRAM |
 | M2-cal-s2-flat-b64 | 2026-07-12 | `experiments/M2-cal-s2-flat-b64.yaml` (commit 2b22848) | flat pre-norm Transformer | 84.3M params, FineWeb-Edu BPE-16k, 120x64x1024 tok | RunPod A100 PCIe 80GB Secure $1.39/hr, CA-MTL-3, bf16 | DONE | 140,444 tok/s, peak VRAM 40.01 GiB; wall 60.5s (~0.02 EUR) | `logs/M2-cal-s2-flat-b64.log` | Phase 1 calibration measurement only (no quality conclusions); launch subset depends on booked GPU VRAM |
+
+Ledger note (2026-07-13, per D-log 2026-07-12 / HO-10 open item #2): the per-run EUR
+figures above are wall-clock x $1.39/hr estimates (they sum to ~0.13 EUR); the
+console-authoritative billed total for the whole calibration pod is $3.4786 ~ 3.04 EUR
+(pod lifetime incl. the ~2 h idle incident). Per-run attribution within the billed
+total is **not derivable** from CC-side timestamps and is not reconstructed
+(Pravidlo W) — see `results/M2-calibration.md` §7.
 Smoke chain provenance: runs executed back-to-back (`logs/M1-smoke-chain.log`);
 `meta.commit` is 184d9bd for p1 and f06263f for the rest solely because the
 docs-only HO-04 commit landed 13 s after the chain started — model code
