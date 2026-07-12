@@ -52,8 +52,13 @@ class SharedAttention(nn.Module):
         pos = torch.arange(1, n_in + 1, device=x.device)
         q = rope_rotate(q, pos, self.rope_base)
         k = rope_rotate(k, pos, self.rope_base)
-        scores = q @ k.transpose(-1, -2) / math.sqrt(self.d_h)
-        out = self._drop(scores.softmax(dim=-1)) @ v
+        # R5 (read-out optimization assignment, 2026-07-12): this is a plain
+        # bidirectional softmax attention (single softmax over homogeneous
+        # keys, RoPE pre-applied, dropout on probs), so SDPA is legal here --
+        # unlike in the read-out, where SDPA would break the §8 one-softmax-
+        # over-heterogeneous-keys semantics and is prohibited.
+        out = F.scaled_dot_product_attention(
+            q, k, v, dropout_p=self.dropout_attn if self.training else 0.0)
         return self.w_o(self.merge_heads(out))
 
     def cross_attn(self, q_in: torch.Tensor, kv_in: torch.Tensor,
