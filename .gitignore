@@ -34,3 +34,5 @@ wandb/
 .env
 *.key
 *credentials*
+*-key.json
+ssra-secrets/

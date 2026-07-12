@@ -62,3 +62,73 @@ this constraint enforced by default.
 - `gcloud auth list`: active account `daniel@sopovai.com` (never changed).
 - No key file at `$HOME/ssra-secrets/` (directory not created).
 - `git status`: only this report added; no secret material in the repo.
+
+---
+
+# Follow-up (2026-07-12) — decision (a) executed: exemption + SA + bucket-scoped key
+
+**Decision:** Daniel chose option (a) from §3 (D-log entry to be logged by the
+Claude.ai side after this report). **gcloud:** Google Cloud SDK 572.0.0.
+
+## 5. Org-policy exemption (project scope ONLY)
+
+- `orgpolicy.googleapis.com` enabled on `ssra-poc` (management plane; no policy
+  change by itself).
+- `roles/orgpolicy.policyAdmin` was **already granted** to `daniel@sopovai.com`
+  at org level — no IAM grant was made in this task.
+- Effective state before override:
+  - `iam.disableServiceAccountKeyCreation` → `enforce: true` (inherited)
+  - `iam.managed.disableServiceAccountKeyCreation` → `enforce: false`
+    (not enforced; recorded, no override needed)
+- Override applied — project-level policy
+  `projects/ssra-poc/policies/iam.disableServiceAccountKeyCreation` with
+  `enforce: false`, via `gcloud org-policies set-policy` on a `/tmp` spec file
+  (removed afterwards). Applied **by Daniel in a separate terminal** (the CC
+  permission layer declined to execute the org-governance write itself);
+  re-verified by CC.
+- Effective state after override: `enforce: false` on `ssra-poc`.
+  **Org-level policy untouched; no other project touched.**
+- **TEMPORARY:** this override is to be REVERTED after M2/M3 — delete the SA key
+  and restore enforcement (remove the project-level policy so the org default
+  applies again).
+
+## 6. Service account, binding, key
+
+- **SA:** `ssra-runpod@ssra-poc.iam.gserviceaccount.com`
+  (display name "SSRA RunPod GCS access", project `ssra-poc`).
+- **IAM:** single bucket-scoped binding — `roles/storage.objectAdmin` on
+  `gs://ssra-poc-ew3` only. No project-level roles, no other buckets.
+- **Key:** JSON key at `$HOME/ssra-secrets/ssra-runpod-key.json`, mode `0600`.
+  **Out-of-repo; never committed; never printed.** `.gitignore` extended with
+  `*-key.json` and `ssra-secrets/` (belt-and-suspenders).
+
+Commands run (Phase 4):
+
+```
+gcloud iam service-accounts create ssra-runpod --project=ssra-poc \
+  --display-name="SSRA RunPod GCS access"
+gcloud storage buckets add-iam-policy-binding gs://ssra-poc-ew3 \
+  --member="serviceAccount:ssra-runpod@ssra-poc.iam.gserviceaccount.com" \
+  --role="roles/storage.objectAdmin"
+mkdir -p $HOME/ssra-secrets
+gcloud iam service-accounts keys create $HOME/ssra-secrets/ssra-runpod-key.json \
+  --iam-account=ssra-runpod@ssra-poc.iam.gserviceaccount.com
+chmod 600 $HOME/ssra-secrets/ssra-runpod-key.json
+```
+
+## 7. Key verification (2026-07-12)
+
+Authenticated **with the key only** via per-invocation
+`CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE` (no `gcloud auth activate-service-account`,
+so Daniel's stored credentials were never touched):
+
+- `gcloud storage ls gs://ssra-poc-ew3/` → listed `phase0/` ✓
+- Write+read+delete round-trip on throwaway object
+  `gs://ssra-poc-ew3/_verify/cc-key-check.txt` ✓ (object removed)
+- Afterwards `gcloud auth list` → active account `daniel@sopovai.com` ✓
+
+## 8. Deferred
+
+RunPod-side key injection (env var / RunPod Secret) is a **separate task** —
+not started here. Reminder: revert of the org-policy override + key deletion is
+scheduled for after M2/M3 (§5).
