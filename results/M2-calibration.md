@@ -139,12 +139,11 @@ implementation memory/throughput, not hardware choice or budget arithmetic.**
 
 | item | value |
 |---|---|
-| pod window (CC execution) | 2026-07-12 17:23:49Z → 20:39Z terminate signal (pod created ≈17:20Z; **console billed figure authoritative — to be appended on Daniel's paste**) |
-| est. billed | ≈ 3.3 h × $1.39 ≈ **$4.6 ≈ 4.0 EUR** (ECB 1.1430) |
-| of which productive | ≈ 35 min (bootstrap+env 15, pytest 2×0.5, 12 runs ≈ 8, kill+resume ≈ 8, uploads/snapshot ≈ 3) |
-| of which incident idle | ≈ 2 h 05 min ≈ **2.6 EUR** — pytest thread-thrash (§8.4); mitigated for all subsequent work |
+| **billed (console, authoritative)** | pod `ssra-m2-cal` (`e8r68jb8fduz8n`), terminated 2026-07-12: **$3.4785989448 ≈ 3.04 EUR** (ECB 1.1430) — implies 2.5026 h ≈ 2 h 30 m 09 s at $1.39/hr |
+| CC-observed window | 17:23:49Z (first SSH) → 20:39Z terminate signal; ≈ 3 h 15 m wall + Daniel's termination after the signal. **Delta vs billed (~45 min) not derivable from CC-side timestamps; recorded as-is, no reconstructed explanation** (earlier estimate ≈ $4.6 was wall-clock-based and is superseded) |
+| wall-clock composition (CC window, informative) | productive ≈ 35 min (bootstrap+env 15, pytest 2×0.5, 12 runs ≈ 8, kill+resume ≈ 8, uploads/snapshot ≈ 3); incident idle ≈ 2 h 05 min — pytest thread-thrash (§8.4), mitigated for all subsequent work. Monetary attribution within the billed total not derivable (see delta note) |
 | GCS | ≈ 290 MB new (ckpt 277 MB + logs) — negligible |
-| **cumulative project spend vs 300 EUR** | **≈ 4.0 EUR ≈ 1.3 %** (M0–M1: 0; Phase 0: negligible GCS) |
+| **cumulative project spend vs 300 EUR** | **≈ 3.04 EUR ≈ 1.0 %** (M0–M1: 0; Phase 0: negligible GCS) |
 
 Per-run wall-clock + EUR: `results/runs.md` rows (config commit `2b22848`).
 
@@ -202,6 +201,6 @@ Per-run wall-clock + EUR: `results/runs.md` rows (config commit `2b22848`).
 AP-17 executed, sanity gate PASSED ✔ · Phase 1 steps 1–7 ✔ (12/12 configs
 launched: 7 DONE, 5 recorded OOM) · kill+resume verified ✔ (after `124ee72`) ·
 logs/artifacts in GCS (`gs://ssra-poc-ew3/m2/calibration/{logs,ckpt}/`) ✔ ·
-YAMLs + runs.md + ledger ✔ · pod terminated on signal (billed figure to append) ◐ ·
+YAMLs + runs.md + ledger ✔ · pod terminated, billed $3.4786 ≈ 3.04 EUR recorded ✔ ·
 **STOP: CC stops here. No Phase 2 work. Daniel confirms HW + plan (D-log) — the
 §9.1 decision is the gating item.**
