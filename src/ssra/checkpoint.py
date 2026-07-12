@@ -55,8 +55,11 @@ def load_checkpoint(path: Path, *, model, optimizer,
     blob = torch.load(Path(path), map_location=map_location, weights_only=False)
     model.load_state_dict(blob["model"])
     optimizer.load_state_dict(blob["optimizer"])
-    data_gen.set_state(blob["data_gen_state"])
-    torch.set_rng_state(blob["torch_rng_state"])
+    # RNG states must stay CPU ByteTensors: map_location="cuda" (GPU resume)
+    # would otherwise move them to the device and set_state() rejects that.
+    # Found by the Phase-1 GPU kill+resume verification (AP-11).
+    data_gen.set_state(blob["data_gen_state"].cpu())
+    torch.set_rng_state(blob["torch_rng_state"].cpu())
     return int(blob["step"])
 
 
