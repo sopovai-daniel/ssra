@@ -1,0 +1,203 @@
+============================= test session starts ==============================
+platform linux -- Python 3.11.10, pytest-9.0.3, pluggy-1.6.0 -- /usr/bin/python3.11
+cachedir: .pytest_cache
+rootdir: /root/ssra
+configfile: pyproject.toml
+plugins: anyio-4.6.0
+collecting ... collected 65 items
+
+tests/test_baselines.py::test_forward_backward[flat] PASSED              [  1%]
+tests/test_baselines.py::test_forward_backward[megabyte] PASSED          [  3%]
+tests/test_baselines.py::test_loglinear_integration FAILED               [  4%]
+tests/test_baselines.py::test_causal_alignment[flat] PASSED              [  6%]
+tests/test_baselines.py::test_causal_alignment[megabyte] PASSED          [  7%]
+tests/test_checkpoint_resume.py::test_resume_yields_continuous_loss_curve PASSED [  9%]
+tests/test_checkpoint_resume.py::test_checkpoint_is_atomic_and_reloadable PASSED [ 10%]
+tests/test_completion.py::test_completion[257-p1] PASSED                 [ 12%]
+tests/test_completion.py::test_completion[257-p2] PASSED                 [ 13%]
+tests/test_completion.py::test_completion[257-p3] PASSED                 [ 15%]
+tests/test_completion.py::test_completion[257-hybrid] PASSED             [ 16%]
+tests/test_completion.py::test_completion[1000-p1] PASSED                [ 18%]
+tests/test_completion.py::test_completion[1000-p2] PASSED                [ 20%]
+tests/test_completion.py::test_completion[1000-p3] PASSED                [ 21%]
+tests/test_completion.py::test_completion[1000-hybrid] PASSED            [ 23%]
+tests/test_config_validation.py::test_defaults_match_spec PASSED         [ 24%]
+tests/test_config_validation.py::test_schedule PASSED                    [ 26%]
+tests/test_config_validation.py::test_reject_p2_linear PASSED            [ 27%]
+tests/test_config_validation.py::test_reject_p2_k4 PASSED                [ 29%]
+tests/test_config_validation.py::test_reject_linear_non_p1 PASSED        [ 30%]
+tests/test_config_validation.py::test_reject_hybrid_k_sel_too_large PASSED [ 32%]
+tests/test_config_validation.py::test_reject_virtual_summary_pos_without_override PASSED [ 33%]
+tests/test_config_validation.py::test_p1_diversity_loss_not_implemented PASSED [ 35%]
+tests/test_config_validation.py::test_k4_stubbed PASSED                  [ 36%]
+tests/test_config_validation.py::test_unknown_keys_rejected PASSED       [ 38%]
+tests/test_config_validation.py::test_nested_yaml_forms PASSED           [ 40%]
+tests/test_config_validation.py::test_yaml_file_roundtrip PASSED         [ 41%]
+tests/test_gradient_flow.py::test_gradient_flow[p1] PASSED               [ 43%]
+tests/test_gradient_flow.py::test_gradient_flow[p2] PASSED               [ 44%]
+tests/test_gradient_flow.py::test_gradient_flow[p3] PASSED               [ 46%]
+tests/test_gradient_flow.py::test_gradient_flow[hybrid] PASSED           [ 47%]
+tests/test_p3_determinism.py::test_p3_inference_bitwise_deterministic[ste] PASSED [ 49%]
+tests/test_p3_determinism.py::test_p3_inference_bitwise_deterministic[gumbel_topk] PASSED [ 50%]
+tests/test_readout_equiv.py::test_grouped_equals_reference[shared-on-257-16-64] PASSED [ 52%]
+tests/test_readout_equiv.py::test_grouped_equals_reference[shared-on-1000-16-64] PASSED [ 53%]
+tests/test_readout_equiv.py::test_grouped_equals_reference[shared-on-1024-16-64] PASSED [ 55%]
+tests/test_readout_equiv.py::test_grouped_equals_reference[shared-on-257-4-8] PASSED [ 56%]
+tests/test_readout_equiv.py::test_grouped_equals_reference[shared-on-1000-8-32] PASSED [ 58%]
+tests/test_readout_equiv.py::test_grouped_equals_reference[shared-on-1024-4-8] PASSED [ 60%]
+tests/test_readout_equiv.py::test_grouped_equals_reference[shared-off-257-16-64] PASSED [ 61%]
+tests/test_readout_equiv.py::test_grouped_equals_reference[shared-off-1000-16-64] PASSED [ 63%]
+tests/test_readout_equiv.py::test_grouped_equals_reference[shared-off-1024-16-64] PASSED [ 64%]
+tests/test_readout_equiv.py::test_grouped_equals_reference[shared-off-257-4-8] PASSED [ 66%]
+tests/test_readout_equiv.py::test_grouped_equals_reference[shared-off-1000-8-32] PASSED [ 67%]
+tests/test_readout_equiv.py::test_grouped_equals_reference[shared-off-1024-4-8] PASSED [ 69%]
+tests/test_readout_equiv.py::test_grouped_equals_reference[separate-on-257-16-64] PASSED [ 70%]
+tests/test_readout_equiv.py::test_grouped_equals_reference[separate-on-1000-16-64] PASSED [ 72%]
+tests/test_readout_equiv.py::test_grouped_equals_reference[separate-on-1024-16-64] PASSED [ 73%]
+tests/test_readout_equiv.py::test_grouped_equals_reference[separate-on-257-4-8] PASSED [ 75%]
+tests/test_readout_equiv.py::test_grouped_equals_reference[separate-on-1000-8-32] PASSED [ 76%]
+tests/test_readout_equiv.py::test_grouped_equals_reference[separate-on-1024-4-8] PASSED [ 78%]
+tests/test_readout_equiv.py::test_grouped_equals_reference[separate-off-257-16-64] PASSED [ 80%]
+tests/test_readout_equiv.py::test_grouped_equals_reference[separate-off-1000-16-64] PASSED [ 81%]
+tests/test_readout_equiv.py::test_grouped_equals_reference[separate-off-1024-16-64] PASSED [ 83%]
+tests/test_readout_equiv.py::test_grouped_equals_reference[separate-off-257-4-8] PASSED [ 84%]
+tests/test_readout_equiv.py::test_grouped_equals_reference[separate-off-1000-8-32] PASSED [ 86%]
+tests/test_readout_equiv.py::test_grouped_equals_reference[separate-off-1024-4-8] PASSED [ 87%]
+tests/test_readout_equiv.py::test_virtual_fallback_equals_reference[257] PASSED [ 89%]
+tests/test_readout_equiv.py::test_virtual_fallback_equals_reference[1024] PASSED [ 90%]
+tests/test_readout_equiv.py::test_full_model_logits_equal PASSED         [ 92%]
+tests/test_readout_equiv.py::test_grouped_gradients_flow PASSED          [ 93%]
+tests/test_shift.py::test_shift[p1] PASSED                               [ 95%]
+tests/test_shift.py::test_shift[p2] PASSED                               [ 96%]
+tests/test_shift.py::test_shift[p3] PASSED                               [ 98%]
+tests/test_shift.py::test_shift[hybrid] PASSED                           [100%]
+
+=================================== FAILURES ===================================
+__________________________ test_loglinear_integration __________________________
+
+    def test_loglinear_integration():
+        """Baseline (b), AP-5: pinned fla package imports; the GatedDeltaNet
+        LM builds where Triton exists, otherwise the wrapper must raise the
+        explicit M2-deferral error (never a silent skip)."""
+        import fla
+        from baselines.loglinear import FLA_VERSION, build_gated_deltanet_lm
+        assert fla.__version__ == FLA_VERSION
+        cfg = ModelConfig(d=64, h=2, n_layers=2, vocab=50, n_max=512)
+        try:
+>           model = build_gated_deltanet_lm(cfg)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_baselines.py:43: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+baselines/loglinear.py:53: in build_gated_deltanet_lm
+    return GatedDeltaNetForCausalLM(fla_cfg)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/usr/local/lib/python3.11/dist-packages/fla/models/gated_deltanet/modeling_gated_deltanet.py:287: in __init__
+    self.post_init()
+/usr/local/lib/python3.11/dist-packages/transformers/modeling_utils.py:1413: in post_init
+    self.all_tied_weights_keys = self.get_expanded_tied_weights_keys(all_submodels=False)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = GatedDeltaNetForCausalLM(
+  (model): GatedDeltaNetModel(
+    (embeddings): Embedding(50, 64)
+    (layers): ModuleList(...      )
+    )
+    (norm): RMSNorm(64, eps=1e-06)
+  )
+  (lm_head): Linear(in_features=64, out_features=50, bias=False)
+)
+all_submodels = False
+
+    def get_expanded_tied_weights_keys(self, all_submodels: bool = False) -> dict:
+        r"""
+        Return the expanded tied weight keys (in case they contain modules or regex patterns) for only the current
+        model, or recursively for all submodels if `all_submodels=True` (i.e. it will re-check the config values for all
+        submodels).
+    
+        For almost all models, we only require to tie the embeddings, so the model has an internal property
+        `_tied_weights_keys = {"lm_head.weight": "model.embed_tokens.weight"}`. In this case, the mapping is already
+        "expanded", i.e. it already contains full parameters, and this function will simply return a copy of the property.
+        For more complex patterns, e.g. for `DFineForObjectDetection`, we have the following attribute
+        ```
+        _tied_weights_keys = {
+            r"bbox_embed.(?![0])\d+": "bbox_embed.0",
+            r"class_embed.(?![0])\d+": "class_embed.0",
+            "model.decoder.class_embed": "class_embed",
+            "model.decoder.bbox_embed": "bbox_embed",
+        }
+        ```
+        In this case, the function looks up all the model's parameters and buffers, and matches all the params,
+        returning the following:
+        ```
+        {
+            'bbox_embed.1.layers.0.bias': 'bbox_embed.0.layers.0.bias',
+            'bbox_embed.1.layers.0.weight': 'bbox_embed.0.layers.0.weight',
+            'bbox_embed.1.layers.1.bias': 'bbox_embed.0.layers.1.bias',
+            'bbox_embed.1.layers.1.weight': 'bbox_embed.0.layers.1.weight',
+            'bbox_embed.1.layers.2.bias': 'bbox_embed.0.layers.2.bias',
+            'bbox_embed.1.layers.2.weight': 'bbox_embed.0.layers.2.weight',
+            'bbox_embed.2.layers.0.bias': 'bbox_embed.0.layers.0.bias',
+            'bbox_embed.2.layers.0.weight': 'bbox_embed.0.layers.0.weight',
+            ...
+            'class_embed.1.bias': 'class_embed.0.bias',
+            'class_embed.1.weight': 'class_embed.0.weight',
+            'class_embed.2.bias': 'class_embed.0.bias',
+            'class_embed.2.weight': 'class_embed.0.weight',
+            ...
+            'model.decoder.class_embed.0.bias': 'class_embed.0.bias',
+            'model.decoder.class_embed.0.weight': 'class_embed.0.weight',
+            'model.decoder.class_embed.1.bias': 'class_embed.0.bias',
+            'model.decoder.class_embed.1.weight': 'class_embed.0.weight',
+            ...
+            'model.decoder.bbox_embed.0.layers.0.bias': 'bbox_embed.0.layers.0.bias',
+            'model.decoder.bbox_embed.0.layers.0.weight': 'bbox_embed.0.layers.0.weight',
+            'model.decoder.bbox_embed.0.layers.1.bias': 'bbox_embed.0.layers.1.bias',
+            'model.decoder.bbox_embed.0.layers.1.weight': 'bbox_embed.0.layers.1.weight',
+            ...
+        }
+        ```
+        i.e. all the parameters matching the regex and modules patterns in `_tied_weights_keys`
+        """
+        if all_submodels:
+            expanded_tied_weights = {}
+            for prefix, submodule in self.named_modules(remove_duplicate=False):
+                if isinstance(submodule, PreTrainedModel):
+                    # Will dynamically check the config if it has changed
+                    submodel_tied_weights = submodule.get_expanded_tied_weights_keys(all_submodels=False)
+                    if prefix != "":
+                        submodel_tied_weights = {
+                            f"{prefix}.{k}": f"{prefix}.{v}" for k, v in submodel_tied_weights.items()
+                        }
+                    expanded_tied_weights.update(submodel_tied_weights)
+            return expanded_tied_weights
+    
+        tied_mapping = self._tied_weights_keys
+        # If the config does not specify any tying, return empty dict
+        # NOTE: not all modules have `tie_word_embeddings` attr, for example vision-only
+        # modules do not have any word embeddings!
+        tie_word_embeddings = getattr(self.config, "tie_word_embeddings", False)
+        if not tie_word_embeddings:
+            return {}
+        # If None, return empty dict
+        elif tied_mapping is None:
+            return {}
+        # Short-cut for the most common cases: if the tied weights mapping only contains already expanded params,
+        # return it directly (the regex matches names containing only letters, numbers, dots, and underscores to make
+        # sure it does not contain a regex pattern, and finishing by "bias" or "weight" to make sure it's not a module)
+        common_case_regex = re.compile(r"^[A-Za-z0-9_\.]+(weight)|(bias)$")
+>       if all(common_case_regex.match(k) for k in tied_mapping.keys() | tied_mapping.values()):
+                                                   ^^^^^^^^^^^^^^^^^
+E       AttributeError: 'list' object has no attribute 'keys'
+
+/usr/local/lib/python3.11/dist-packages/transformers/modeling_utils.py:2648: AttributeError
+=============================== warnings summary ===============================
+tests/test_baselines.py: 14 warnings
+  /usr/local/lib/python3.11/dist-packages/torch/jit/_script.py:365: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_baselines.py::test_loglinear_integration - AttributeError: ...
+================== 1 failed, 64 passed, 14 warnings in 28.17s ==================
