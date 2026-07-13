@@ -45,6 +45,7 @@ ROOT = Path(__file__).resolve().parent.parent
 _spec = importlib.util.spec_from_file_location(
     "ssra_data", ROOT / "src" / "ssra" / "data.py")
 _data = importlib.util.module_from_spec(_spec)
+sys.modules["ssra_data"] = _data  # required for the dataclass in data.py
 _spec.loader.exec_module(_data)
 EOT_TOKEN, SHARD_DTYPE = _data.EOT_TOKEN, _data.SHARD_DTYPE
 split_of, write_json = _data.split_of, _data.write_json
