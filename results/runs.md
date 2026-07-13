@@ -33,8 +33,10 @@ One row per run. A run without a committed config in `experiments/` does not exi
 
 Ledger note (2026-07-13, re-calibration): per-run EUR above are wall-clock x $1.49/hr
 estimates; the console-authoritative billed total for pod `ssra-m2-recal`
-(`1u7wmoy6l71ull`) is recorded at terminate by Daniel (Pravidlo W — no CC-side
-reconstruction); see `results/M2-recalibration.md` §6.
+(`1u7wmoy6l71ull`) is **$0.9700 ~ 0.85 EUR** (console 2026-07-13, ECB 1.1430;
+region US-MD-1) — ~25 % below the CC wall-clock estimate ($1.30), same pattern as
+Phase 1; the delta is not reconstructed from CC-side timestamps (Pravidlo W); see
+`results/M2-recalibration.md` §6.
 
 Ledger note (2026-07-13, per D-log 2026-07-12 / HO-10 open item #2): the per-run EUR
 figures above are wall-clock x $1.39/hr estimates (they sum to ~0.13 EUR); the

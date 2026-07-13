@@ -108,7 +108,7 @@ project spend ≈ 3.04 EUR (Phase 1) + this pod ≈ **< 5 EUR ≈ 1.6 % of the
 
 | item | value |
 |---|---|
-| billed (console, authoritative) | **recorded by Daniel at terminate** — pod `ssra-m2-recal` (`1u7wmoy6l71ull`), $1.497/hr total rate; no CC-side backfill (Pravidlo W) |
+| billed (console, authoritative) | **$0.9700 ≈ 0.85 EUR** (console 2026-07-13, ECB 1.1430) — pod `ssra-m2-recal` (`1u7wmoy6l71ull`), $1.497/hr total rate; ≈ 25 % below the CC estimate, same pattern as Phase 1, delta not reconstructed (Pravidlo W) |
 | CC-observed window | pod start 17:18 local (15:18Z) → terminate signal ≈ 16:10Z; ≈ 52 min wall ⇒ ≈ $1.30 ≈ 1.14 EUR estimate (informative only) |
 | wall-clock composition | bootstrap + env ≈ 8 min, pytest 28 s, 6 runs ≈ 18 min, uploads/log handling ≈ 5 min, CC orchestration gaps remainder |
 | GCS | logs ≈ 35 KiB new under `m2/recalibration/logs/`; two `latest.pt` ckpt objects overwritten in place (§7.5) — negligible |
@@ -163,8 +163,8 @@ pytest once, known-failure-only ✔ · run set #1–#4 captured, optional #5–#
 single attempts (one DONE, one OOM-recorded) ✔ · measured-vs-D5 table with
 explicit model error ✔ · EUR projection at booked price, Community recorded
 as not capturable ✔ · logs in repo + GCS ✔ · runs.md rows appended ✔ ·
-billed console total = Daniel at terminate ✔ (placeholder, authoritative
-number console-side) · no code/config/allocator changes, no OOM retries,
+billed console total ✔ (**$0.9700 ≈ 0.85 EUR**, filled post-terminate,
+console-authoritative) · no code/config/allocator changes, no OOM retries,
 no Phase 2 work ✔.
 
 **re-calibration report ready for verdict**
