@@ -1,0 +1,23 @@
+# M2 Task A — data scale-up to the full Phase 2+3 token budget
+# (docs/cc/M2-phase2-sweep.md v1.1 §2; AP-9 provenance, AP-21 naming).
+# Dedicated CPU-only pod ssra-m2-data — never a GPU pod, never the local machine.
+# Nothing methodological changes vs Phase 0: same corpus, same deterministic
+# document-disjoint split, same FROZEN tokenizer (retraining is an anti-goal).
+# Run: python3.11 scripts/data_scale.py experiments/M2-data-900m.yaml
+run_name: m2-data-900m                  # AP-21: globally unique; log logs/{run_name}.log
+dataset: HuggingFaceFW/fineweb-edu      # config sample-10BT, as Phase 0 (AP-9)
+dataset_config: sample-10BT
+val_permille: 50                        # sha1(doc.id) % 1000 < 50 -> val (unchanged)
+vocab: 16384
+tokenizer_path: artifacts/tokenizer/fineweb-edu-bpe-16384.json
+# FROZEN Phase-0 artifact — data_scale.py refuses to run on any other file:
+tokenizer_sha256: 019568a206fe6ccc4bc2e90c750d660979d3fd3add159e302a0dfa4be0d669a0
+target_train_tokens: 900000000          # >= 850M S2 budget + sweep + margin (§2)
+target_val_tokens: 5000000              # packed val >= 5M tokens (§2)
+val_eval_tokens: 2000000                # val-eval-2M = first 2.0M tokens of packed val
+chunk_docs: 20000                       # stream/pack chunk; stop checked at chunk boundary
+max_docs: 1500000                       # hard safety cap (~1.8x the projected ~830k docs)
+retrieval_date: "2026-07-13"            # Pravidlo W: license + revision re-verified live
+out_dir: data/m2                        # gitignored (shards never committed)
+gcs_bucket: gs://ssra-poc-ew3
+gcs_prefix: m2/data/m2-data-900m        # AP-21 path for all new GCS objects
