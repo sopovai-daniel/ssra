@@ -1,0 +1,54 @@
+{
+  "commit": "7bb2d1a",
+  "config": "experiments/M2-data-900m.yaml",
+  "gcs": {
+    "dst": "gs://ssra-poc-ew3/m2/data/m2-data-900m",
+    "uploaded": [
+      "gs://ssra-poc-ew3/m2/data/m2-data-900m/train.bin",
+      "gs://ssra-poc-ew3/m2/data/m2-data-900m/val.bin",
+      "gs://ssra-poc-ew3/m2/data/m2-data-900m/val-eval-2M.bin",
+      "gs://ssra-poc-ew3/m2/data/m2-data-900m/shards_meta.json",
+      "gs://ssra-poc-ew3/m2/data/m2-data-900m/M2-data-900m-manifest.json"
+    ]
+  },
+  "provenance": {
+    "dataset_config": "sample-10BT",
+    "dataset_license": "odc-by",
+    "dataset_repo": "HuggingFaceFW/fineweb-edu",
+    "dataset_sha": "87f09149ef4734204d70ed1d046ddc9ca3f2b8f9",
+    "dataset_url": "https://huggingface.co/datasets/HuggingFaceFW/fineweb-edu",
+    "n_docs_streamed": 860000,
+    "n_train_docs": 816994,
+    "n_val_docs": 43006,
+    "retrieval_date": "2026-07-13",
+    "train_chars": 3879434104,
+    "val_chars": 203925780,
+    "val_permille": 50
+  },
+  "run_name": "m2-data-900m",
+  "shards": {
+    "tokenizer_sha256": "019568a206fe6ccc4bc2e90c750d660979d3fd3add159e302a0dfa4be0d669a0",
+    "train": {
+      "dtype": "uint16",
+      "n_docs": 816994,
+      "n_tokens": 913605620,
+      "path": "data/m2/train.bin",
+      "sha256": "6d0e47cdbb75a5148c8588671ad92bc56f4afe24683d1665c6d618f909549ea0"
+    },
+    "val": {
+      "dtype": "uint16",
+      "n_docs": 43006,
+      "n_tokens": 48050671,
+      "path": "data/m2/val.bin",
+      "sha256": "03e0dd1a6fb47b57a41e1c800f593b38cd55c24ddb521ac63d1f65cd9e60f35d"
+    },
+    "val_eval_2M": {
+      "dtype": "uint16",
+      "n_tokens": 2000000,
+      "path": "data/m2/val-eval-2M.bin",
+      "sha256": "bde526d2ee244f44fa0ce9be66d8d561dbc4200ff4ba86ce63bf34336bfef55d"
+    },
+    "vocab": 16384
+  },
+  "wall_seconds_pack": 195.9
+}

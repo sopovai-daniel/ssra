@@ -31,6 +31,12 @@ One row per run. A run without a committed config in `experiments/` does not exi
 | M2-recal-s1-ssra-b64 | 2026-07-13 | `experiments/M2-cal-s1-ssra-b64.yaml` (commit 2b22848) | SSRA P1 | 24.2M params, 120x64x1024 tok | ditto | DONE | 33,357 tok/s, peak VRAM 72.624 GiB; wall 243.4s (~0.09 EUR) | `logs/M2-recal-s1-ssra-b64.log` | optional marginal probe (calib: OOM); D5 proj 60.51 GiB -> +20.0% error |
 | M2-recal-s2-ssra-b32 | 2026-07-13 | `experiments/M2-cal-s2-ssra-b32.yaml` (commit 2b22848) | SSRA P1 | 84.6M params, 120x32x1024 tok | ditto | FAILED-OOM | CUDA OOM in first backward (2.00 GiB req @ 78.22 GiB allocated); <0.02 EUR | `logs/M2-recal-s2-ssra-b32.log` | optional marginal probe, single attempt per assignment (OOM = valid outcome, no retry); D5 proj 71.92 GiB + ~20% model error ~= 86 GiB > 80 — consistent |
 
+| m2-data-900m | 2026-07-13 | `experiments/M2-data-900m.yaml` (commit 7597ff4; code at execution 7bb2d1a) | data pipeline (no model) | 913,605,620 train + 48,050,671 val tok packed, FineWeb-Edu BPE-16k frozen | RunPod CPU pod `ssra-m2-data`, 16 vCPU EPYC 4564P / 32 GB, runpod-ubuntu, $0.568/hr (console 2026-07-13) | DONE | pack 195.9 s (~4.7M train-tok/s); val-eval-2M sha256 bde526d2 | `logs/m2-data-900m.log` | M2 Task A (M2-phase2-sweep §2); shards + manifests at `gs://ssra-poc-ew3/m2/data/m2-data-900m/`; corpus sample-10BT (odc-by, hub sha 87f09149, retrieved 2026-07-13); tokenizer FROZEN sha 019568a2; 2 pre-run import aborts preserved as `logs/m2-data-900m-import-abort*.log` (see `results/M2-sweep.md` §A.6/A.8) |
+
+Ledger note (2026-07-13, Task A CPU pod): wall-clock estimate ≈ 0.61 h x $0.568/hr
+≈ $0.35 ≈ 0.30 EUR (ECB 1.1430 carried); billed console total for pod
+`ssra-m2-data`: **[TO FILL POST-TERMINATE — console authoritative, Pravidlo W]**.
+
 Ledger note (2026-07-13, re-calibration): per-run EUR above are wall-clock x $1.49/hr
 estimates; the console-authoritative billed total for pod `ssra-m2-recal`
 (`1u7wmoy6l71ull`) is **$0.9700 ~ 0.85 EUR** (console 2026-07-13, ECB 1.1430;

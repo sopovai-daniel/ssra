@@ -1,0 +1,58 @@
+[pack] frozen tokenizer OK: sha256=019568a206fe6ccc4bc2e90c750d660979d3fd3add159e302a0dfa4be0d669a0 eot_id=0
+[pack] hub revision=87f09149ef4734204d70ed1d046ddc9ca3f2b8f9 license=odc-by retrieval_date=2026-07-13
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[pack] docs=20000 train_tok=21295879 (2.4%) val_tok=1054275 rate=3,772,323 train-tok/s eta=3.9 min
+[pack] docs=40000 train_tok=42983226 (4.8%) val_tok=2196788 rate=4,153,694 train-tok/s eta=3.4 min
+[pack] docs=60000 train_tok=64963979 (7.2%) val_tok=3315850 rate=4,329,404 train-tok/s eta=3.2 min
+[pack] docs=80000 train_tok=86500042 (9.6%) val_tok=4585490 rate=4,422,657 train-tok/s eta=3.1 min
+[pack] docs=100000 train_tok=107242925 (11.9%) val_tok=5706016 rate=4,498,755 train-tok/s eta=2.9 min
+[pack] docs=120000 train_tok=128588226 (14.3%) val_tok=6857230 rate=4,549,512 train-tok/s eta=2.8 min
+[pack] docs=140000 train_tok=149005347 (16.6%) val_tok=7878409 rate=4,599,889 train-tok/s eta=2.7 min
+[pack] docs=160000 train_tok=170234895 (18.9%) val_tok=8916087 rate=4,638,580 train-tok/s eta=2.6 min
+[pack] docs=180000 train_tok=191307394 (21.3%) val_tok=9962360 rate=4,666,564 train-tok/s eta=2.5 min
+[pack] docs=200000 train_tok=211847505 (23.5%) val_tok=11188127 rate=4,686,626 train-tok/s eta=2.4 min
+[pack] docs=220000 train_tok=233355053 (25.9%) val_tok=12319295 rate=4,703,430 train-tok/s eta=2.4 min
+[pack] docs=240000 train_tok=254064385 (28.2%) val_tok=13526168 rate=4,715,135 train-tok/s eta=2.3 min
+Got disconnected from remote data host. Retrying in 5sec [1/20]
+[pack] docs=260000 train_tok=274657503 (30.5%) val_tok=14682830 rate=4,725,323 train-tok/s eta=2.2 min
+[pack] docs=280000 train_tok=295320738 (32.8%) val_tok=15738027 rate=4,737,499 train-tok/s eta=2.1 min
+[pack] docs=300000 train_tok=316341744 (35.1%) val_tok=16910765 rate=4,740,149 train-tok/s eta=2.1 min
+[pack] docs=320000 train_tok=337433482 (37.5%) val_tok=17902739 rate=4,746,341 train-tok/s eta=2.0 min
+[pack] docs=340000 train_tok=359162211 (39.9%) val_tok=19022539 rate=4,748,546 train-tok/s eta=1.9 min
+[pack] docs=360000 train_tok=381032499 (42.3%) val_tok=20205330 rate=4,755,244 train-tok/s eta=1.8 min
+[pack] docs=380000 train_tok=402592571 (44.7%) val_tok=21335522 rate=4,758,455 train-tok/s eta=1.7 min
+[pack] docs=400000 train_tok=423980596 (47.1%) val_tok=22422784 rate=4,758,670 train-tok/s eta=1.7 min
+[pack] docs=420000 train_tok=445508207 (49.5%) val_tok=23470098 rate=4,758,981 train-tok/s eta=1.6 min
+[pack] docs=440000 train_tok=467165428 (51.9%) val_tok=24606378 rate=4,755,914 train-tok/s eta=1.5 min
+[pack] docs=460000 train_tok=489306662 (54.4%) val_tok=25780252 rate=4,757,724 train-tok/s eta=1.4 min
+[pack] docs=480000 train_tok=510869324 (56.8%) val_tok=26895114 rate=4,759,959 train-tok/s eta=1.4 min
+[pack] docs=500000 train_tok=532098413 (59.1%) val_tok=27972531 rate=4,764,980 train-tok/s eta=1.3 min
+[pack] docs=520000 train_tok=553452219 (61.5%) val_tok=28969472 rate=4,770,249 train-tok/s eta=1.2 min
+[pack] docs=540000 train_tok=574422756 (63.8%) val_tok=30018783 rate=4,774,261 train-tok/s eta=1.1 min
+[pack] docs=560000 train_tok=595396873 (66.2%) val_tok=31176459 rate=4,774,775 train-tok/s eta=1.1 min
+[pack] docs=580000 train_tok=616945597 (68.5%) val_tok=32364803 rate=4,776,627 train-tok/s eta=1.0 min
+[pack] docs=600000 train_tok=638345064 (70.9%) val_tok=33394618 rate=4,779,370 train-tok/s eta=0.9 min
+[pack] docs=620000 train_tok=659602155 (73.3%) val_tok=34573419 rate=4,780,607 train-tok/s eta=0.8 min
+[pack] docs=640000 train_tok=681399700 (75.7%) val_tok=35795316 rate=4,780,676 train-tok/s eta=0.8 min
+[pack] docs=660000 train_tok=702773796 (78.1%) val_tok=36839767 rate=4,783,967 train-tok/s eta=0.7 min
+[pack] docs=680000 train_tok=724030051 (80.4%) val_tok=38067831 rate=4,783,079 train-tok/s eta=0.6 min
+[pack] docs=700000 train_tok=745036615 (82.8%) val_tok=39192792 rate=4,784,752 train-tok/s eta=0.5 min
+[pack] docs=720000 train_tok=766075531 (85.1%) val_tok=40399468 rate=4,786,054 train-tok/s eta=0.5 min
+[pack] docs=740000 train_tok=787939823 (87.5%) val_tok=41545147 rate=4,669,039 train-tok/s eta=0.4 min
+[pack] docs=760000 train_tok=809226996 (89.9%) val_tok=42559814 rate=4,673,725 train-tok/s eta=0.3 min
+HTTP Error 500 thrown while requesting GET https://huggingface.co/datasets/HuggingFaceFW/fineweb-edu/resolve/87f09149ef4734204d70ed1d046ddc9ca3f2b8f9/sample/10BT/001_00000.parquet
+Retrying in 1s [Retry 1/5].
+[pack] docs=780000 train_tok=830055431 (92.2%) val_tok=43665935 rate=4,677,666 train-tok/s eta=0.2 min
+[pack] docs=800000 train_tok=851024337 (94.6%) val_tok=44702314 rate=4,679,673 train-tok/s eta=0.2 min
+[pack] docs=820000 train_tok=871614587 (96.8%) val_tok=45775902 rate=4,682,987 train-tok/s eta=0.1 min
+[pack] docs=840000 train_tok=892393359 (99.2%) val_tok=46962838 rate=4,683,207 train-tok/s eta=0.0 min
+[pack] docs=860000 train_tok=913605620 (101.5%) val_tok=48050671 rate=4,685,452 train-tok/s eta=0.0 min
+[pack] DONE in 3.2 min: train 913605620 tok / 816994 docs, val 48050671 tok / 43006 docs
+[pack] val-eval-2M: 2000000 tokens -> val-eval-2M.bin
+[upload] -> gs://ssra-poc-ew3/m2/data/m2-data-900m
+[upload] ok gs://ssra-poc-ew3/m2/data/m2-data-900m/train.bin
+[upload] ok gs://ssra-poc-ew3/m2/data/m2-data-900m/val.bin
+[upload] ok gs://ssra-poc-ew3/m2/data/m2-data-900m/val-eval-2M.bin
+[upload] ok gs://ssra-poc-ew3/m2/data/m2-data-900m/shards_meta.json
+[upload] ok gs://ssra-poc-ew3/m2/data/m2-data-900m/M2-data-900m-manifest.json
+[done] manifest -> results/M2-data-900m-manifest.json

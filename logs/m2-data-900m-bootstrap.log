@@ -1,0 +1,83 @@
+[bootstrap-cpu] SA key decoded -> /root/.gcp/sa-key.json
+[bootstrap-cpu] key OK: ssra-runpod@ssra-poc.iam.gserviceaccount.com
+[bootstrap-cpu] gcloud absent - installing google-cloud-cli (recorded in env snapshot)
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package apt-transport-https.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 30797 files and directories currently installed.)
+Preparing to unpack .../0-apt-transport-https_2.0.11_all.deb ...
+Unpacking apt-transport-https (2.0.11) ...
+Selecting previously unselected package gnupg-l10n.
+Preparing to unpack .../1-gnupg-l10n_2.2.19-3ubuntu2.5_all.deb ...
+Unpacking gnupg-l10n (2.2.19-3ubuntu2.5) ...
+Selecting previously unselected package gnupg-utils.
+Preparing to unpack .../2-gnupg-utils_2.2.19-3ubuntu2.5_amd64.deb ...
+Unpacking gnupg-utils (2.2.19-3ubuntu2.5) ...
+Selecting previously unselected package gpg-wks-client.
+Preparing to unpack .../3-gpg-wks-client_2.2.19-3ubuntu2.5_amd64.deb ...
+Unpacking gpg-wks-client (2.2.19-3ubuntu2.5) ...
+Selecting previously unselected package gpg-wks-server.
+Preparing to unpack .../4-gpg-wks-server_2.2.19-3ubuntu2.5_amd64.deb ...
+Unpacking gpg-wks-server (2.2.19-3ubuntu2.5) ...
+Selecting previously unselected package gpgsm.
+Preparing to unpack .../5-gpgsm_2.2.19-3ubuntu2.5_amd64.deb ...
+Unpacking gpgsm (2.2.19-3ubuntu2.5) ...
+Selecting previously unselected package gnupg.
+Preparing to unpack .../6-gnupg_2.2.19-3ubuntu2.5_all.deb ...
+Unpacking gnupg (2.2.19-3ubuntu2.5) ...
+Setting up apt-transport-https (2.0.11) ...
+Setting up gpg-wks-client (2.2.19-3ubuntu2.5) ...
+Setting up gpgsm (2.2.19-3ubuntu2.5) ...
+Setting up gnupg-l10n (2.2.19-3ubuntu2.5) ...
+Setting up gpg-wks-server (2.2.19-3ubuntu2.5) ...
+Setting up gnupg-utils (2.2.19-3ubuntu2.5) ...
+Setting up gnupg (2.2.19-3ubuntu2.5) ...
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package google-cloud-cli.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 30919 files and directories currently installed.)
+Preparing to unpack .../google-cloud-cli_575.0.1-0_amd64.deb ...
+Unpacking google-cloud-cli (575.0.1-0) ...
+Setting up google-cloud-cli (575.0.1-0) ...
+Processing triggers for libc-bin (2.31-0ubuntu9.18) ...
+Activated service account credentials for: [ssra-runpod@ssra-poc.iam.gserviceaccount.com]
+WARNING: [ssra-runpod@ssra-poc.iam.gserviceaccount.com] does not have permission to access projects instance [ssra-poc] (or it may not exist): Cloud Resource Manager API has not been used in project 1045608942004 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/cloudresourcemanager.googleapis.com/overview?project=1045608942004 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry. This command is authenticated as ssra-runpod@ssra-poc.iam.gserviceaccount.com which is the active account specified by the [core/account] property.
+- '@type': type.googleapis.com/google.rpc.ErrorInfo
+  domain: googleapis.com
+  metadata:
+    activationUrl: https://console.developers.google.com/apis/api/cloudresourcemanager.googleapis.com/overview?project=1045608942004
+    consumer: projects/1045608942004
+    containerInfo: '1045608942004'
+    service: cloudresourcemanager.googleapis.com
+    serviceTitle: Cloud Resource Manager API
+  reason: SERVICE_DISABLED
+- '@type': type.googleapis.com/google.rpc.LocalizedMessage
+  locale: en-US
+  message: Cloud Resource Manager API has not been used in project 1045608942004 before
+    or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/cloudresourcemanager.googleapis.com/overview?project=1045608942004
+    then retry. If you enabled this API recently, wait a few minutes for the action
+    to propagate to our systems and retry.
+- '@type': type.googleapis.com/google.rpc.Help
+  links:
+  - description: Google developers console API activation
+    url: https://console.developers.google.com/apis/api/cloudresourcemanager.googleapis.com/overview?project=1045608942004
+Updated property [core/project].
+[bootstrap-cpu] gcloud Google Cloud SDK 575.0.1, SA activated
+[bootstrap-cpu] AP-17 sanity gate: gsutil ls gs://ssra-poc-ew3
+gs://ssra-poc-ew3/m2/
+gs://ssra-poc-ew3/phase0/
+[bootstrap-cpu] AP-17 sanity gate PASSED
+[bootstrap-cpu] thread limits: OMP/MKL/RAYON = 16 (cgroup quota 'unlimited', nproc 16)
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+
+[notice] A new release of pip is available: 25.1.1 -> 26.1.2
+[notice] To update, run: python3.11 -m pip install --upgrade pip
+[bootstrap-cpu] python deps installed (pins from requirements.txt data section; no torch)
+[bootstrap-cpu] ENV SNAPSHOT:
+  os:       Ubuntu 20.04.6 LTS / 6.8.0-51-generic
+  cpu:      16 vCPU   AMD EPYC 4564P 16-Core Processor
+  mem:      124Gi total (cgroup limit: 32000000000)
+  disk:     60G total, 59G free
+  python:   Python 3.11.13
+  gcloud:   Google Cloud SDK 575.0.1
+  pins:     datasets 5.0.0, pyarrow 24.0.0, tokenizers 0.22.2, huggingface_hub 1.19.0, numpy 2.4.6, PyYAML 6.0.3
+  commit:   101d9d4
+[bootstrap-cpu] DONE - pod ready for Task A (scripts/data_scale.py experiments/M2-data-900m.yaml)
