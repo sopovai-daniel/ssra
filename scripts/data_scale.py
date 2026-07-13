@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.util
 import json
 import subprocess
 import sys
@@ -37,11 +38,16 @@ import numpy as np
 import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(ROOT / "src"))
 
-from ssra.data import (  # noqa: E402
-    EOT_TOKEN, SHARD_DTYPE, split_of, write_json,
-)
+# Load src/ssra/data.py directly, bypassing the ssra package __init__ (which
+# imports torch — absent on the Task A CPU pod by design). Same source of
+# truth for EOT_TOKEN / SHARD_DTYPE / split_of, no duplication.
+_spec = importlib.util.spec_from_file_location(
+    "ssra_data", ROOT / "src" / "ssra" / "data.py")
+_data = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(_data)
+EOT_TOKEN, SHARD_DTYPE = _data.EOT_TOKEN, _data.SHARD_DTYPE
+split_of, write_json = _data.split_of, _data.write_json
 
 MANIFEST = ROOT / "results" / "M2-data-900m-manifest.json"
 ITEMSIZE = np.dtype(SHARD_DTYPE).itemsize
