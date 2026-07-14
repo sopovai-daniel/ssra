@@ -346,6 +346,20 @@ picture — entropy [3.4655, 3.4657], participation [0.045, 0.092].
   [wall-clock estimate, console pending] ≈ **9.98 EUR of 300** (≈ 3.3 %).
   The 30 EUR pre-approved cap stays scoped exclusively to Phase 3.
 
+**Addendum (2026-07-14, closure — appended, text above unchanged):**
+- Console billed total, pod `ssra-m2-sweep`: **$7.2679 ≈ 6.36 EUR** (ECB
+  1.1430) — **FINAL by Daniel's decision** (RunPod documents ~1 h billing
+  delay; reading taken ≈ 2.5 h after the 13:31 UTC termination; no further
+  re-check per the updated read-out rule, D-log 2026-07-14).
+- Decomposition (wall-clock estimate, flagged as such; console total
+  authoritative, Pravidlo W): ≈ $5.25 work + ≈ $2.03 post-signal idle
+  (signal ≈ 12:10 UTC → terminate 13:31 UTC ≈ 1 h 21 min — 3rd occurrence
+  of the post-signal idle pattern in M2; no AP change, known cost pattern).
+- Cumulative M2 spend: **11.75 EUR ≈ 3.9 %** of the 300 EUR envelope
+  (4.05 + 0.85 + 0.49 + 6.36). Oversight review (Claude, 2026-07-14):
+  §B.1–B.9 VERIFIED — selections, ledger arithmetic, tok/s consistency
+  independently recomputed.
+
 ### B.8 Deviations + open questions
 
 Deviations (all explicit, none silent):

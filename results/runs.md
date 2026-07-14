@@ -69,6 +69,19 @@ wall-clock estimate ≈ 3.5 h ⇒ ≈ $5.25 ≈ 4.59 EUR (ECB 1.1430). Billed co
 total to be filled post-terminate by Daniel (console authoritative, provisional
 until T+1). Cumulative M2 ≈ 9.98 EUR of 300 (≈ 3.3 %).
 
+Ledger closure (2026-07-14, Task B sweep pod; appended, prior rows and notes
+unchanged): pod `ssra-m2-sweep` (`bq0ky2rcudcsf4`) billed console total
+**$7.2679 ≈ 6.36 EUR** (ECB 1.1430) — **FINAL by Daniel's decision 2026-07-14**
+(RunPod documents ~1 h billing delay; reading taken ≈ 2.5 h after the 13:31 UTC
+termination; no further re-check per the updated read-out rule, D-log
+2026-07-14). Decomposition — a wall-clock estimate, flagged as such; the
+console total is authoritative and the split is NOT console-derived
+(Pravidlo W): ≈ $5.25 work + ≈ $2.03 post-signal idle (terminate signal
+≈ 12:10 UTC → console terminate 13:31 UTC ≈ 1 h 21 min; 3rd occurrence of the
+post-signal idle pattern in M2 — no AP change, known cost pattern).
+Cumulative M2 spend: **11.75 EUR ≈ 3.9 %** of the 300 EUR envelope
+(4.05 + 0.85 + 0.49 + 6.36).
+
 Ledger confirmation (T+1 re-check, console data supplied by Daniel 2026-07-14;
 appended per the D-log 2026-07-13 correction row — prior rows and notes left
 unchanged, append-only):
