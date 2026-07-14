@@ -39,6 +39,8 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("runs", nargs="*", default=STAGE1)
     ap.add_argument("--out-prefix", default="results/M2-sweep-curves")
+    ap.add_argument("--title-prefix", default="M2 sweep",
+                    help="plot title prefix (e.g. 'M2 core pair' for Phase 3)")
     args = ap.parse_args()
     runs = args.runs or STAGE1
 
@@ -69,8 +71,8 @@ def main():
             print(f"{run:40s} {status:10s} {fel:15.5f}")
         ax.set_xlabel("step")
         ax.set_ylabel("loss (nats/token)")
-        ax.set_title(f"M2 sweep — {arch} (train faint, val marked; "
-                     f"selection = final_eval on val-eval-2M)")
+        ax.set_title(f"{args.title_prefix} — {arch} (train faint, val marked; "
+                     f"metric = final_eval on val-eval-2M)")
         ax.legend(fontsize=8)
         ax.grid(alpha=0.3)
         out = ROOT / f"{args.out_prefix}-{arch}.png"
