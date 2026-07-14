@@ -111,3 +111,6 @@ Smoke chain provenance: runs executed back-to-back (`logs/M1-smoke-chain.log`);
 `meta.commit` is 184d9bd for p1 and f06263f for the rest solely because the
 docs-only HO-04 commit landed 13 s after the chain started — model code
 identical for the whole chain.
+
+| m2-core-flat-s2-850m | 2026-07-14 (pre-run row) | `experiments/m2-core-flat-s2-850m.yaml` (commit 76fc814) | flat pre-norm Transformer | 84,301,440 params (dry-run), FineWeb-Edu BPE-16k m2 shards, 51880x16x1024 = 850,001,920 tok | A100 80GB class (booked GPU/tier/rate recorded at launch, Pravidlo W) | PLANNED | — (G1 input: final_eval_loss on val-eval-2M) | `logs/m2-core-flat-s2-850m.log` (expected) | M2 Phase 3 core pair (docs/cc/M2-phase3-core-pair.md §2); lr 1e-3 / dropout 0.0 (sweep selections §B.4); seed 1337; row updated post-run |
+| m2-core-ssra-s2-850m | 2026-07-14 (pre-run row) | `experiments/m2-core-ssra-s2-850m.yaml` (commit 76fc814) | SSRA P1 | 84,647,040 params (dry-run), ditto | ditto | PLANNED | — (G1 input: final_eval_loss on val-eval-2M) | `logs/m2-core-ssra-s2-850m.log` (expected) | ditto; scoped 30 EUR hard cap (D-log 2026-07-13) enforced in-flight by the §3 early cost gate (`scripts/cost_gate.py`, steps ~1000–1500, ≥200-step window); row updated post-run |
