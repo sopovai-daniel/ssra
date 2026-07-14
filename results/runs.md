@@ -54,6 +54,21 @@ unchanged on 2026-07-13, provisional, re-check due 2026-07-14; `ssra-m2-data`
 spend: **≈ 5.39 EUR** (4.05 final + 0.85 provisional + 0.49 provisional) of the
 300 EUR envelope.
 
+| m2-sweep-flat-lr1e3-do00 | 2026-07-14 | `experiments/m2-sweep-flat-lr1e3-do00.yaml` (commit 482bdb5) | flat pre-norm Transformer | 24.0M params, FineWeb-Edu BPE-16k m2 shards, 3662x16x1024 tok (~60M) | RunPod A100 SXM 80GB Secure $1.50/hr (GPU+disk), US-MD-1, bf16 | DONE | **final_eval_loss 4.28121** (val-eval-2M); 311,776 tok/s, 6.345 GiB; wall 287s (~0.10 EUR) | `logs/m2-sweep-flat-lr1e3-do00.log` | M2 Phase 2 Task B stage-1 cell (AP-14); selection input only, no quality conclusions (spec §16); pod bq0ky2rcudcsf4 |
+| m2-sweep-flat-lr6e4-do00 | 2026-07-14 | `experiments/m2-sweep-flat-lr6e4-do00.yaml` (commit 482bdb5) | flat pre-norm Transformer | ditto | ditto | DONE | final_eval_loss 4.42130; 311,334 tok/s, 6.345 GiB; wall 294s (~0.11 EUR) | `logs/m2-sweep-flat-lr6e4-do00.log` | ditto |
+| m2-sweep-flat-lr3e4-do00 | 2026-07-14 | `experiments/m2-sweep-flat-lr3e4-do00.yaml` (commit 482bdb5) | flat pre-norm Transformer | ditto | ditto | DONE | final_eval_loss 4.80148; 312,395 tok/s, 6.345 GiB; wall 286s (~0.10 EUR) | `logs/m2-sweep-flat-lr3e4-do00.log` | ditto |
+| m2-sweep-ssra-lr1e3-do00 | 2026-07-14 | `experiments/m2-sweep-ssra-lr1e3-do00.yaml` (commit 482bdb5) | SSRA P1 | 24.2M params, ditto | ditto | DONE | **final_eval_loss 4.23127**; 27,062 tok/s, 18.557 GiB; wall 2361s (~0.86 EUR) | `logs/m2-sweep-ssra-lr1e3-do00.log` | ditto; throughput sanity −0.06% vs recal 27,079 PASSED (informative); p1_attn_entropy ~ln(32) throughout (P-C standing) |
+| m2-sweep-ssra-lr6e4-do00 | 2026-07-14 | `experiments/m2-sweep-ssra-lr6e4-do00.yaml` (commit 482bdb5) | SSRA P1 | ditto | ditto | DONE | final_eval_loss 4.34882; 27,209 tok/s, 18.557 GiB; wall 2346s (~0.86 EUR) | `logs/m2-sweep-ssra-lr6e4-do00.log` | ditto |
+| m2-sweep-ssra-lr3e4-do00 | 2026-07-14 | `experiments/m2-sweep-ssra-lr3e4-do00.yaml` (commit 482bdb5) | SSRA P1 | ditto | ditto | DONE | final_eval_loss 4.69499; 27,062 tok/s, 18.557 GiB; wall 2357s (~0.86 EUR) | `logs/m2-sweep-ssra-lr3e4-do00.log` | ditto |
+| m2-sweep-flat-lr1e3-do01 | 2026-07-14 | `experiments/m2-sweep-flat-lr1e3-do01.yaml` (commit 21a4d9d) | flat pre-norm Transformer | ditto, dropout 0.1 | ditto | DONE | final_eval_loss 4.36339; 305,511 tok/s, 6.464 GiB; wall 291s (~0.11 EUR) | `logs/m2-sweep-flat-lr1e3-do01.log` | M2 Task B stage-2 cell (winner lr 1e-3 @ do 0.1); config committed pre-run |
+| m2-sweep-ssra-lr1e3-do01 | 2026-07-14 | `experiments/m2-sweep-ssra-lr1e3-do01.yaml` (commit 21a4d9d) | SSRA P1 | ditto, dropout 0.1 | ditto | DONE | final_eval_loss 4.35232; 26,483 tok/s, 18.908 GiB; wall 2410s (~0.88 EUR) | `logs/m2-sweep-ssra-lr1e3-do01.log` | ditto; **selections: flat (1e-3, 0.0), SSRA (1e-3, 0.0)** — see `results/M2-sweep.md` §B.4 |
+
+Ledger note (2026-07-14, Task B sweep pod): per-run EUR above are wall-clock ×
+$1.50/hr estimates (sum ≈ 3.88 EUR); pod `ssra-m2-sweep` (bq0ky2rcudcsf4)
+wall-clock estimate ≈ 3.5 h ⇒ ≈ $5.25 ≈ 4.59 EUR (ECB 1.1430). Billed console
+total to be filled post-terminate by Daniel (console authoritative, provisional
+until T+1). Cumulative M2 ≈ 9.98 EUR of 300 (≈ 3.3 %).
+
 Ledger confirmation (T+1 re-check, console data supplied by Daniel 2026-07-14;
 appended per the D-log 2026-07-13 correction row — prior rows and notes left
 unchanged, append-only):

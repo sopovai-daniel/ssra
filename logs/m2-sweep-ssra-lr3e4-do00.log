@@ -1,0 +1,170 @@
+{"meta": {"run": "m2-sweep-ssra-lr3e4-do00", "arch": "ssra", "pool": "p1", "params": 24159744, "vocab": 16384, "data": {"train_bin": "data/m2/train.bin", "val_bin": "data/m2/val.bin", "eval_bin": "data/m2/val-eval-2M.bin", "tokenizer": "artifacts/tokenizer/fineweb-edu-bpe-16384.json", "vocab": 16384, "sha256": {"train_bin": "6d0e47cdbb75a5148c8588671ad92bc56f4afe24683d1665c6d618f909549ea0", "val_bin": "03e0dd1a6fb47b57a41e1c800f593b38cd55c24ddb521ac63d1f65cd9e60f35d", "eval_bin": "bde526d2ee244f44fa0ce9be66d8d561dbc4200ff4ba86ce63bf34336bfef55d", "tokenizer": "019568a206fe6ccc4bc2e90c750d660979d3fd3add159e302a0dfa4be0d669a0"}}, "train_tokens": 913605620, "val_tokens": 48050671, "eval_tokens": 2000000, "sha256_verified": ["eval_bin", "tokenizer", "train_bin", "val_bin"], "torch": "2.12.0+cu126", "commit": "52ec36a", "config": "experiments/m2-sweep-ssra-lr3e4-do00.yaml", "resumed_from": null, "steps": 3662, "batch_size": 16, "seq_len": 1024, "lr": 0.0003, "warmup_steps": 55, "weight_decay": 0.01, "lr_min_frac": 0.1, "seed": 1337, "device": "cuda", "precision": "bf16", "val_every": 200, "val_batches": 8, "log_every": 25, "ckpt_dir": "checkpoints/m2-sweep-ssra-lr3e4-do00", "ckpt_every": 500, "gcs_ckpt_dir": "gs://ssra-poc-ew3/m2/sweep/m2-sweep-ssra-lr3e4-do00"}}
+{"step": 0, "train_loss": 9.75481, "lr": 5e-06, "elapsed_s": 1.7, "peak_vram_gib": 18.316, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0564, "p1_participation_max": 0.0687}
+{"step": 0, "val_loss": 9.73601, "val_bpc": 14.0461}
+{"step": 25, "train_loss": 8.72446, "lr": 0.000142, "elapsed_s": 18.3, "tok_per_s": 27005.5, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0566, "p1_participation_max": 0.0683}
+{"step": 50, "train_loss": 7.73097, "lr": 0.000278, "elapsed_s": 33.4, "tok_per_s": 27100.7, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0569, "p1_participation_max": 0.0682}
+{"step": 75, "train_loss": 7.37526, "lr": 0.0003, "elapsed_s": 48.6, "tok_per_s": 27082.4, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0568, "p1_participation_max": 0.0696}
+{"step": 100, "train_loss": 7.07011, "lr": 0.0003, "elapsed_s": 63.9, "tok_per_s": 27026.0, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0538, "p1_participation_max": 0.0703}
+{"step": 125, "train_loss": 6.9417, "lr": 0.0003, "elapsed_s": 79.0, "tok_per_s": 27052.7, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0536, "p1_participation_max": 0.072}
+{"step": 150, "train_loss": 6.71663, "lr": 0.0003, "elapsed_s": 94.1, "tok_per_s": 27063.4, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0558, "p1_participation_max": 0.0738}
+{"step": 175, "train_loss": 6.65209, "lr": 0.000299, "elapsed_s": 109.2, "tok_per_s": 27074.8, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0538, "p1_participation_max": 0.0725}
+{"step": 200, "train_loss": 6.59486, "lr": 0.000299, "elapsed_s": 124.4, "tok_per_s": 27060.2, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.057, "p1_participation_max": 0.069}
+{"step": 200, "val_loss": 6.53048, "val_bpc": 9.42149}
+{"step": 225, "train_loss": 6.45758, "lr": 0.000299, "elapsed_s": 141.0, "tok_per_s": 27077.5, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0536, "p1_participation_max": 0.0727}
+{"step": 250, "train_loss": 6.47108, "lr": 0.000298, "elapsed_s": 156.0, "tok_per_s": 27101.3, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0549, "p1_participation_max": 0.0716}
+{"step": 275, "train_loss": 6.25924, "lr": 0.000298, "elapsed_s": 171.0, "tok_per_s": 27123.7, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0541, "p1_participation_max": 0.0714}
+{"step": 300, "train_loss": 6.3341, "lr": 0.000297, "elapsed_s": 186.0, "tok_per_s": 27143.3, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0532, "p1_participation_max": 0.0736}
+{"step": 325, "train_loss": 6.30424, "lr": 0.000296, "elapsed_s": 201.0, "tok_per_s": 27156.2, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0543, "p1_participation_max": 0.0754}
+{"step": 350, "train_loss": 6.12335, "lr": 0.000296, "elapsed_s": 216.2, "tok_per_s": 27144.4, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0528, "p1_participation_max": 0.0742}
+{"step": 375, "train_loss": 6.03741, "lr": 0.000295, "elapsed_s": 231.2, "tok_per_s": 27151.7, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0533, "p1_participation_max": 0.0795}
+{"step": 400, "train_loss": 6.01029, "lr": 0.000294, "elapsed_s": 246.3, "tok_per_s": 27163.2, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.05, "p1_participation_max": 0.0766}
+{"step": 400, "val_loss": 6.08322, "val_bpc": 8.77623}
+{"step": 425, "train_loss": 6.07662, "lr": 0.000293, "elapsed_s": 262.8, "tok_per_s": 27158.7, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0537, "p1_participation_max": 0.0751}
+{"step": 450, "train_loss": 5.99427, "lr": 0.000292, "elapsed_s": 278.0, "tok_per_s": 27150.7, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0547, "p1_participation_max": 0.0762}
+{"step": 475, "train_loss": 5.93897, "lr": 0.000291, "elapsed_s": 293.1, "tok_per_s": 27152.4, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0518, "p1_participation_max": 0.0791}
+{"step": 500, "train_loss": 5.93965, "lr": 0.00029, "elapsed_s": 318.7, "tok_per_s": 27140.7, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0539, "p1_participation_max": 0.0727}
+{"step": 525, "train_loss": 5.87237, "lr": 0.000289, "elapsed_s": 333.8, "tok_per_s": 27141.5, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0553, "p1_participation_max": 0.075}
+{"step": 550, "train_loss": 5.8858, "lr": 0.000288, "elapsed_s": 348.9, "tok_per_s": 27136.1, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0535, "p1_participation_max": 0.0759}
+{"step": 575, "train_loss": 5.88839, "lr": 0.000286, "elapsed_s": 364.0, "tok_per_s": 27142.9, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0546, "p1_participation_max": 0.0737}
+{"step": 600, "train_loss": 5.7655, "lr": 0.000285, "elapsed_s": 379.0, "tok_per_s": 27150.6, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0534, "p1_participation_max": 0.0732}
+{"step": 600, "val_loss": 5.82633, "val_bpc": 8.40561}
+{"step": 625, "train_loss": 5.89205, "lr": 0.000284, "elapsed_s": 395.5, "tok_per_s": 27156.8, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0532, "p1_participation_max": 0.077}
+{"step": 650, "train_loss": 5.92594, "lr": 0.000282, "elapsed_s": 410.5, "tok_per_s": 27162.2, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0514, "p1_participation_max": 0.0745}
+{"step": 675, "train_loss": 5.59764, "lr": 0.000281, "elapsed_s": 425.6, "tok_per_s": 27162.5, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0539, "p1_participation_max": 0.0751}
+{"step": 700, "train_loss": 5.73186, "lr": 0.000279, "elapsed_s": 440.8, "tok_per_s": 27155.0, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0527, "p1_participation_max": 0.0741}
+{"step": 725, "train_loss": 5.80628, "lr": 0.000278, "elapsed_s": 456.2, "tok_per_s": 27140.2, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0513, "p1_participation_max": 0.0716}
+{"step": 750, "train_loss": 5.65365, "lr": 0.000276, "elapsed_s": 471.3, "tok_per_s": 27137.0, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0528, "p1_participation_max": 0.0719}
+{"step": 775, "train_loss": 5.50873, "lr": 0.000274, "elapsed_s": 486.4, "tok_per_s": 27139.9, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0537, "p1_participation_max": 0.0743}
+{"step": 800, "train_loss": 5.73716, "lr": 0.000273, "elapsed_s": 501.6, "tok_per_s": 27136.9, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0529, "p1_participation_max": 0.0706}
+{"step": 800, "val_loss": 5.61575, "val_bpc": 8.10181}
+{"step": 825, "train_loss": 5.52414, "lr": 0.000271, "elapsed_s": 518.1, "tok_per_s": 27139.1, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0527, "p1_participation_max": 0.0722}
+{"step": 850, "train_loss": 5.60649, "lr": 0.000269, "elapsed_s": 533.2, "tok_per_s": 27140.5, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0537, "p1_participation_max": 0.0754}
+{"step": 875, "train_loss": 5.48398, "lr": 0.000267, "elapsed_s": 548.2, "tok_per_s": 27144.7, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0564, "p1_participation_max": 0.0751}
+{"step": 900, "train_loss": 5.60067, "lr": 0.000265, "elapsed_s": 563.3, "tok_per_s": 27147.0, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0543, "p1_participation_max": 0.0722}
+{"step": 925, "train_loss": 5.54306, "lr": 0.000263, "elapsed_s": 578.4, "tok_per_s": 27148.3, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0552, "p1_participation_max": 0.0722}
+{"step": 950, "train_loss": 5.4313, "lr": 0.000261, "elapsed_s": 593.4, "tok_per_s": 27153.2, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0536, "p1_participation_max": 0.0716}
+{"step": 975, "train_loss": 5.52987, "lr": 0.000259, "elapsed_s": 608.4, "tok_per_s": 27157.8, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0544, "p1_participation_max": 0.072}
+{"step": 1000, "train_loss": 5.42565, "lr": 0.000257, "elapsed_s": 633.2, "tok_per_s": 27162.4, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0534, "p1_participation_max": 0.0719}
+{"step": 1000, "val_loss": 5.45125, "val_bpc": 7.86449}
+{"step": 1025, "train_loss": 5.46849, "lr": 0.000255, "elapsed_s": 649.8, "tok_per_s": 27161.2, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0528, "p1_participation_max": 0.071}
+{"step": 1050, "train_loss": 5.4156, "lr": 0.000252, "elapsed_s": 664.9, "tok_per_s": 27159.5, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0519, "p1_participation_max": 0.0722}
+{"step": 1075, "train_loss": 5.38661, "lr": 0.00025, "elapsed_s": 680.0, "tok_per_s": 27162.0, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0519, "p1_participation_max": 0.0702}
+{"step": 1100, "train_loss": 5.38679, "lr": 0.000248, "elapsed_s": 695.0, "tok_per_s": 27165.7, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.053, "p1_participation_max": 0.0728}
+{"step": 1125, "train_loss": 5.39996, "lr": 0.000245, "elapsed_s": 710.2, "tok_per_s": 27163.7, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0545, "p1_participation_max": 0.0714}
+{"step": 1150, "train_loss": 5.51559, "lr": 0.000243, "elapsed_s": 725.4, "tok_per_s": 27157.2, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0537, "p1_participation_max": 0.0726}
+{"step": 1175, "train_loss": 5.38863, "lr": 0.000241, "elapsed_s": 740.7, "tok_per_s": 27151.0, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.054, "p1_participation_max": 0.0734}
+{"step": 1200, "train_loss": 5.39098, "lr": 0.000238, "elapsed_s": 755.7, "tok_per_s": 27153.7, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0538, "p1_participation_max": 0.0734}
+{"step": 1200, "val_loss": 5.31433, "val_bpc": 7.66695}
+{"step": 1225, "train_loss": 5.16635, "lr": 0.000236, "elapsed_s": 772.2, "tok_per_s": 27155.0, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0531, "p1_participation_max": 0.0762}
+{"step": 1250, "train_loss": 5.26381, "lr": 0.000233, "elapsed_s": 787.4, "tok_per_s": 27152.2, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0558, "p1_participation_max": 0.0734}
+{"step": 1275, "train_loss": 5.27936, "lr": 0.000231, "elapsed_s": 802.6, "tok_per_s": 27149.7, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0547, "p1_participation_max": 0.0723}
+{"step": 1300, "train_loss": 5.23531, "lr": 0.000228, "elapsed_s": 817.6, "tok_per_s": 27153.4, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0538, "p1_participation_max": 0.0731}
+{"step": 1325, "train_loss": 5.19219, "lr": 0.000225, "elapsed_s": 832.6, "tok_per_s": 27157.6, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0537, "p1_participation_max": 0.0735}
+{"step": 1350, "train_loss": 5.13684, "lr": 0.000223, "elapsed_s": 847.6, "tok_per_s": 27161.4, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0535, "p1_participation_max": 0.0725}
+{"step": 1375, "train_loss": 5.25549, "lr": 0.00022, "elapsed_s": 862.6, "tok_per_s": 27164.7, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0528, "p1_participation_max": 0.0719}
+{"step": 1400, "train_loss": 5.17412, "lr": 0.000217, "elapsed_s": 877.6, "tok_per_s": 27167.8, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.053, "p1_participation_max": 0.0748}
+{"step": 1400, "val_loss": 5.19092, "val_bpc": 7.48891}
+{"step": 1425, "train_loss": 5.28073, "lr": 0.000215, "elapsed_s": 894.0, "tok_per_s": 27171.0, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0546, "p1_participation_max": 0.0734}
+{"step": 1450, "train_loss": 5.19857, "lr": 0.000212, "elapsed_s": 909.1, "tok_per_s": 27173.8, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0539, "p1_participation_max": 0.0729}
+{"step": 1475, "train_loss": 5.21938, "lr": 0.000209, "elapsed_s": 924.1, "tok_per_s": 27174.4, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.054, "p1_participation_max": 0.072}
+{"step": 1500, "train_loss": 5.22434, "lr": 0.000206, "elapsed_s": 949.3, "tok_per_s": 27172.9, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0532, "p1_participation_max": 0.0734}
+{"step": 1525, "train_loss": 5.00555, "lr": 0.000204, "elapsed_s": 964.5, "tok_per_s": 27171.4, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0552, "p1_participation_max": 0.0715}
+{"step": 1550, "train_loss": 5.09434, "lr": 0.000201, "elapsed_s": 979.6, "tok_per_s": 27169.8, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0562, "p1_participation_max": 0.0715}
+{"step": 1575, "train_loss": 5.03853, "lr": 0.000198, "elapsed_s": 994.8, "tok_per_s": 27167.7, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0544, "p1_participation_max": 0.0709}
+{"step": 1600, "train_loss": 5.11683, "lr": 0.000195, "elapsed_s": 1010.0, "tok_per_s": 27163.4, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0539, "p1_participation_max": 0.0718}
+{"step": 1600, "val_loss": 5.09484, "val_bpc": 7.3503}
+{"step": 1625, "train_loss": 5.13551, "lr": 0.000192, "elapsed_s": 1026.7, "tok_per_s": 27159.8, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.054, "p1_participation_max": 0.0707}
+{"step": 1650, "train_loss": 5.12363, "lr": 0.000189, "elapsed_s": 1041.8, "tok_per_s": 27159.1, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0548, "p1_participation_max": 0.0726}
+{"step": 1675, "train_loss": 5.03578, "lr": 0.000186, "elapsed_s": 1056.8, "tok_per_s": 27161.8, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0564, "p1_participation_max": 0.0705}
+{"step": 1700, "train_loss": 5.06805, "lr": 0.000184, "elapsed_s": 1071.9, "tok_per_s": 27163.6, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0536, "p1_participation_max": 0.0728}
+{"step": 1725, "train_loss": 5.18821, "lr": 0.000181, "elapsed_s": 1086.9, "tok_per_s": 27165.9, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0531, "p1_participation_max": 0.0731}
+{"step": 1750, "train_loss": 5.00511, "lr": 0.000178, "elapsed_s": 1101.9, "tok_per_s": 27167.4, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0551, "p1_participation_max": 0.0732}
+{"step": 1775, "train_loss": 5.10523, "lr": 0.000175, "elapsed_s": 1116.9, "tok_per_s": 27169.6, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0533, "p1_participation_max": 0.0731}
+{"step": 1800, "train_loss": 4.9141, "lr": 0.000172, "elapsed_s": 1132.0, "tok_per_s": 27171.2, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0532, "p1_participation_max": 0.0716}
+{"step": 1800, "val_loss": 5.01003, "val_bpc": 7.22795}
+{"step": 1825, "train_loss": 5.03685, "lr": 0.000169, "elapsed_s": 1148.5, "tok_per_s": 27173.2, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0527, "p1_participation_max": 0.0725}
+{"step": 1850, "train_loss": 5.00769, "lr": 0.000166, "elapsed_s": 1163.6, "tok_per_s": 27172.2, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0531, "p1_participation_max": 0.0717}
+{"step": 1875, "train_loss": 5.04268, "lr": 0.000163, "elapsed_s": 1178.8, "tok_per_s": 27170.7, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0535, "p1_participation_max": 0.0733}
+{"step": 1900, "train_loss": 4.98726, "lr": 0.00016, "elapsed_s": 1194.0, "tok_per_s": 27166.0, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0526, "p1_participation_max": 0.0725}
+{"step": 1925, "train_loss": 4.88971, "lr": 0.000157, "elapsed_s": 1209.1, "tok_per_s": 27166.2, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0525, "p1_participation_max": 0.0712}
+{"step": 1950, "train_loss": 4.9703, "lr": 0.000154, "elapsed_s": 1224.2, "tok_per_s": 27167.5, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0518, "p1_participation_max": 0.0713}
+{"step": 1975, "train_loss": 5.01668, "lr": 0.000151, "elapsed_s": 1239.4, "tok_per_s": 27165.3, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0519, "p1_participation_max": 0.073}
+{"step": 2000, "train_loss": 4.97809, "lr": 0.000148, "elapsed_s": 1264.3, "tok_per_s": 27161.9, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.053, "p1_participation_max": 0.07}
+{"step": 2000, "val_loss": 4.94054, "val_bpc": 7.12769}
+{"step": 2025, "train_loss": 5.00116, "lr": 0.000145, "elapsed_s": 1281.0, "tok_per_s": 27160.9, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0536, "p1_participation_max": 0.0717}
+{"step": 2050, "train_loss": 4.97325, "lr": 0.000143, "elapsed_s": 1296.1, "tok_per_s": 27159.9, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0544, "p1_participation_max": 0.0707}
+{"step": 2075, "train_loss": 4.96336, "lr": 0.00014, "elapsed_s": 1311.1, "tok_per_s": 27161.8, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0525, "p1_participation_max": 0.071}
+{"step": 2100, "train_loss": 4.9039, "lr": 0.000137, "elapsed_s": 1326.1, "tok_per_s": 27163.4, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0515, "p1_participation_max": 0.0725}
+{"step": 2125, "train_loss": 4.93351, "lr": 0.000134, "elapsed_s": 1341.3, "tok_per_s": 27161.5, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0513, "p1_participation_max": 0.0732}
+{"step": 2150, "train_loss": 4.87343, "lr": 0.000131, "elapsed_s": 1356.5, "tok_per_s": 27159.2, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0514, "p1_participation_max": 0.0716}
+{"step": 2175, "train_loss": 4.87452, "lr": 0.000128, "elapsed_s": 1371.7, "tok_per_s": 27157.5, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0526, "p1_participation_max": 0.0718}
+{"step": 2200, "train_loss": 4.89721, "lr": 0.000125, "elapsed_s": 1386.9, "tok_per_s": 27155.8, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0529, "p1_participation_max": 0.074}
+{"step": 2200, "val_loss": 4.87817, "val_bpc": 7.03772}
+{"step": 2225, "train_loss": 4.96469, "lr": 0.000123, "elapsed_s": 1403.6, "tok_per_s": 27154.2, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.053, "p1_participation_max": 0.0698}
+{"step": 2250, "train_loss": 4.90812, "lr": 0.00012, "elapsed_s": 1418.7, "tok_per_s": 27152.9, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0537, "p1_participation_max": 0.0712}
+{"step": 2275, "train_loss": 4.95201, "lr": 0.000117, "elapsed_s": 1434.0, "tok_per_s": 27150.4, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0553, "p1_participation_max": 0.0703}
+{"step": 2300, "train_loss": 4.84818, "lr": 0.000114, "elapsed_s": 1449.2, "tok_per_s": 27148.1, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0525, "p1_participation_max": 0.0729}
+{"step": 2325, "train_loss": 4.78749, "lr": 0.000112, "elapsed_s": 1464.4, "tok_per_s": 27146.2, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0541, "p1_participation_max": 0.0703}
+{"step": 2350, "train_loss": 4.80315, "lr": 0.000109, "elapsed_s": 1479.6, "tok_per_s": 27143.8, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0541, "p1_participation_max": 0.0713}
+{"step": 2375, "train_loss": 4.94777, "lr": 0.000106, "elapsed_s": 1494.8, "tok_per_s": 27141.7, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.055, "p1_participation_max": 0.07}
+{"step": 2400, "train_loss": 4.73216, "lr": 0.000104, "elapsed_s": 1509.9, "tok_per_s": 27141.7, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0539, "p1_participation_max": 0.0694}
+{"step": 2400, "val_loss": 4.82623, "val_bpc": 6.96278}
+{"step": 2425, "train_loss": 4.93341, "lr": 0.000101, "elapsed_s": 1526.4, "tok_per_s": 27143.3, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.054, "p1_participation_max": 0.0704}
+{"step": 2450, "train_loss": 4.90036, "lr": 9.8e-05, "elapsed_s": 1541.5, "tok_per_s": 27144.9, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0562, "p1_participation_max": 0.0707}
+{"step": 2475, "train_loss": 4.83821, "lr": 9.6e-05, "elapsed_s": 1556.5, "tok_per_s": 27146.2, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.055, "p1_participation_max": 0.0711}
+{"step": 2500, "train_loss": 4.87688, "lr": 9.3e-05, "elapsed_s": 1581.5, "tok_per_s": 27145.7, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0548, "p1_participation_max": 0.0705}
+{"step": 2525, "train_loss": 4.67294, "lr": 9.1e-05, "elapsed_s": 1596.7, "tok_per_s": 27144.8, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0553, "p1_participation_max": 0.069}
+{"step": 2550, "train_loss": 4.78472, "lr": 8.9e-05, "elapsed_s": 1611.9, "tok_per_s": 27142.5, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0547, "p1_participation_max": 0.0712}
+{"step": 2575, "train_loss": 4.76333, "lr": 8.6e-05, "elapsed_s": 1627.1, "tok_per_s": 27140.1, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0547, "p1_participation_max": 0.0694}
+{"step": 2600, "train_loss": 4.84613, "lr": 8.4e-05, "elapsed_s": 1642.4, "tok_per_s": 27138.3, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0539, "p1_participation_max": 0.0704}
+{"step": 2600, "val_loss": 4.7861, "val_bpc": 6.90488}
+{"step": 2625, "train_loss": 5.0008, "lr": 8.1e-05, "elapsed_s": 1658.9, "tok_per_s": 27139.1, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0548, "p1_participation_max": 0.0699}
+{"step": 2650, "train_loss": 4.80281, "lr": 7.9e-05, "elapsed_s": 1674.1, "tok_per_s": 27137.3, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0541, "p1_participation_max": 0.0701}
+{"step": 2675, "train_loss": 4.73067, "lr": 7.7e-05, "elapsed_s": 1689.3, "tok_per_s": 27135.9, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0545, "p1_participation_max": 0.0698}
+{"step": 2700, "train_loss": 4.88754, "lr": 7.5e-05, "elapsed_s": 1704.5, "tok_per_s": 27134.7, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0545, "p1_participation_max": 0.0689}
+{"step": 2725, "train_loss": 4.6741, "lr": 7.3e-05, "elapsed_s": 1719.7, "tok_per_s": 27133.8, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0553, "p1_participation_max": 0.0684}
+{"step": 2750, "train_loss": 4.78063, "lr": 7e-05, "elapsed_s": 1734.9, "tok_per_s": 27132.7, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0554, "p1_participation_max": 0.0699}
+{"step": 2775, "train_loss": 4.83762, "lr": 6.8e-05, "elapsed_s": 1750.0, "tok_per_s": 27131.9, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0567, "p1_participation_max": 0.0695}
+{"step": 2800, "train_loss": 4.76016, "lr": 6.6e-05, "elapsed_s": 1765.2, "tok_per_s": 27131.1, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0551, "p1_participation_max": 0.0685}
+{"step": 2800, "val_loss": 4.74873, "val_bpc": 6.85097}
+{"step": 2825, "train_loss": 4.85631, "lr": 6.4e-05, "elapsed_s": 1781.9, "tok_per_s": 27129.1, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0559, "p1_participation_max": 0.0693}
+{"step": 2850, "train_loss": 4.73421, "lr": 6.2e-05, "elapsed_s": 1797.1, "tok_per_s": 27127.0, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0545, "p1_participation_max": 0.0687}
+{"step": 2875, "train_loss": 4.77581, "lr": 6e-05, "elapsed_s": 1812.4, "tok_per_s": 27125.1, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0548, "p1_participation_max": 0.0683}
+{"step": 2900, "train_loss": 4.79545, "lr": 5.9e-05, "elapsed_s": 1827.6, "tok_per_s": 27124.0, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0565, "p1_participation_max": 0.0688}
+{"step": 2925, "train_loss": 4.70535, "lr": 5.7e-05, "elapsed_s": 1842.6, "tok_per_s": 27125.6, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0561, "p1_participation_max": 0.0694}
+{"step": 2950, "train_loss": 4.73287, "lr": 5.5e-05, "elapsed_s": 1857.8, "tok_per_s": 27124.9, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0557, "p1_participation_max": 0.0689}
+{"step": 2975, "train_loss": 4.71142, "lr": 5.3e-05, "elapsed_s": 1872.8, "tok_per_s": 27125.5, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0543, "p1_participation_max": 0.0682}
+{"step": 3000, "train_loss": 4.7583, "lr": 5.2e-05, "elapsed_s": 1897.8, "tok_per_s": 27126.0, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0559, "p1_participation_max": 0.0677}
+{"step": 3000, "val_loss": 4.71922, "val_bpc": 6.80839}
+{"step": 3025, "train_loss": 4.74483, "lr": 5e-05, "elapsed_s": 1914.4, "tok_per_s": 27124.9, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.054, "p1_participation_max": 0.0691}
+{"step": 3050, "train_loss": 4.65137, "lr": 4.9e-05, "elapsed_s": 1929.6, "tok_per_s": 27123.9, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0544, "p1_participation_max": 0.0695}
+{"step": 3075, "train_loss": 4.7681, "lr": 4.7e-05, "elapsed_s": 1944.9, "tok_per_s": 27121.3, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0546, "p1_participation_max": 0.0674}
+{"step": 3100, "train_loss": 4.68852, "lr": 4.6e-05, "elapsed_s": 1960.1, "tok_per_s": 27119.9, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.055, "p1_participation_max": 0.0686}
+{"step": 3125, "train_loss": 4.73792, "lr": 4.4e-05, "elapsed_s": 1975.3, "tok_per_s": 27118.9, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0543, "p1_participation_max": 0.0691}
+{"step": 3150, "train_loss": 4.78143, "lr": 4.3e-05, "elapsed_s": 1990.5, "tok_per_s": 27117.8, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0555, "p1_participation_max": 0.0688}
+{"step": 3175, "train_loss": 4.81767, "lr": 4.2e-05, "elapsed_s": 2005.7, "tok_per_s": 27116.4, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0554, "p1_participation_max": 0.0694}
+{"step": 3200, "train_loss": 4.70772, "lr": 4.1e-05, "elapsed_s": 2021.0, "tok_per_s": 27114.7, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0552, "p1_participation_max": 0.0692}
+{"step": 3200, "val_loss": 4.70013, "val_bpc": 6.78086}
+{"step": 3225, "train_loss": 4.7262, "lr": 4e-05, "elapsed_s": 2037.7, "tok_per_s": 27112.7, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0549, "p1_participation_max": 0.0701}
+{"step": 3250, "train_loss": 4.81246, "lr": 3.9e-05, "elapsed_s": 2053.0, "tok_per_s": 27111.0, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0538, "p1_participation_max": 0.0697}
+{"step": 3275, "train_loss": 4.85075, "lr": 3.8e-05, "elapsed_s": 2068.2, "tok_per_s": 27109.0, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0552, "p1_participation_max": 0.0691}
+{"step": 3300, "train_loss": 4.75486, "lr": 3.7e-05, "elapsed_s": 2083.5, "tok_per_s": 27107.4, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0557, "p1_participation_max": 0.0695}
+{"step": 3325, "train_loss": 4.61445, "lr": 3.6e-05, "elapsed_s": 2098.8, "tok_per_s": 27105.6, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0544, "p1_participation_max": 0.0696}
+{"step": 3350, "train_loss": 4.86124, "lr": 3.5e-05, "elapsed_s": 2114.0, "tok_per_s": 27103.7, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0553, "p1_participation_max": 0.069}
+{"step": 3375, "train_loss": 4.6815, "lr": 3.4e-05, "elapsed_s": 2129.3, "tok_per_s": 27101.9, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.055, "p1_participation_max": 0.0688}
+{"step": 3400, "train_loss": 4.75681, "lr": 3.3e-05, "elapsed_s": 2144.6, "tok_per_s": 27100.2, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0547, "p1_participation_max": 0.0689}
+{"step": 3400, "val_loss": 4.68175, "val_bpc": 6.75433}
+{"step": 3425, "train_loss": 4.71914, "lr": 3.3e-05, "elapsed_s": 2161.3, "tok_per_s": 27098.5, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0549, "p1_participation_max": 0.069}
+{"step": 3450, "train_loss": 4.80144, "lr": 3.2e-05, "elapsed_s": 2176.5, "tok_per_s": 27097.3, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0551, "p1_participation_max": 0.0688}
+{"step": 3475, "train_loss": 4.66971, "lr": 3.2e-05, "elapsed_s": 2191.8, "tok_per_s": 27095.8, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0548, "p1_participation_max": 0.0706}
+{"step": 3500, "train_loss": 4.67966, "lr": 3.1e-05, "elapsed_s": 2216.9, "tok_per_s": 27094.8, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0555, "p1_participation_max": 0.0705}
+{"step": 3525, "train_loss": 4.69099, "lr": 3.1e-05, "elapsed_s": 2232.2, "tok_per_s": 27093.2, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0551, "p1_participation_max": 0.0683}
+{"step": 3550, "train_loss": 4.88884, "lr": 3.1e-05, "elapsed_s": 2247.4, "tok_per_s": 27091.9, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0561, "p1_participation_max": 0.0685}
+{"step": 3575, "train_loss": 4.6721, "lr": 3e-05, "elapsed_s": 2262.6, "tok_per_s": 27090.7, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0548, "p1_participation_max": 0.0688}
+{"step": 3600, "train_loss": 4.64578, "lr": 3e-05, "elapsed_s": 2277.9, "tok_per_s": 27089.5, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0545, "p1_participation_max": 0.0693}
+{"step": 3600, "val_loss": 4.66732, "val_bpc": 6.73352}
+{"step": 3625, "train_loss": 4.69778, "lr": 3e-05, "elapsed_s": 2294.6, "tok_per_s": 27088.3, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0548, "p1_participation_max": 0.0699}
+{"step": 3650, "train_loss": 4.66507, "lr": 3e-05, "elapsed_s": 2309.8, "tok_per_s": 27087.1, "peak_vram_gib": 18.557, "p1_attn_entropy": 3.4657, "p1_participation_min": 0.0545, "p1_participation_max": 0.0697}
+{"step": 3661, "val_loss": 4.66444, "val_bpc": 6.72937}
+{"final_eval": {"eval_loss": 4.69499, "eval_windows": 1953, "eval_tokens": 1999872, "eval_tokens_dropped": 127, "eval_bin": "data/m2/val-eval-2M.bin"}}
+{"summary": {"final_val_loss": 4.66444, "final_val_bpc": 6.72937, "final_eval_loss": 4.69499, "wall_clock_s": 2350.2, "run": "m2-sweep-ssra-lr3e4-do00", "tok_per_s": 27087.2, "meas_steps": 3652, "tokens_per_step": 16384, "peak_vram_gib": 18.557}}

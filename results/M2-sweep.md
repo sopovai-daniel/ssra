@@ -1,8 +1,10 @@
 # M2 Phase 2 report — symmetric S1 lr/dropout sweep (AP-14)
 
 **Assignment:** `docs/cc/M2-phase2-sweep.md` v1.1 (2026-07-13) · **Status:**
-Task A (data scale-up) DONE · Task B local prep DONE 2026-07-14 (§B.0) —
-READY FOR POD · Task B pod execution NOT STARTED (awaits Daniel's pod deploy).
+Task A (data scale-up) DONE · Task B local prep DONE 2026-07-14 (§B.0) ·
+Task B sweep DONE 2026-07-14 (§B.1–B.9): 8/8 runs completed, no divergence;
+**selections: flat (1e-3, 0.0), SSRA (1e-3, 0.0)** (§B.4). Billed total
+pending console read-out post-terminate (§B.7).
 
 ---
 
@@ -222,9 +224,156 @@ deterministic non-overlapping pass was chosen as the mechanical symmetric
 reading); (2) interval picks (200/25/500) — both stand unless vetoed before
 pod deploy.
 
-### B.1+ Pod execution (NOT STARTED)
+### B.1 Pre-flight record (pod `ssra-m2-sweep`, 2026-07-14)
 
-Separate GPU pod launch per assignment §2/§4; sections (i) AP-19 step-0
-capture, (ii) GPU env snapshot + pytest, (iv) run table, (v) selection table,
-(vi) loss-curve plots, (vii) `p1_attn_entropy` + participation summary,
-(viii) full cost ledger, (ix)–(x) to be filled by the Task B report.
+- **AP-19 step 0 (4th consecutive occurrence):** Community price **NOT
+  capturable** in the deploy flow on 2026-07-14 (Daniel, deploy console;
+  recorded verbatim, no backfill, Pravidlo W). Prior occurrences: 2026-07-12,
+  2026-07-13 (recal), 2026-07-14. Consequence: no Secure-vs-Community cost
+  line for the sweep (see open question B.8-1).
+- **Booked HW:** 1× A100 SXM 80 GB, Secure, region **US-MD-1**; 16 vCPU
+  EPYC 7742 quoted at deploy, container disk 60 GB, no network volume.
+  Template "Runpod Pytorch 2.4.0 - SSRA". **Pricing (deploy console
+  2026-07-14): GPU $1.49/hr + disk $0.008/hr = $1.50/hr total**, billed per
+  millisecond. Pod start 10:40 local. `RUNPOD_POD_ID=bq0ky2rcudcsf4`
+  (read from `/proc/1/environ`; absent in SSH session env, the known
+  RunPod behavior from Phase 1).
+- **AP-17 flow:** SA key decoded from `GCP_SA_KEY_B64` via the
+  `/proc/1/environ` fallback (SSH session env empty, as in Phase 1);
+  key file verified (`ssra-runpod@ssra-poc.iam.gserviceaccount.com`);
+  **blocking sanity gate `gsutil ls gs://ssra-poc-ew3` PASSED before any
+  billable work** (`/root/bootstrap.out` on the pod; no secret material
+  anywhere in logs/repo/chat).
+- **Thread limits:** cgroup v2 `cpu.max = 1360000 100000` → quota 13.6
+  vCPU → `OMP_NUM_THREADS = MKL_NUM_THREADS = 13` exported for every
+  training/pytest process. (Deviation note: 13.6 vCPU quota ≠ 16 vCPU
+  quoted at deploy; recorded, not escalated — informative.)
+- **Repo delivery:** GitHub clone from the pod failed (repo private via
+  unauthenticated HTTPS) → repo shipped as a git bundle at commit
+  `52ec36a`, later fast-forwarded to `21a4d9d` (stage-2 configs) —
+  both commits pushed to origin BEFORE the corresponding runs started.
+- **Data:** bootstrap step 6 pulled
+  `gs://ssra-poc-ew3/m2/data/m2-data-900m/{train,val,val-eval-2M}.bin` +
+  `shards_meta.json` → `data/m2/` (byte sizes match Task A manifest);
+  integrity then enforced per-run by the harness sha256 hard gates
+  (all four gates OK in every run's stdout; `sha256_verified` recorded in
+  every log meta line). `data_scale.py` NOT run.
+
+### B.2 Environment snapshot + pytest
+
+Pod `bq0ky2rcudcsf4` (`ssra-m2-sweep` class) · NVIDIA A100-SXM4-80GB ·
+driver 580.126.16 · torch **2.12.0+cu126** (image shipped 2.4.1+cu124;
+bootstrap installed the pinned wheel per the standing pin-manifest
+correction) · CUDA 12.6 · Python 3.11.10 · repo commit `52ec36a` for all
+six stage-1 runs, `21a4d9d` for both stage-2 runs.
+
+**pytest (before any run):** `1 failed, 64 passed in 25.54s` — the failure
+is exactly `tests/test_baselines.py::test_loglinear_integration` (known
+Phase-4-only state per assignment §4). Box-specific detail recorded
+verbatim: on this pod the fla import chain fails with
+`RuntimeError('operator torchvision::nms does not exist')` instead of the
+"deferred to M2 GPU" message the test expects locally (where it SKIPS on
+missing Triton). No other failure → proceeded.
+
+### B.3 Run table (all 8 runs; EUR = wall-clock × $1.50/hr, ECB 1.1430;
+console-authoritative billed total in §B.7)
+
+| run_name | config commit | status | tok/s | peak GiB | final_eval_loss (val-eval-2M) | wall s | ≈EUR |
+|---|---|---|---|---|---|---|---|
+| m2-sweep-flat-lr1e3-do00 | 482bdb5 | DONE | 311,776 | 6.345 | **4.28121** | 287 | 0.10 |
+| m2-sweep-flat-lr6e4-do00 | 482bdb5 | DONE | 311,334 | 6.345 | 4.42130 | 294 | 0.11 |
+| m2-sweep-flat-lr3e4-do00 | 482bdb5 | DONE | 312,395 | 6.345 | 4.80148 | 286 | 0.10 |
+| m2-sweep-ssra-lr1e3-do00 | 482bdb5 | DONE | 27,062 | 18.557 | **4.23127** | 2,361 | 0.86 |
+| m2-sweep-ssra-lr6e4-do00 | 482bdb5 | DONE | 27,209 | 18.557 | 4.34882 | 2,346 | 0.86 |
+| m2-sweep-ssra-lr3e4-do00 | 482bdb5 | DONE | 27,062* | 18.557 | 4.69499 | 2,357 | 0.86 |
+| m2-sweep-flat-lr1e3-do01 | 21a4d9d | DONE | 305,511 | 6.464 | 4.36339 | 291 | 0.11 |
+| m2-sweep-ssra-lr1e3-do01 | 21a4d9d | DONE | 26,483 | 18.908 | 4.35232 | 2,410 | 0.88 |
+
+*ssra-lr3e4 tok/s from its summary line (see `logs/`); wall times from the
+driver progress stamps (start→exit, includes gates + data load + final_eval).
+No divergence in any cell: zero `divergence` records; every final val/eval
+loss is far below its step-0 value (initial val ≈ 9.68–9.77).
+
+**Throughput sanity (informative, non-gating): PASSED** — first SSRA run
+steady-state 27,062 tok/s vs recal anchor 27,079 (−0.06 %, well within
+±10 %). Peak VRAM 18.557 GiB = recal value exactly. Flat ≈ 312k tok/s vs
+recal 319.9k (−2.5 %).
+
+### B.4 Selection (mechanical, within-model, min final_eval_loss on val-eval-2M)
+
+| model | stage-1 winner lr | do 0.0 | do 0.1 | **selected (lr, dropout)** |
+|---|---|---|---|---|
+| flat | 1e-3 (4.28121 < 4.42130 < 4.80148) | **4.28121** | 4.36339 | **(1e-3, 0.0)** |
+| SSRA | 1e-3 (4.23127 < 4.34882 < 4.69499) | **4.23127** | 4.35232 | **(1e-3, 0.0)** |
+
+Justification (one line, mechanical rule of assignment §3): for both models
+min final_eval_loss among {winner@do0.0, winner@do0.1} is the do 0.0 cell
+(flat 4.28121 < 4.36339; SSRA 4.23127 < 4.35232).
+No quality or architecture conclusions from any loss (spec §16);
+SSRA-vs-flat loss comparisons are never evidence of anything in this phase.
+
+### B.5 Loss-curve plots
+
+`results/M2-sweep-curves-flat.png` + `results/M2-sweep-curves-ssra.png`
+(train faint, val marked, all cells; regenerated with stage 2 included).
+
+### B.6 p1_attn_entropy + participation (standing, informative, non-gating)
+
+Logged at every log interval (25 steps) on all SSRA runs. Across all three
+stage-1 SSRA runs (147 samples each): `p1_attn_entropy` stayed in
+[3.4655, 3.4657] ≈ ln(32) = 3.4657 from step 0 to step 3650 — the Q_φ
+attention map remains ~uniform at 60M-token scale, the same standing
+observation as M1 and Phase 0 (D-log 2026-06-12; informative, carries no
+gate). Per-query participation stayed in [0.042, 0.085] around the uniform
+value 1/16 = 0.0625, no query collapse. Stage-2 SSRA run (do 0.1): same
+picture — entropy [3.4655, 3.4657], participation [0.045, 0.092].
+
+### B.7 Cost ledger (vs 300 EUR envelope)
+
+- Pod `ssra-m2-sweep` (`bq0ky2rcudcsf4`), $1.50/hr total, start 10:40 local
+  (08:40 UTC); bootstrap + pytest ≈ 0.32 h; runs 10,632 s ≈ 2.95 h (§B.3,
+  sum of driver start→exit stamps); terminate signal issued at ≈ 12:10 UTC
+  on completion (AP-18). Wall-clock estimate: ≈ 3.5 h × $1.50 ≈ **$5.25 ≈
+  4.59 EUR** (ECB 1.1430 carried, no top-up). Per-run EUR in §B.3 sum to
+  ≈ 3.88 EUR; the remainder is bootstrap, pytest, winner computation and
+  upload overhead.
+- **Console-authoritative billed total: to be read from the console
+  post-terminate by Daniel; provisional until T+1 re-check per the D-log
+  2026-07-13 correction rule.** Not reconstructed from CC-side timestamps
+  (Pravidlo W) — the 4.59 EUR figure above is explicitly a wall-clock
+  estimate.
+- Cumulative M2 spend: 5.39 EUR (confirmed, §A.7) + this pod ≈ 4.59 EUR
+  [wall-clock estimate, console pending] ≈ **9.98 EUR of 300** (≈ 3.3 %).
+  The 30 EUR pre-approved cap stays scoped exclusively to Phase 3.
+
+### B.8 Deviations + open questions
+
+Deviations (all explicit, none silent):
+1. Pod cgroup CPU quota 13.6 vCPU vs 16 quoted at deploy → thread limits 13
+   (rule applied as written; informative).
+2. GitHub HTTPS clone unauthenticated fails on the pod → git-bundle
+   delivery (commits pushed to origin before runs; no methodology impact).
+3. `test_loglinear_integration` fails with a box-specific error text
+   (§B.2) — same known test, recorded verbatim.
+4. Loss-curve plots are cross-run artifacts, so they are uploaded to
+   `gs://ssra-poc-ew3/m2/sweep/plots/` (AP-21 defines per-run dirs only;
+   no existing object overwritten). Stage 2 itself: no deviations — peak
+   VRAM slightly above the do 0.0 cells (6.464 / 18.908 GiB vs 6.345 /
+   18.557) is the expected dropout-mask cost, recorded as data.
+
+Open questions (proposed D-log entries):
+1. **AP-19 step 0 [proposed by Daniel with the pod facts, for D-log]:**
+   keep AP-19 step 0 (zero cost) but stop treating the Secure-vs-Community
+   comparison as an expected deliverable until the Community tier reappears
+   in the deploy flow for this GPU class (4th consecutive "not capturable":
+   2026-07-12, 2026-07-13, 2026-07-14). Daniel decides over this report.
+
+### B.9 Definition-of-done check
+
+Stage 1: 6/6 DONE, no divergence ✔ · stage 2: 2/2 DONE, no divergence,
+configs committed pre-run (21a4d9d) ✔ · selections §B.4 ✔ ·
+plots §B.5 ✔ · runs.md rows ✔ · logs + plots + ckpts in
+`gs://ssra-poc-ew3/m2/sweep/{run_name}/` ✔ · AP-17 gate before billable
+work ✔ · AP-19 step-0 recorded ✔ · pod terminated on explicit signal, billed
+total to be filled post-terminate [provisional until T+1] ✔ · no Phase 3
+work ✔.
