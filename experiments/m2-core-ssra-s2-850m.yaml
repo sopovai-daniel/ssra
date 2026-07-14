@@ -1,0 +1,50 @@
+# M2 Phase 3 core-pair run (docs/cc/M2-phase3-core-pair.md §2, Gate G1 input).
+# S2 @ 850M tokens, selected hyperparameters lr 1e-3 / dropout 0.0 for BOTH
+# models (sweep selections, results/M2-sweep.md §B.4). The two core-pair
+# configs are generated from one template and are identical except `arch` and
+# the AP-21 run_name/paths (matched-parameters + matched-tokens, AP-8; any
+# asymmetry invalidates the pair). G1 metric = ppl = exp(final_eval_loss),
+# deterministic full pass over val-eval-2M (assignment §1). The G1 verdict is
+# Daniel's; no quality conclusions from any loss here (spec §16).
+arch: ssra
+run_name: m2-core-ssra-s2-850m
+model:
+  d: 640
+  h: 10
+  n_layers: 15
+  n_max: 32768             # e_l table headroom for M3 length extrapolation
+  m: 16
+  w: 64
+  pool: p1                 # P1 defaults, no contingency flags (assignment §2)
+  tied_embeddings: true    # AP-9: 16k tied
+  dropout_attn: 0.0        # sweep selection: dropout 0.0 (both models)
+  dropout_resid: 0.0
+data:
+  train_bin: data/m2/train.bin
+  val_bin: data/m2/val.bin
+  eval_bin: data/m2/val-eval-2M.bin  # G1 eval set (confirmed, assignment §1)
+  tokenizer: artifacts/tokenizer/fineweb-edu-bpe-16384.json  # frozen, gate only
+  vocab: 16384
+  sha256:                  # hard gates before any training step; values
+                           # verbatim from results/M2-data-900m-manifest.json
+    train_bin: 6d0e47cdbb75a5148c8588671ad92bc56f4afe24683d1665c6d618f909549ea0
+    val_bin: 03e0dd1a6fb47b57a41e1c800f593b38cd55c24ddb521ac63d1f65cd9e60f35d
+    eval_bin: bde526d2ee244f44fa0ce9be66d8d561dbc4200ff4ba86ce63bf34336bfef55d
+    tokenizer: 019568a206fe6ccc4bc2e90c750d660979d3fd3add159e302a0dfa4be0d669a0
+training:
+  steps: 51880             # 51,880 x 16,384 tok/step = 850,001,920 >= 850M (AP-12 floor)
+  batch_size: 16           # b16, grad-accum 1 (assignment §2)
+  seq_len: 1024
+  lr: 1.0e-3               # sweep selection (both models)
+  warmup_steps: 778        # same ~1.5 % warmup fraction as the sweep, rescaled
+  weight_decay: 0.01
+  lr_min_frac: 0.1         # cosine decay floor (harness default)
+  seed: 1337               # AP-13
+  device: cuda
+  precision: bf16          # AP-16
+  val_every: 200           # loss-curve only (val.bin), fixed-seed batches
+  val_batches: 8
+  log_every: 25            # P-C diagnostics on SSRA each interval (standing rule)
+  ckpt_dir: checkpoints/m2-core-ssra-s2-850m
+  ckpt_every: 1000         # ~22 min SSRA wall-clock [ODHAD], inside AP-11 <= 30 min
+  gcs_ckpt_dir: gs://ssra-poc-ew3/m2/core/m2-core-ssra-s2-850m

@@ -132,4 +132,48 @@ for f in train.bin val.bin val-eval-2M.bin shards_meta.json; do
 done
 log "m2 shards in place: $(ls -l data/m2 | tail -n +2 | awk '{print $9, $5}' | tr '\n' ' ')"
 
+# ---- 7. AP-23 self-terminate capability check (zero cost) --------------------
+# Verification only (M2-phase3-core-pair §4): confirm runpodctl + pod id +
+# pod-scoped API key so a completed session can self-terminate
+# (`runpodctl remove pod $RUNPOD_POD_ID`, AP-23 strict sequence: GCS uploads
+# verified -> results pushed -> completion signal -> terminate). NON-blocking:
+# on failure the AP-18 manual terminate window is the primary path; the
+# outcome is recorded in the session report. No secret values are printed.
+AP23_OK=1
+if command -v runpodctl >/dev/null 2>&1; then
+    log "AP-23: runpodctl present ($(command -v runpodctl))"
+else
+    log "AP-23: runpodctl ABSENT"
+    AP23_OK=0
+fi
+AP23_POD_ID=${RUNPOD_POD_ID:-}
+if [[ -z $AP23_POD_ID && -r /proc/1/environ ]]; then
+    # known RunPod behavior: pod env vars may be absent in SSH sessions
+    AP23_POD_ID=$(tr '\0' '\n' < /proc/1/environ | sed -n 's/^RUNPOD_POD_ID=//p')
+fi
+if [[ -n $AP23_POD_ID ]]; then
+    log "AP-23: RUNPOD_POD_ID=$AP23_POD_ID"
+else
+    log "AP-23: RUNPOD_POD_ID NOT FOUND (session env + /proc/1/environ)"
+    AP23_OK=0
+fi
+AP23_KEY=0
+if [[ -n ${RUNPOD_API_KEY:-} ]]; then
+    AP23_KEY=1
+elif [[ -r /proc/1/environ ]] \
+        && tr '\0' '\n' < /proc/1/environ | grep -q '^RUNPOD_API_KEY='; then
+    AP23_KEY=1
+fi
+if [[ $AP23_KEY -eq 1 ]]; then
+    log "AP-23: pod-scoped RUNPOD_API_KEY present (value not printed)"
+else
+    log "AP-23: RUNPOD_API_KEY NOT FOUND"
+    AP23_OK=0
+fi
+if [[ $AP23_OK -eq 1 ]]; then
+    log "AP-23 verification PASSED - self-terminate path available"
+else
+    log "AP-23 verification FAILED - AP-18 manual terminate window is primary"
+fi
+
 log "DONE - pod ready (pytest, then the committed experiments/*.yaml for this task)"
