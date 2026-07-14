@@ -141,7 +141,23 @@ semantics unchanged.
 - **pytest: 64 passed, 1 failed in 51.5 s — the single failure is exactly
   the known `test_loglinear_integration`** (§B.2 precedent; box-specific).
   Full output: `logs/m2-core-pytest.log`. Gate: PASS (no OTHER failure).
-## §iii Run table — pending pod session
+## §iii Run table — in flight (final values on completion)
+
+- `m2-core-flat-s2-850m` (launch 17:46:23Z): **DONE, no divergence.**
+  final_eval_loss **3.21201** (val-eval-2M, 1953 windows / 1,999,872 tok /
+  127 dropped), 137,251.9 tok/s, peak 10.846 GiB, wall 7,358.8 s ≈ 2.04 h
+  (≈ 2.68 EUR [ODHAD @ $1.50]; wall > the 1.6–1.8 h train-only estimate —
+  includes val passes, checkpoints, final_eval). Final ckpt in GCS:
+  `gs://ssra-poc-ew3/m2/core/m2-core-flat-s2-850m/latest.pt` (964.97 MiB,
+  19:49:37Z).
+- `m2-core-ssra-s2-850m` (launch 19:50:19Z): in flight.
+  **Early cost gate (§3, steps 1000–1500, 500-step window): PASS** —
+  steady 12,387.1 tok/s ⇒ projected 19.061 h ⇒ $28.59 ⇒ **25.01 EUR ≤
+  30 EUR scoped cap** (rate $1.50/hr, ECB 1.1430; break-even 10,329 tok/s).
+  Anchor sanity +0.42 % vs 12,335 (informative, within ±10 %). Peak
+  41.2 GiB = recalibration anchor. ETA posted per §3.4: training +
+  final_eval ≈ 15:35 UTC 2026-07-15; session end incl. uploads/push/AP-23
+  self-terminate ≈ 16:00–16:30 UTC (18:00–18:30 Bratislava).
 ## §iv G1 input table — pending pod session
 ## §v Loss-curve plots — pending pod session
 ## §vi P-C summary (informative, non-gating) — pending pod session
