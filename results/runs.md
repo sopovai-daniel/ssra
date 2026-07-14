@@ -35,7 +35,22 @@ One row per run. A run without a committed config in `experiments/` does not exi
 
 Ledger note (2026-07-13, Task A CPU pod): wall-clock estimate ≈ 0.61 h x $0.568/hr
 ≈ $0.35 ≈ 0.30 EUR (ECB 1.1430 carried); billed console total for pod
-`ssra-m2-data`: **[TO FILL POST-TERMINATE — console authoritative, Pravidlo W]**.
+`ssra-m2-data`: **$0.5567 (0.98 h billed, region EUR-IS-1) ≈ 0.49 EUR** (console
+2026-07-13 evening; **provisional** pending T+1 re-check per the D-log 2026-07-13
+correction row).
+
+Ledger correction (console 2026-07-13 evening, appended 2026-07-14 — historical
+rows and notes below are left unchanged, append-only): pod `ssra-m2-cal`
+(Phase 1 calibration) final console total settled at **$4.6293 ≈ 4.05 EUR**
+(ECB 1.1430), superseding the $3.4786 ≈ 3.04 EUR read on 2026-07-12
+(late-settling charges; the final figure matches the original CC timestamp
+estimate, resolving the "billed below estimate" delta noted for Phase 1).
+Per the new rule (D-log 2026-07-13 correction row) console figures are
+provisional until a T+1 re-check: `ssra-m2-recal` **$0.9700 ≈ 0.85 EUR** —
+unchanged on 2026-07-13, provisional, re-check due 2026-07-14; `ssra-m2-data`
+**$0.5567 ≈ 0.49 EUR** — provisional, re-check due 2026-07-14. Cumulative M2
+spend: **≈ 5.39 EUR** (4.05 final + 0.85 provisional + 0.49 provisional) of the
+300 EUR envelope.
 
 Ledger note (2026-07-13, re-calibration): per-run EUR above are wall-clock x $1.49/hr
 estimates; the console-authoritative billed total for pod `ssra-m2-recal`

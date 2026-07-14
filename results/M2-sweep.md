@@ -92,10 +92,10 @@ tokenizer (byte-level BPE, vocab 16,384).
 - Pod container start 2026-07-13 20:28:37 UTC; terminate signal issued at
   ≈ 21:05 UTC → ≈ 0.61 h wall ⇒ **≈ $0.35 ≈ 0.30 EUR** at $0.568/hr
   (per-second billing; ECB 1.1430 carried per assignment §4).
-- **Billed console total (authoritative): [TO FILL POST-TERMINATE — console
-  only, Pravidlo W].** Daniel terminates on the explicit completion signal
-  (AP-18: terminate, not stop) and fills the console figure here and in the
-  `results/runs.md` ledger note.
+- **Billed console total (authoritative): $0.5567 ≈ 0.49 EUR** (0.98 h billed,
+  region EUR-IS-1; console 2026-07-13 evening, ECB 1.1430; **provisional**
+  pending the T+1 re-check per the D-log 2026-07-13 correction row). Pod
+  terminated 2026-07-13 on the explicit completion signal (AP-18).
 
 ### A.6 Deviations (all explicit, none silent)
 
@@ -124,8 +124,11 @@ tokenizer (byte-level BPE, vocab 16,384).
 ### A.7 runs.md / ledger
 
 Row `m2-data-900m` appended to `results/runs.md`; cost ledger note added there
-(billed console total from §A.5). Cumulative M2 spend after Task A ≈ 4.0 EUR
-of the 300 EUR envelope (≈ 1.3 %); the 30 EUR pre-approved cap remains scoped
+(billed console total from §A.5). Cumulative M2 spend after Task A and the
+Phase-1 billing correction (console 2026-07-13 evening, see the runs.md
+ledger-correction note): **≈ 5.39 EUR** of the 300 EUR envelope (≈ 1.8 %) =
+4.05 final (ssra-m2-cal, corrected) + 0.85 provisional (ssra-m2-recal) +
+0.49 provisional (ssra-m2-data); the 30 EUR pre-approved cap remains scoped
 exclusively to the Phase 3 S2 850M run and was not touched.
 
 ### A.8 Open questions (proposed D-log entries)
