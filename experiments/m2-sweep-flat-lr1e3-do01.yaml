@@ -1,0 +1,49 @@
+# M2 Phase 2 Task B stage-2 sweep cell (docs/cc/M2-phase2-sweep.md §3, AP-14):
+# dropout 0.1 at the stage-1 winner lr (flat winner = lr 1.0e-3 by min
+# final_eval_loss: 4.28121 < 4.42130 (6e-4) < 4.80148 (3e-4)).
+# S1 flat, lr 1.0e-3, dropout 0.1. Cells are identical except arch and lr
+# (any asymmetry invalidates the sweep, M2-assignment §3). Selection metric =
+# final_eval full deterministic pass over val-eval-2M, fp32 accumulation.
+# No quality conclusions from any loss (spec §16); SSRA-vs-flat loss
+# comparisons are never evidence of anything in this phase.
+arch: flat
+run_name: m2-sweep-flat-lr1e3-do01
+model:
+  d: 384
+  h: 6
+  n_layers: 10
+  n_max: 32768             # e_l table headroom for M3 length extrapolation
+  m: 16
+  w: 64
+  pool: p1                 # P1 default, no contingency flags
+  tied_embeddings: true    # AP-9: 16k tied
+  dropout_attn: 0.1
+  dropout_resid: 0.1
+data:
+  train_bin: data/m2/train.bin
+  val_bin: data/m2/val.bin
+  eval_bin: data/m2/val-eval-2M.bin  # distinct fixed shard (selection input)
+  tokenizer: artifacts/tokenizer/fineweb-edu-bpe-16384.json  # frozen, gate only
+  vocab: 16384
+  sha256:                  # hard gates before any training step (Task B step 2)
+    train_bin: 6d0e47cdbb75a5148c8588671ad92bc56f4afe24683d1665c6d618f909549ea0
+    val_bin: 03e0dd1a6fb47b57a41e1c800f593b38cd55c24ddb521ac63d1f65cd9e60f35d
+    eval_bin: bde526d2ee244f44fa0ce9be66d8d561dbc4200ff4ba86ce63bf34336bfef55d
+    tokenizer: 019568a206fe6ccc4bc2e90c750d660979d3fd3add159e302a0dfa4be0d669a0
+training:
+  steps: 3662              # 3,662 x 16,384 tok/step = 59,998,208 ~ 60M budget
+  batch_size: 16           # matches the S2 gate batch; grad_accum 1
+  seq_len: 1024
+  lr: 1.0e-3
+  warmup_steps: 55         # ~1.5 % of total steps
+  weight_decay: 0.01
+  lr_min_frac: 0.1         # cosine decay floor (harness default)
+  seed: 1337               # AP-13: one seed per cell
+  device: cuda
+  precision: bf16          # AP-16
+  val_every: 200           # loss-curve interval, identical in all sweep runs
+  val_batches: 8
+  log_every: 25            # SSRA: p1_attn_entropy + participation each interval
+  ckpt_dir: checkpoints/m2-sweep-flat-lr1e3-do01
+  ckpt_every: 500          # AP-11 preemption safety, identical in all runs
+  gcs_ckpt_dir: gs://ssra-poc-ew3/m2/sweep/m2-sweep-flat-lr1e3-do01
