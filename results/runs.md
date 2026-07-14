@@ -33,6 +33,8 @@ One row per run. A run without a committed config in `experiments/` does not exi
 
 | m2-data-900m | 2026-07-13 | `experiments/M2-data-900m.yaml` (commit 7597ff4; code at execution 7bb2d1a) | data pipeline (no model) | 913,605,620 train + 48,050,671 val tok packed, FineWeb-Edu BPE-16k frozen | RunPod CPU pod `ssra-m2-data`, 16 vCPU EPYC 4564P / 32 GB, runpod-ubuntu, $0.568/hr (console 2026-07-13) | DONE | pack 195.9 s (~4.7M train-tok/s); val-eval-2M sha256 bde526d2 | `logs/m2-data-900m.log` | M2 Task A (M2-phase2-sweep §2); shards + manifests at `gs://ssra-poc-ew3/m2/data/m2-data-900m/`; corpus sample-10BT (odc-by, hub sha 87f09149, retrieved 2026-07-13); tokenizer FROZEN sha 019568a2; 2 pre-run import aborts preserved as `logs/m2-data-900m-import-abort*.log` (see `results/M2-sweep.md` §A.6/A.8) |
 
+| m2-sweep-localsmoke-r0 | 2026-07-14 | `experiments/m2-sweep-localsmoke-r0.yaml` (commit 482bdb5) | SSRA P1 (tiny, d64/L2) | 1.15M params, Phase-0 shards, 12x4x256 tok | MacBook M1, CPU fp32 | DONE | harness plumbing only — sha256 gates 4/4, eval_bin final_eval pass (1306 win), wall 13.7 s, 0 EUR | `logs/m2-sweep-localsmoke-r0.log` | M2 Task B local prep (M2-phase2-sweep §3 prep; see `results/M2-sweep.md` §B.0); throwaway name per task brief; NO conclusions of any kind from its loss (spec §16); no GCS access |
+
 Ledger note (2026-07-13, Task A CPU pod): wall-clock estimate ≈ 0.61 h x $0.568/hr
 ≈ $0.35 ≈ 0.30 EUR (ECB 1.1430 carried); billed console total for pod
 `ssra-m2-data`: **$0.5567 (0.98 h billed, region EUR-IS-1) ≈ 0.49 EUR** (console

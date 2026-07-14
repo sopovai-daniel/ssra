@@ -1,8 +1,8 @@
 # M2 Phase 2 report — symmetric S1 lr/dropout sweep (AP-14)
 
 **Assignment:** `docs/cc/M2-phase2-sweep.md` v1.1 (2026-07-13) · **Status:**
-Task A (data scale-up) DONE · Task B (sweep) NOT STARTED — separate GPU pod
-launch per assignment §2/§6.
+Task A (data scale-up) DONE · Task B local prep DONE 2026-07-14 (§B.0) —
+READY FOR POD · Task B pod execution NOT STARTED (awaits Daniel's pod deploy).
 
 ---
 
@@ -144,7 +144,85 @@ exclusively to the Phase 3 S2 850M run and was not touched.
 
 ---
 
-## Task B — sweep (NOT STARTED)
+## Task B — sweep
+
+### B.0 Local prep (DONE 2026-07-14, local machine only — no pod, no spend, no GCS writes)
+
+**Stage-1 configs (6, committed `482bdb5`):**
+`m2-sweep-{ssra,flat}-lr{1e3,6e4,3e4}-do00` per AP-21. All cells: S1
+d 384 / h 6 / L 10 (SSRA 24,159,744 / flat 24,021,504 params, dry-run
+verified — matches calibration ≈24.2M/24.0M), ctx 1024, b16, grad-accum 1,
+bf16 (AP-16), AdamW + cosine (floor `lr_min_frac` 0.1), warmup 55 steps
+(≈1.5 %), **3,662 steps = 59,998,208 tok** (≈60M budget), seed 1337,
+dropout 0.0, SSRA = P1 default with no contingency flags. Generated from a
+single template in one loop — cells differ ONLY in `arch`, `lr` and the
+AP-21 name/paths (diff-verified). GCS ckpt dir
+`gs://ssra-poc-ew3/m2/sweep/{run_name}` (AP-21). Stage-2 configs are NOT
+created — written + committed on the pod after stage-1 winners are computed.
+
+**Intervals picked (one value, identical in all 8 sweep runs; delegated by
+assignment "pick one interval"):** `val_every` 200 (loss curves; fixed-seed
+val batches, `val_batches` 8), `log_every` 25 (SSRA `p1_attn_entropy` +
+per-query participation at every log interval), `ckpt_every` 500 (AP-11
+preemption safety; ckpt time excluded from tok/s by the harness design).
+
+**Harness readiness (scripts/train.py, commit `482bdb5`):**
+- **Hard sha256 gates before any training step** (`data.sha256`): mismatch or
+  missing file aborts (SystemExit) BEFORE the log file is opened — verified
+  positively (smoke) and negatively (tampered hash → exit 1, no log written,
+  zero steps). Gated values in every sweep config, copied from the committed
+  Task A manifest: `train.bin 6d0e47cd…`, `val.bin 03e0dd1a…`,
+  `val-eval-2M.bin bde526d2…`, tokenizer `019568a2…` (frozen, unchanged).
+- **`data.eval_bin` = distinct eval set:** `val-eval-2M.bin` is loaded as its
+  own shard (never a runtime prefix slice of val.bin). **Selection metric
+  definition (mechanical, symmetric by construction):** one deterministic
+  full pass in non-overlapping windows of seq_len+1 at stride seq_len —
+  every token after the first predicted exactly once, trailing partial
+  window dropped and its size recorded (`eval_tokens_dropped`; 1,151 tokens
+  at 2.0M/1024) — batched at the training batch size (16), bf16 forward +
+  fp32 loss accumulation (AP-16), token-weighted mean; written to the log as
+  `final_eval` and to the summary as `final_eval_loss`. Identical code path,
+  data, and batching for both models.
+- **`--dry-run` mode:** parse + validation + model construction + path
+  resolution, zero steps, no log/ckpt/GCS access. All 6 configs PASS
+  (params + 59,998,208 total tokens as above; shard paths resolve to
+  `data/m2/`, present only on the pod; tokenizer present locally, sha ✓).
+- **Bootstrap:** `scripts/pod_bootstrap.sh` step 6 pulls
+  `gs://ssra-poc-ew3/m2/data/m2-data-900m/{train,val,val-eval-2M}.bin` +
+  `shards_meta.json` → `data/m2/` (download only; integrity enforced by the
+  harness gates). Identical token stream / document order / step count /
+  batch schedule for both models follows from identical configs + seed +
+  the shared loader (M2-assignment §3).
+- `scripts/data_scale.py` NOT run — data is final (Task A).
+
+**Local verification (free):**
+- `pytest tests/` → **64 passed, 1 skipped** — the skip is
+  `test_loglinear_integration` (tests/test_baselines.py:47, Triton absent on
+  the local machine; this is the same known Phase-4-only item that FAILS on
+  the GPU pod per assignment §4). No other failure → proceed.
+- Local smoke `m2-sweep-localsmoke-r0` (config committed pre-launch per run
+  discipline; throwaway name per the task brief, never one of the six AP-21
+  names): tiny SSRA on OLD Phase-0 shards, CPU fp32, 12 steps, no GCS.
+  Exercised gates (4/4 OK), distinct `eval_bin` load, `final_eval` full pass
+  (1306 windows / 334,336 tokens / 56 dropped), P-C diagnostics, JSONL log
+  `logs/m2-sweep-localsmoke-r0.log`. **Harness plumbing only — no
+  conclusions of any kind from its loss (spec §16).**
+
+**Ledger (T+1, console data from Daniel 2026-07-14):** `ssra-m2-recal`
+$0.9700 CONFIRMED (did not grow to the $1.30 estimate) and `ssra-m2-data`
+$0.5567 ≈ 0.49 EUR CONFIRMED — both provisional flags closed, appended to
+`results/runs.md`; the billed totals in §A.5 and the Task A ledger note were
+already filled and match — verified, not modified. Cumulative ≈ **5.39 EUR
+≈ 1.8 %** of the 300 EUR cap.
+
+**Open points for Daniel (none blocking, veto applies):** (1) the
+`final_eval` windowing definition above (assignment fixed "fp32 accumulation
++ identical eval batching" but not the exact batching — the full
+deterministic non-overlapping pass was chosen as the mechanical symmetric
+reading); (2) interval picks (200/25/500) — both stand unless vetoed before
+pod deploy.
+
+### B.1+ Pod execution (NOT STARTED)
 
 Separate GPU pod launch per assignment §2/§4; sections (i) AP-19 step-0
 capture, (ii) GPU env snapshot + pytest, (iv) run table, (v) selection table,
