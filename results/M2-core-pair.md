@@ -98,8 +98,49 @@ only: two run configs, `scripts/cost_gate.py` (reads logs), bootstrap
 verification block. Model code remains `9417399`-certified lineage; harness
 semantics unchanged.
 
-## §i Pre-flight record (AP-19 step 0, AP-23 verification) — pending pod session
-## §ii Environment snapshot + pytest — pending pod session
+## §i Pre-flight record (2026-07-14)
+
+- **AP-19 step 0 (verbatim, recorded by Daniel at deploy):** "Community price
+  not capturable in deploy flow, 2026-07-14 (5th occurrence)". No backfill.
+  Secure-vs-Community comparison not an expected deliverable (D-log
+  2026-07-14 amendment).
+- **Booked HW (console 2026-07-14, Pravidlo W):** pod `ssra-m2-core`
+  (`bxwa0whm15v8mi`), A100 SXM 80 GB Secure, EUR-IS-1, 32 vCPU advertised
+  (cgroup quota 27.2 → thread limits `OMP_NUM_THREADS=MKL_NUM_THREADS=27`
+  exported for every process), 60 GB container disk, no network volume.
+  Rate: **$1.49/hr GPU + $0.008/hr disk = $1.50/hr total**.
+- **Early cost gate threshold recomputed at the booked rate:** 30 EUR ×
+  1.1430 / $1.50 = 22.86 h ⇒ break-even **≈ 10,329 tok/s** on 850,001,920
+  tokens (steady-state below ⇒ STOP, ABORTED-cost-gate). ECB 1.1430 carried
+  (no top-up).
+- **Credit check:** ≥ $40 headroom confirmed by Daniel at deploy (handoff).
+- **AP-17:** secret injected at deploy as `GCP_SA_KEY_B64`; bootstrap decoded
+  key (SA `ssra-runpod@ssra-poc.iam.gserviceaccount.com`), **sanity gate
+  `gsutil ls gs://ssra-poc-ew3` PASSED before any billable work**.
+- **AP-23 capability verification (bootstrap step 7): PASSED** — runpodctl
+  present (`/usr/bin/runpodctl`), `RUNPOD_POD_ID=bxwa0whm15v8mi`, pod-scoped
+  `RUNPOD_API_KEY` present (value not printed). Self-terminate is the primary
+  idle eliminator; manual window is fallback.
+- **Repo delivery:** git bundle at `73a783c` (HTTPS clone not attempted;
+  bundle is the known path), cloned clean on pod at `/workspace/ssra`.
+- **Terminate window:** projected session ≈ 21.5 h [ODHAD] posted to Daniel
+  pre-deploy; refined ETA posted after the SSRA early cost gate (§3.4).
+
+## §ii Environment snapshot + pytest
+
+- GPU: NVIDIA A100-SXM4-80GB (81,920 MiB), driver 580.159.04.
+- torch 2.12.0+cu126 (bootstrap pin; image shipped 2.4.1+cu124), CUDA
+  runtime 12.6, python 3.11.10, gsutil 5.37.
+- Image: project cu124 class (container `CUDA_VERSION=12.4.1`); image
+  tag/digest not exposed in the pod env — Daniel's console deploy record is
+  authoritative (same limitation as prior pods).
+- Code: commit `73a783c` (model code `9417399` lineage unchanged).
+- Data shards byte-exact: train.bin 1,827,211,240 B (= 913,605,620 tok ×
+  2 B), val.bin 96,101,342 B, val-eval-2M.bin 4,000,000 B; harness sha256
+  gates verified 4/4 in-run (meta `sha256_verified`).
+- **pytest: 64 passed, 1 failed in 51.5 s — the single failure is exactly
+  the known `test_loglinear_integration`** (§B.2 precedent; box-specific).
+  Full output: `logs/m2-core-pytest.log`. Gate: PASS (no OTHER failure).
 ## §iii Run table — pending pod session
 ## §iv G1 input table — pending pod session
 ## §v Loss-curve plots — pending pod session
