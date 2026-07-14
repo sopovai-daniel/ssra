@@ -1,0 +1,46 @@
+# M2 Phase 2 Task B — LOCAL harness-plumbing smoke (assignment step 3), free.
+# Throwaway run_name per the task brief (never one of the six AP-21 sweep
+# names). Exercises: sha256 hard gates, distinct eval_bin loading, the
+# final_eval selection-metric pass, JSONL logging. Runs on the OLD Phase-0
+# shards on the local CPU. NO GCS reads or writes, no checkpointing.
+# NO CONCLUSIONS OF ANY KIND from its loss (spec §16) — plumbing only.
+arch: ssra
+run_name: m2-sweep-localsmoke-r0
+model:
+  d: 64
+  h: 4
+  n_layers: 2
+  n_max: 1024
+  m: 16
+  w: 64
+  pool: p1
+  tied_embeddings: true
+  dropout_attn: 0.0
+  dropout_resid: 0.0
+data:
+  train_bin: data/phase0/train.bin
+  val_bin: data/phase0/val.bin
+  eval_bin: data/phase0/val.bin  # plumbing: distinct-key code path; same file
+  tokenizer: artifacts/tokenizer/fineweb-edu-bpe-16384.json
+  vocab: 16384
+  sha256:                  # gates exercised against local Phase-0 artifacts
+    train_bin: 928a3e5ee1ed07e7771447558c8ef5282adaad2c0044c990cb053792ddca9c9b
+    val_bin: a8faa017b5dd36e5ae8a51f88d7ee7561a29078cce54c9ab3a52455dab1256ef
+    eval_bin: a8faa017b5dd36e5ae8a51f88d7ee7561a29078cce54c9ab3a52455dab1256ef
+    tokenizer: 019568a206fe6ccc4bc2e90c750d660979d3fd3add159e302a0dfa4be0d669a0
+training:
+  steps: 12
+  batch_size: 4
+  seq_len: 256
+  lr: 3.0e-4
+  warmup_steps: 2
+  weight_decay: 0.01
+  lr_min_frac: 0.1
+  seed: 1337
+  device: cpu
+  precision: fp32
+  val_every: 5
+  val_batches: 2
+  log_every: 5
+  ckpt_dir: checkpoints/m2-sweep-localsmoke-r0
+  ckpt_every: 0            # no checkpoints, no gcs_ckpt_dir (no GCS writes)

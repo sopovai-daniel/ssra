@@ -123,4 +123,13 @@ for f in train.bin val.bin shards_meta.json; do
 done
 log "data shards in place: $(ls -l data/phase0 | tail -n +2 | awk '{print $9, $5}' | tr '\n' ' ')"
 
-log "DONE - pod ready for calibration (pytest, then experiments/M2-cal-*.yaml)"
+# ---- 6. M2 token shards (Task A output; M2-phase2-sweep Task B) --------------
+# Download only — integrity is enforced by the harness sha256 hard gates
+# (train.py verify_data_gates) before any training step.
+mkdir -p data/m2
+for f in train.bin val.bin val-eval-2M.bin shards_meta.json; do
+    [[ -s data/m2/$f ]] || gcloud storage cp "$BUCKET/m2/data/m2-data-900m/$f" data/m2/
+done
+log "m2 shards in place: $(ls -l data/m2 | tail -n +2 | awk '{print $9, $5}' | tr '\n' ' ')"
+
+log "DONE - pod ready (pytest, then the committed experiments/*.yaml for this task)"

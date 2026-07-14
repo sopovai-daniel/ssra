@@ -52,6 +52,18 @@ unchanged on 2026-07-13, provisional, re-check due 2026-07-14; `ssra-m2-data`
 spend: **≈ 5.39 EUR** (4.05 final + 0.85 provisional + 0.49 provisional) of the
 300 EUR envelope.
 
+Ledger confirmation (T+1 re-check, console data supplied by Daniel 2026-07-14;
+appended per the D-log 2026-07-13 correction row — prior rows and notes left
+unchanged, append-only):
+- pod `ssra-m2-recal`: **$0.9700 ≈ 0.85 EUR CONFIRMED** at T+1 (2026-07-14) —
+  did NOT grow to the CC wall-clock estimate $1.30; provisional flag CLOSED.
+- pod `ssra-m2-data`: **$0.5567 ≈ 0.49 EUR CONFIRMED** at T+1 (2026-07-14)
+  (region EUR-IS-1, ~0.98 h billed); provisional flag CLOSED. The billed-total
+  figures already filled in `results/M2-sweep.md` §A.5 and the Task A ledger
+  note above match this confirmed value — verified, not modified.
+- Cumulative M2 spend after confirmation: **≈ 5.39 EUR ≈ 1.8 %** of the
+  300 EUR cap (4.05 final + 0.85 confirmed + 0.49 confirmed; ECB 1.1430).
+
 Ledger note (2026-07-13, re-calibration): per-run EUR above are wall-clock x $1.49/hr
 estimates; the console-authoritative billed total for pod `ssra-m2-recal`
 (`1u7wmoy6l71ull`) is **$0.9700 ~ 0.85 EUR** (console 2026-07-13, ECB 1.1430;

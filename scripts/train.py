@@ -16,13 +16,22 @@ YAML layout: spec §13 {model:, p3:} sections plus
   data:     char mode  -> {url: str, val_frac: float}
             token mode -> {train_bin: str, val_bin: str, vocab: int}
                           (vocab optional if shards_meta.json sits beside .bin)
+            optional   -> eval_bin: str   (distinct fixed eval shard; final
+                          full-coverage eval on it = the sweep selection
+                          metric, M2-phase2-sweep §3)
+                          tokenizer: str  (frozen artifact, gate only)
+                          sha256: {train_bin|val_bin|eval_bin|tokenizer: hex}
+                          (hard gates: every listed file's sha256 must match
+                          BEFORE any training step, else abort)
   training: {steps, batch_size, seq_len, lr, warmup_steps, seed, device,
              val_every, val_batches, log_every, lr_min_frac, weight_decay,
              precision: fp32|bf16, ckpt_dir, ckpt_every, resume, gcs_ckpt_dir}
 
 Usage:
-  .venv/bin/python scripts/train.py experiments/<run>.yaml [--resume]
-Writes logs/<run_name>.log (JSONL) + final summary line.
+  .venv/bin/python scripts/train.py experiments/<run>.yaml [--resume] [--dry-run]
+Writes logs/<run_name>.log (JSONL) + final summary line. --dry-run parses the
+config, builds the model on CPU and resolves data paths, then exits: zero
+training steps, no log file, no checkpoint, no GCS access.
 """
 
 from __future__ import annotations
@@ -55,8 +64,41 @@ from ssra.pool import P3TopKSelect  # noqa: E402
 
 DATA_DIR = ROOT / "data"
 
+BUILDERS = {"ssra": SSRALM, "flat": FlatLM, "megabyte": MegabyteLM}
+
 
 # ---- data loading -----------------------------------------------------------
+
+def sha256_file(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def verify_data_gates(data_cfg: dict) -> list[str]:
+    """Hard sha256 gates (M2-phase2-sweep Task B): every key listed under
+    data.sha256 names a path entry in the data section; the on-disk file's
+    sha256 must equal the recorded value BEFORE any training step. Mismatch
+    or missing file aborts the run."""
+    gates = data_cfg.get("sha256") or {}
+    verified = []
+    for key, expected in sorted(gates.items()):
+        rel = data_cfg.get(key)
+        if rel is None:
+            raise SystemExit(f"[gate] sha256 gate names '{key}' but data.{key} "
+                             f"is not set in the config")
+        p = ROOT / rel
+        if not p.exists():
+            raise SystemExit(f"[gate] sha256 gate FAILED: {key} missing: {p}")
+        actual = sha256_file(p)
+        if actual != expected:
+            raise SystemExit(f"[gate] sha256 gate FAILED for {key} ({rel}):\n"
+                             f"  actual   {actual}\n  expected {expected}")
+        print(f"[gate] sha256 OK: {key} ({rel})")
+        verified.append(key)
+    return verified
 
 def get_corpus(url: str) -> str:
     DATA_DIR.mkdir(exist_ok=True)
@@ -128,6 +170,35 @@ def autocast_ctx(device: str, precision: str):
 
 
 @torch.no_grad()
+def final_eval(model, ids: torch.Tensor, t: dict, device: str,
+               precision: str) -> dict:
+    """Selection-metric eval (M2-phase2-sweep §3): one deterministic full pass
+    over the fixed eval shard in non-overlapping windows of seq_len+1 at
+    stride seq_len — every token after the first is predicted exactly once;
+    the trailing partial window is dropped (count recorded). Batching is the
+    training batch size, so the schedule is identical for every run of the
+    sweep by construction. Loss accumulates in fp32 (AP-16), token-weighted."""
+    model.eval()
+    seq, bs = t["seq_len"], t["batch_size"]
+    n_win = (len(ids) - 1) // seq
+    total_nll, total_tok = 0.0, 0
+    for i in range(0, n_win, bs):
+        rows = [ids[j * seq : j * seq + seq + 1]
+                for j in range(i, min(i + bs, n_win))]
+        x = torch.stack(rows).to(device)
+        with autocast_ctx(device, precision):
+            logits = model(x[:, :-1])[0]
+        nll = F.cross_entropy(logits.flatten(0, 1).float(),
+                              x[:, 1:].flatten(), reduction="sum")
+        total_nll += nll.item()
+        total_tok += x.shape[0] * seq
+    model.train()
+    return {"eval_loss": round(total_nll / total_tok, 5),
+            "eval_windows": n_win, "eval_tokens": total_tok,
+            "eval_tokens_dropped": len(ids) - 1 - n_win * seq}
+
+
+@torch.no_grad()
 def validate(model, val, t: dict, device: str, gen, precision: str) -> float:
     model.eval()
     losses = []
@@ -143,7 +214,7 @@ def validate(model, val, t: dict, device: str, gen, precision: str) -> float:
 
 # ---- training ---------------------------------------------------------------
 
-def main(path: str, resume_flag: bool):
+def main(path: str, resume_flag: bool, dry_run: bool = False):
     raw = yaml.safe_load(Path(path).read_text())
     arch = raw.pop("arch", "ssra")
     run_name = raw.pop("run_name", Path(path).stem)
@@ -153,12 +224,45 @@ def main(path: str, resume_flag: bool):
     precision = t.get("precision", "fp32")
     t["precision"] = precision  # ensure recorded in meta via **t (no duplicate)
 
+    if dry_run:
+        # Config-load dry run: parse + validate + model construction + path
+        # resolution. Zero training steps, no data load (shards may live only
+        # in GCS), no log/checkpoint writes, no GCS access.
+        vocab = data_cfg.get("vocab")
+        if vocab is None:
+            raise SystemExit("[dry-run] data.vocab required (shards not loaded)")
+        raw.setdefault("model", {})["vocab"] = int(vocab)
+        cfg = config_from_dict(raw)
+        model = BUILDERS[arch](cfg)
+        paths = {k: {"resolved": str(ROOT / data_cfg[k]),
+                     "exists": (ROOT / data_cfg[k]).exists()}
+                 for k in ("train_bin", "val_bin", "eval_bin", "tokenizer")
+                 if k in data_cfg}
+        report = {"dry_run": {
+            "run": run_name, "arch": arch, "pool": cfg.pool,
+            "params": sum(p.numel() for p in model.parameters()),
+            "vocab": int(vocab), "paths": paths,
+            "sha256_gates": sorted((data_cfg.get("sha256") or {})),
+            "steps": t["steps"],
+            "tokens_per_step": t["batch_size"] * t["seq_len"],
+            "total_tokens": t["steps"] * t["batch_size"] * t["seq_len"],
+            "warmup_steps": t["warmup_steps"], "lr": t["lr"],
+            "seed": t["seed"], "precision": precision,
+            "gcs_ckpt_dir": t.get("gcs_ckpt_dir"),
+        }}
+        print(json.dumps(report, indent=2))
+        return
+
+    gates_verified = verify_data_gates(data_cfg)  # hard gate, aborts on fail
     train_ids, val_ids, vocab = load_data(data_cfg)
+    eval_ids = None
+    if "eval_bin" in data_cfg:  # distinct fixed eval shard (selection metric)
+        eval_ids = torch.from_numpy(np.asarray(
+            load_shard(str(ROOT / data_cfg["eval_bin"])), dtype=np.int64))
     raw.setdefault("model", {})["vocab"] = vocab
     cfg = config_from_dict(raw)
     torch.manual_seed(t["seed"])
-    builders = {"ssra": SSRALM, "flat": FlatLM, "megabyte": MegabyteLM}
-    model = builders[arch](cfg).to(device).train()
+    model = BUILDERS[arch](cfg).to(device).train()
     n_params = sum(p.numel() for p in model.parameters())
 
     opt = torch.optim.AdamW(model.parameters(), lr=t["lr"],
@@ -186,6 +290,8 @@ def main(path: str, resume_flag: bool):
     meta = dict(run=run_name, arch=arch, pool=cfg.pool, params=n_params,
                 vocab=vocab, data=data_cfg,
                 train_tokens=len(train_ids), val_tokens=len(val_ids),
+                eval_tokens=len(eval_ids) if eval_ids is not None else None,
+                sha256_verified=gates_verified,
                 torch=torch.__version__,
                 commit=commit, config=str(Path(path)),
                 resumed_from=start_step if start_step else None, **t)
@@ -278,7 +384,15 @@ def main(path: str, resume_flag: bool):
 
     if ckpt_every:
         checkpoint(t["steps"])  # final checkpoint at run end (AP-11)
+    ev = None
+    if eval_ids is not None:  # selection metric: full pass over eval_bin
+        ev = final_eval(model, eval_ids, t, device, precision)
+        ev["eval_bin"] = data_cfg["eval_bin"]
+        log.write(json.dumps({"final_eval": ev}) + "\n")
+        log.flush()
+        print(json.dumps({"final_eval": ev}))
     summary = {"final_val_loss": rec["val_loss"], "final_val_bpc": rec["val_bpc"],
+               "final_eval_loss": ev["eval_loss"] if ev else None,
                "wall_clock_s": round(time.time() - t0, 1), "run": run_name,
                "tok_per_s": tok_per_s(), "meas_steps": meas_steps,
                "tokens_per_step": tokens_per_step,
@@ -293,5 +407,8 @@ if __name__ == "__main__":
     ap.add_argument("config")
     ap.add_argument("--resume", action="store_true",
                     help="resume from <ckpt_dir>/latest.pt if present (AP-11)")
+    ap.add_argument("--dry-run", action="store_true",
+                    help="parse config + build model + resolve paths, then "
+                         "exit: zero steps, no log/checkpoint/GCS writes")
     args = ap.parse_args()
-    main(args.config, args.resume)
+    main(args.config, args.resume, args.dry_run)
