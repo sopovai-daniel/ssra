@@ -1,0 +1,47 @@
+# T5 data window: steps 6450..6550 (inclusive), shard data/m2/train.bin (913605620 tokens), seed 1337, eot_id 0
+
+## Baseline (2048 independent windows, seed 20260715)
+
+- eot_count: mean 0.9380, std 0.9173, p95 3.0000, p99 3.0000, max 5.0000
+- distinct_frac: mean 0.4641, std 0.0501, p95 0.5312, p99 0.5547, max 0.5840
+- entropy_nats: mean 5.5341, std 0.1724, p95 5.7523, p99 5.8226, max 5.9065
+- longest_run: mean 1.2290, std 1.1704, p95 2.0000, p99 3.0000, max 48.0000
+- windows with longest_run >= 8: 2/2048 (heavy tail -- z-scores on longest_run overstate significance)
+
+per-step table -> /Users/ds/Developer/ssra/results/M2-spike-diag-T5-steps.csv
+
+## Steps with |z| >= 3 on any batch-mean stat
+
+- step 6473: eot_count_z=3.0
+- step 6487: eot_count_z=3.27
+- step 6504: longest_run_z=5.84
+- step 6532: longest_run_z=3.06
+
+## Window overlap within steps 6450..6550
+
+- windows: 1616; overlapping adjacent pairs: 2 (uniform-sampling expectation ~2.9)
+  - step 6522 win 1 (start 739127839) ~ step 6483 win 14 (start 739128154)
+  - step 6498 win 13 (start 815211978) ~ step 6516 win 12 (start 815212433)
+
+## Decoded excerpts (5 lowest-entropy + 5 longest-run windows, first 240 chars each)
+
+- step 6455 win 1 (start 448133555, entropy 4.419, run 1 of token -1, eot 0):
+    '� رمح Abdullah narrated to us Abu Ibrāhim al-Burjumāni narrated to us al-Faraj ibn Faḍala narrated to us from Abdullah ibn ‘Amr ibn ‘Uthmān from Fāṭima bint Ḥussain from Ḥussain from his father from the Prophet peace be upon him, he said: D'
+- step 6497 win 4 (start 678697378, entropy 4.468, run 1 of token -1, eot 0):
+    'дат 9. to sit entrance tests – проходить вступительные экзамены 10. Clinical Aptitude Test – тест на пригодность к медицинской профессии 11. delivery of medical education – проведение обучения медицинским предметам 12. with little input fro'
+- step 6479 win 14 (start 331621771, entropy 4.603, run 2 of token 65, eot 0):
+    'mo), or Z if no particle is possible. What is in the bag? Zisyo ga arimasu yo. Which one would you like? Kore o kudasai. Which one did you use? Kono konpyuutaa o tukaimasita. Did you buy that one over there? Iya, kore o kaimasita. Do both y'
+- step 6523 win 13 (start 842016572, entropy 4.670, run 1 of token -1, eot 0):
+    "m.). 10 hektometers = 1 kilometer (Km.). 10 kilometers = 1 myriameter (Mm.). * In the common pronunciation of these words the primary accent Is on the first syllable and a secondary accent on the penultimate syllable; thus, cen'timfiter. In"
+- step 6455 win 10 (start 187269876, entropy 4.734, run 1 of token -1, eot 0):
+    "3) Antifa (2) Apartheid (1) AR. LEESE (4) ARCHAEOLOGY (3) Argentina (1) Armenia (4) Armenian Genocide (1) Art (15) Arthur Koestler (1) Astronomy (30) ATHEISM (1) AUSTRALIA (2) AUSTRIA (1) Ayaan Hirsi Ali (3) Baha'i faith (1) BALI (1) Balkan"
+- step 6504 win 0 (start 635918756, entropy 5.680, run 27 of token 29, eot 1):
+    '===========================**Important note** - contact our company for very powerful solutions for IP management (IP'
+- step 6532 win 10 (start 211769480, entropy 5.511, run 10 of token 29, eot 1):
+    '. ========= THANKS FOR VIEWING ===========Jean Toomer’s “Karintha” is a unique piece of literature;'
+- step 6456 win 10 (start 742246403, entropy 5.042, run 8 of token 1219, eot 0):
+    ' 9 l O O o copepods pankton 9 9 0 o o 9 9 0 0 9 9 9 9 9 9 9 9 0 00 0000 0 0 9 9 qbo 0 00 9 0 0 0 0 0 9 .'
+- step 6485 win 5 (start 108824189, entropy 5.685, run 8 of token 2859, eot 1):
+    '3% - Wrong side of road ………3.1% - Other ………………………….8.7% Less Accidents = Less Premiums The vehicle safety technologies'
+- step 6532 win 6 (start 840060437, entropy 5.471, run 5 of token 432, eot 0):
+    '–70. PMID 25829340. doi:10.1161/cir.0000000000000207. - Wolff T, Miller T,'
