@@ -164,4 +164,23 @@ semantics unchanged.
 ## §vii Cost ledger — pending pod session
 ## §viii M3 handoff (checkpoints + config hashes) — pending pod session
 ## §ix Deviations — pending pod session
-## §x Open questions — pending pod session
+
+## §x Open questions
+
+- **OQ-1 (2026-07-15, in-flight): SSRA loss spike without NaN/inf.**
+  `m2-core-ssra-s2-850m` train loss jumped 3.97 → 7.45 in the 25-step window
+  6,475 → 6,500 (lr 9.73e-4, no coincident val/ckpt boundary; grad-clip 1.0
+  active) and has not recovered for 4,500+ steps (train 7.2–8.4, val
+  7.6–8.4 vs 3.93 at step 6,400). Loss finite throughout — the §3 NaN/inf
+  abort trigger did not fire. P-C: `p1_attn_entropy` held ≈ ln(32) through
+  the spike itself (3.4645 @ 6,500) and de-uniformized only afterwards
+  (3.01 @ 11,000; participation [0.03, 0.17]) — symptom, not precursor.
+  Assignment does not enumerate this case; per the ambiguity rule the
+  decision (continue vs abort) was surfaced to Daniel in-session with
+  diagnostics + recommendation (continue: pre-approved budget, no-retry rule
+  makes this the one shot, abort forecloses a recovered result). Run left
+  RUNNING pending his call. **Proposed D-log entry:** "2026-07-15: M2
+  Phase 3 SSRA 850M run exhibited a finite non-recovering loss spike at
+  step ~6,500; CC continued per assignment default / Daniel ordered abort
+  at step N (choose one); stability arm of G1 to be judged on the full
+  curve; no retry, no re-tuning (assignment §3/§8)."
