@@ -112,5 +112,13 @@ Smoke chain provenance: runs executed back-to-back (`logs/M1-smoke-chain.log`);
 docs-only HO-04 commit landed 13 s after the chain started — model code
 identical for the whole chain.
 
-| m2-core-flat-s2-850m | 2026-07-14 (pre-run row) | `experiments/m2-core-flat-s2-850m.yaml` (commit 76fc814) | flat pre-norm Transformer | 84,301,440 params (dry-run), FineWeb-Edu BPE-16k m2 shards, 51880x16x1024 = 850,001,920 tok | A100 80GB class (booked GPU/tier/rate recorded at launch, Pravidlo W) | PLANNED | — (G1 input: final_eval_loss on val-eval-2M) | `logs/m2-core-flat-s2-850m.log` (expected) | M2 Phase 3 core pair (docs/cc/M2-phase3-core-pair.md §2); lr 1e-3 / dropout 0.0 (sweep selections §B.4); seed 1337; row updated post-run |
-| m2-core-ssra-s2-850m | 2026-07-14 (pre-run row) | `experiments/m2-core-ssra-s2-850m.yaml` (commit 76fc814) | SSRA P1 | 84,647,040 params (dry-run), ditto | ditto | PLANNED | — (G1 input: final_eval_loss on val-eval-2M) | `logs/m2-core-ssra-s2-850m.log` (expected) | ditto; scoped 30 EUR hard cap (D-log 2026-07-13) enforced in-flight by the §3 early cost gate (`scripts/cost_gate.py`, steps ~1000–1500, ≥200-step window); row updated post-run |
+| m2-core-flat-s2-850m | 2026-07-14 | `experiments/m2-core-flat-s2-850m.yaml` (commit 76fc814) | flat pre-norm Transformer | 84,301,440 params, FineWeb-Edu BPE-16k m2 shards, 51880x16x1024 = 850,001,920 tok | RunPod A100 SXM 80GB Secure $1.50/hr (GPU+disk), EUR-IS-1, pod ssra-m2-core (bxwa0whm15v8mi), bf16 | DONE | **final_eval_loss 3.21201** (val-eval-2M) = ppl 24.829; 137,252 tok/s, 10.846 GiB; wall 7,359s (~2.68 EUR) | `logs/m2-core-flat-s2-850m.log` | M2 Phase 3 core pair, G1 denominator (docs/cc/M2-phase3-core-pair.md); stable, no divergence; ckpt gs://ssra-poc-ew3/m2/core/m2-core-flat-s2-850m/latest.pt; no quality conclusions beyond G1 metric (spec §16) |
+| m2-core-ssra-s2-850m | 2026-07-14 | `experiments/m2-core-ssra-s2-850m.yaml` (commit 76fc814) | SSRA P1 | 84,647,040 params, ditto | ditto | DONE (unstable, OQ-1) | **final_eval_loss 7.55885** (val-eval-2M) = ppl 1917.64; 12,376 tok/s, 41.2 GiB; wall 70,467s (~25.69 EUR ≤ 30 cap) | `logs/m2-core-ssra-s2-850m.log` | ditto; early cost gate PASS (12,387 tok/s @ steps 1000–1500, proj 25.01 EUR); **finite loss spike step 6,475→6,500 (3.97→7.45), never recovered, no NaN/inf** — full diagnostics `results/M2-core-pair.md` §iv/§x OQ-1; G1 verdict Daniel's; ckpt gs://ssra-poc-ew3/m2/core/m2-core-ssra-s2-850m/latest.pt |
+
+Ledger note (2026-07-15, Phase 3 core-pair pod): per-run EUR above are
+wall-clock × $1.50/hr estimates [ODHAD]; pod `ssra-m2-core` (`bxwa0whm15v8mi`)
+session ≈ 22.5 h ⇒ ≈ $33.7 ≈ 29.5 EUR (ECB 1.1430). Billed console total to be
+read by Daniel ≥ 2 h after termination (D-log 2026-07-14 rule; append-only
+corrections). Scoped-cap accounting: SSRA run ≈ 25.69 EUR ≤ 30 EUR ✓ (cap
+exclusive to this run); flat + overhead under unchanged AP-12 ✓. Cumulative M2
+≈ 11.75 + 29.5 ≈ **41.3 EUR ≈ 13.8 %** of 300.
