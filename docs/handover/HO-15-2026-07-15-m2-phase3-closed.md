@@ -65,3 +65,9 @@ rozhodnutie o max 1 retune iteracii per 03 (kandidat: symetricky par
 architektonicke zavery z ppl pomeru (spec §16); G1 verdikt a retune su
 Danielove rozhodnutia.
 ```
+
+---
+
+## Addendum A1 (2026-07-15, po oversight review + spike diagnostike)
+
+**Korekcia §1 (stav jednou vetou) a §3 (riadok „checkpointy“):** tvrdenie „spike okno zabalené ckptmi **6 000 / 7 000** (ckpt_every 1 000) ⇒ diagnostika lokálne, bez GPU spendu“ bolo **nesprávne** — neoverená domnienka odvodená z kadencie checkpointovania bez overenia retenčnej sémantiky (vlastníctvo: Claude; presne trieda chyby, ktorú Pravidlo W zakazuje). Skutočnosť [OVERENÉ, `results/M2-spike-diagnostics.md` §1 + `src/ssra/checkpoint.py`]: `save_checkpoint` zapisuje a mirroruje výhradne `latest.pt` pod tým istým menom objektu, bucket versioning OFF (1 generácia/objekt) ⇒ per-step checkpointy neexistujú a T2–T4/T6 diagnostiky boli pre Phase 3 beh nevykonateľné; vykonaný bol T5 (negatívny — okno korpusovo typické). Evidencia pre Phase 3 je definitívne log-only. Otvorené položky #1–#5 tohto HO sú uzavreté D-logom 2026-07-15 (druhý zápis): G1 = FAIL, AP-24 prijaté, retune GO per `docs/cc/M2-phase3b-retune.md` — ktorého inštrumentácia (grad-norm logging + step-tagged ckpt mirror) uzatvára presne túto evidenčnú medzeru.
