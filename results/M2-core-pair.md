@@ -89,7 +89,19 @@ AP-23 sequence itself (GCS listing check → results committed AND pushed →
 explicit completion signal → `runpodctl remove pod $RUNPOD_POD_ID`) is a
 session-side runbook executed only after all three preconditions are
 confirmed; it cannot run before them by construction of the procedure.
-Actual on-pod verification outcome: **pending pod session**.
+Actual on-pod verification outcome (bootstrap step 7): **PASSED**.
+
+**AP-23 execution record (2026-07-15):** preconditions confirmed in order
+(GCS listing verified → results pushed at `ae3b882` → completion signal
+15:32:08Z). First `runpodctl remove pod` invocation FAILED (recorded
+verbatim per §5): `Runpod config file not found` + `API key not found` —
+`RUNPOD_POD_ID` and `RUNPOD_API_KEY` are absent in SSH sessions (the known
+RunPod behavior; bootstrap's step-7 check passed because it reads PID-1
+env). Immediate retry with both values sourced from `/proc/1/environ`
+(values not printed) succeeded at ≈ 15:32:40Z: `pod "bxwa0whm15v8mi"
+removed`; SSH connection-refused confirmed post-terminate. Manual fallback
+window not needed. Lesson recorded for future pods: source both AP-23
+values from PID-1 env in the terminate command itself.
 
 ### §0.5 AP-20 statement
 
