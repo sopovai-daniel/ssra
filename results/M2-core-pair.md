@@ -237,11 +237,6 @@ Caveat for M3: the SSRA checkpoint is post-spike state (val ≈ 7.55) — its
 usability for M3 evaluations is part of Daniel's G1 verdict. Raw logs:
 repo `logs/m2-core-*` + GCS run dirs + `gs://ssra-poc-ew3/m2/core/`
 (pytest, bootstrap, env snapshot).
-## §iv G1 input table — pending pod session
-## §v Loss-curve plots — pending pod session
-## §vi P-C summary (informative, non-gating) — pending pod session
-## §vii Cost ledger — pending pod session
-## §viii M3 handoff (checkpoints + config hashes) — pending pod session
 ## §ix Deviations (all explicit, none silent)
 
 1. Image tag/digest not recorded from inside the pod (no env key exposes
@@ -287,3 +282,59 @@ repo `logs/m2-core-*` + GCS run dirs + `gs://ssra-poc-ew3/m2/core/`
   sustained ≥ 1,000 steps without recovery, is an enumerated in-flight
   STOP (status ABORTED-instability), symmetric for all models; CC executes
   without further confirmation." Daniel's call; not retroactive.
+
+## §xi Corrections & additions (2026-07-15, independent oversight review; append-only)
+
+Full recomputation from the raw committed logs (not from this report)
+verified every headline number in §iii–§vii: both ppl values, the 77.23×
+ratio, token count 850,001,920, param gap +0.41 %, the spike window
+(largest 25-step train jump in the run, +3.4802, exactly at 6,475→6,500),
+zero non-finite losses in 2×(2,076 train + 261 val) records, the cost-gate
+window (12,387.1 tok/s reproduced exactly via the pure-train method;
+naive elapsed-diff gives 12,188.7 — the difference is val/ckpt time,
+confirming the gate measures pure train), break-even 10,329 tok/s, run
+costs 25.69 / 2.68 EUR, ledger 28.78 EUR and cumulative 40.53 EUR
+(13.5 %), warmup fraction, and cosine lr values at the spike
+(lr_min_frac 0.1 schedule reproduces logged 0.000973 / 0.000972). The
+following corrections and additions stand [OVERENÉ from
+`logs/m2-core-ssra-s2-850m.log` / `logs/m2-core-flat-s2-850m.log` unless
+marked otherwise]:
+
+- **C1 (corrects §iv "7.53–8.4 band to run end" and the §x OQ-1 wording):**
+  the post-spike trajectory contains a **second instability episode**:
+  155 train records > 9 nats within steps 16,675–22,100 (71 % of the 218
+  possible records in that span, ~5 sub-blocks — oscillating, not a solid
+  block), train max 10.351 @ 19,775, val max **10.088 @ 19,800**; 37/228
+  post-spike val points > 8.4. Segment view: val [6.6k, 15k) median 7.86;
+  [15k, 25k) median 8.80, max 10.09; last val > 8.0 at step 25,800; the
+  tight 7.52–7.59 band holds only from ~35k. Correct characterization:
+  primary spike + second ~5,400-step episode + late settling. G1 reading
+  unchanged (both arms FAIL); stability evidence strengthened.
+- **C2 (informative, weak):** the flat arm shows a mild elevation in the
+  same token window (3.989 @ 6,525, local z ≈ +2.3 vs the 5k–8k band). A
+  whole-run scan shows comparable local deviations occur ~9× across the
+  flat run at unrelated steps (0.5 % of records) — chance-consistent.
+  Weak evidence for a data-window cause; recorded as a low-expectation
+  diagnostics input only, not a finding.
+- **C3 (log schema fact):** gradient norms are not logged (`grad`/`norm`/
+  `clip` → 0 occurrences in both runs' `.log` and the SSRA `.stdout`).
+  Gradient-scale information is recoverable only from the Adam moments
+  inside checkpoints — which AP-11 checkpoints contain (964.97–969.05 MiB
+  ≈ 84.3–84.6M params × 12 B ≈ fp32 weights + both Adam moments).
+- **C4 (cost cross-check):** billed-hours reconciliation: $32.90 / $1.498
+  = 21.96 h vs summed run walls 21.62 h ⇒ realized session overhead
+  0.34 h ≈ 0.45 EUR. §vii's ≈ 0.9 h / ≈ 1.2 EUR overhead [ODHAD] was ~2×
+  the realized value; the HO-15 decomposition (overhead ≈ 0.4 EUR) is the
+  consistent one. Timeline cross-checks: flat end 19:49:02Z (launch +
+  wall) vs SSRA launch 19:50:19Z (77 s gap); SSRA end 15:24:46Z vs final
+  ckpt object 15:24:37Z. No cap impact.
+- **C5 (OQ-2 quantification — AP-24 retro-test):** trigger "val_loss >
+  running-best + 2 nats, sustained ≥ 1,000 steps (= 6 consecutive val
+  evals @ val_every 200; note: '≥ 5 evals' spans only 800 steps — 6 is
+  the 1,000-step-consistent form)" retro-applied to this run: first
+  breach @ 6,600, fire @ **7,600**; cost-to-fire ≈ 3.76 EUR ⇒ would have
+  saved ≈ 21.9 EUR here. Flat arm: max val regression vs running best =
+  0.0034 nats ⇒ no false positive on the healthy run.
+- **C6 (housekeeping, declared):** removed five leftover template stub
+  headers ("§iv … §viii — pending pod session") that duplicated the
+  filled sections; no content change.
