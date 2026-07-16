@@ -1,0 +1,45 @@
+# M2 Phase 3b frozen-reference smoke (docs/cc/M2-phase3b-retune.md §3
+# verification gate iii): 60-step CPU fp32 run at fixed seed, executed at the
+# pre-instrumentation commit and re-executed after the instrumentation commit;
+# per-step train losses must be BIT-IDENTICAL (training semantics unchanged).
+# Throwaway run_name (never an AP-21 core-pair name; m2-sweep-localsmoke-r0
+# precedent). Runs on the local Phase-0 shards. NO GCS reads or writes.
+# NO CONCLUSIONS OF ANY KIND from its loss (spec §16) — plumbing only.
+arch: ssra
+run_name: m2-3b-frozenref-smoke
+model:
+  d: 128
+  h: 4
+  n_layers: 3
+  n_max: 2048
+  m: 16
+  w: 64
+  pool: p1
+  tied_embeddings: true
+  dropout_attn: 0.0
+  dropout_resid: 0.0
+data:
+  train_bin: data/phase0/train.bin
+  val_bin: data/phase0/val.bin
+  tokenizer: artifacts/tokenizer/fineweb-edu-bpe-16384.json
+  vocab: 16384
+  sha256:                  # gates exercised against local Phase-0 artifacts
+    train_bin: 928a3e5ee1ed07e7771447558c8ef5282adaad2c0044c990cb053792ddca9c9b
+    val_bin: a8faa017b5dd36e5ae8a51f88d7ee7561a29078cce54c9ab3a52455dab1256ef
+    tokenizer: 019568a206fe6ccc4bc2e90c750d660979d3fd3add159e302a0dfa4be0d669a0
+training:
+  steps: 60
+  batch_size: 4
+  seq_len: 256
+  lr: 3.0e-4
+  warmup_steps: 10
+  weight_decay: 0.01
+  lr_min_frac: 0.1
+  seed: 1337
+  device: cpu
+  precision: fp32          # CPU smoke is fp32; bf16 autocast (AP-16) is GPU-only
+  val_every: 20            # exercises the val path (and the AP-24 update rule)
+  val_batches: 4
+  log_every: 1             # per-step train records -> 60-point bit-identity check
+  ckpt_dir: checkpoints/m2-3b-frozenref-smoke
+  ckpt_every: 30           # exercises the AP-11 checkpoint path (no gcs_ckpt_dir)
