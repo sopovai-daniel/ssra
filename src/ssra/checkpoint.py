@@ -46,6 +46,12 @@ def save_checkpoint(path: Path, *, step: int, model, optimizer,
     os.replace(tmp, path)  # atomic on POSIX: latest.pt is never half-written
     if gcs_dir:
         _gcs_upload(path, f"{gcs_dir.rstrip('/')}/{path.name}")
+        # Step-tagged retention (M2 Phase 3b §3): after the latest.pt mirror,
+        # upload the SAME local file once more as an immutable step-<N>.pt
+        # copy (N = completed steps). Blob format and local disk usage are
+        # unchanged; latest.pt stays the resume source. Deleting step-*.pt
+        # objects is a human post-run decision — never delete anything here.
+        _gcs_upload(path, f"{gcs_dir.rstrip('/')}/step-{step}.pt")
     return path
 
 

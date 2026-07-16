@@ -4,6 +4,10 @@
   - bf16 autocast option (AP-16); loss/eval accumulation stays fp32
   - throughput logging (M2 calibration): steady-state tok/s + peak VRAM (cuda)
     in the JSONL records and the final summary
+  - observability (M2 Phase 3b §3-§4): pre-clip grad_norm in each train
+    record; step-tagged GCS checkpoint retention (see ssra.checkpoint);
+    AP-24 in-flight instability stop + Phase 3 §3 NaN/inf immediate abort
+    (exit codes: 3 DIVERGED, 4 ABORTED-instability)
 The M1 char-level path (data: {url, val_frac}) is unchanged and still valid.
 
 One run = one YAML in experiments/ committed BEFORE launch + a row in
@@ -214,6 +218,24 @@ def validate(model, val, t: dict, device: str, gen, precision: str) -> float:
 
 # ---- training ---------------------------------------------------------------
 
+# AP-24 (D-log 2026-07-15; docs/cc/M2-phase3b-retune.md §4): enumerated
+# in-flight instability stop, symmetric for every arm/run. Trigger: current
+# val_loss > (running best val_loss of this run + AP24_MARGIN_NATS) on
+# >= AP24_CONSECUTIVE consecutive val evaluations (no recovery in between;
+# val_every 200 => 1,000 steps sustained). The Phase 3 §3 NaN/inf divergence
+# trigger takes precedence (immediate abort, status DIVERGED).
+AP24_MARGIN_NATS = 2.0
+AP24_CONSECUTIVE = 6
+EXIT_DIVERGED = 3
+EXIT_AP24 = 4
+
+
+def ap24_update(best: float, bad: int, vl: float) -> tuple[float, int]:
+    """One AP-24 state update per (finite) val evaluation: any eval back
+    within best + margin is a recovery and resets the consecutive count."""
+    bad = 0 if vl <= best + AP24_MARGIN_NATS else bad + 1
+    return min(best, vl), bad
+
 def main(path: str, resume_flag: bool, dry_run: bool = False):
     raw = yaml.safe_load(Path(path).read_text())
     arch = raw.pop("arch", "ssra")
@@ -304,6 +326,20 @@ def main(path: str, resume_flag: bool, dry_run: bool = False):
                         run_name=run_name, extra={"arch": arch, "vocab": vocab},
                         gcs_dir=gcs_ckpt)
 
+    # AP-24 trigger state; on resume, rebuilt from this run's own val history
+    # (AP-11 resume continues the SAME run; checkpoint blob format untouched).
+    # A truncated tail line after a kill is expected JSONL damage — skipped.
+    ap24_best, ap24_bad = float("inf"), 0
+    if start_step and log_path.exists():
+        for line in log_path.read_text().splitlines():
+            try:
+                r = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            v = r.get("val_loss")
+            if isinstance(v, (int, float)) and math.isfinite(v):
+                ap24_best, ap24_bad = ap24_update(ap24_best, ap24_bad, v)
+
     # Throughput accounting (M2 deliverable 2: cost+throughput logging).
     # Steady-state tok/s excludes the first MEAS_SKIP steps (CUDA context init,
     # allocator growth, autotune); per-step wall time is sampled without extra
@@ -319,6 +355,28 @@ def main(path: str, resume_flag: bool, dry_run: bool = False):
     def peak_vram_gib() -> float | None:
         return round(torch.cuda.max_memory_allocated() / 2**30, 3) \
             if device == "cuda" else None
+
+    def abort_run(status: str, completed: int, trigger: dict):
+        """Enumerated in-flight aborts — never retried, never re-tuned.
+        "DIVERGED" = Phase 3 §3 NaN/inf trigger (takes precedence): abort
+        immediately WITHOUT a checkpoint write, so a non-finite state can
+        never overwrite the last good latest.pt (single generation/object,
+        bucket versioning OFF). "ABORTED-instability" = AP-24: checkpoint
+        (latest + step-tagged) -> GCS -> mark -> commit+push -> AP-23
+        self-terminate, executed without further confirmation (§4)."""
+        if status == "ABORTED-instability":
+            checkpoint(completed)
+        summary = {"status": status, "run": run_name,
+                   "steps_completed": completed, "trigger": trigger,
+                   "wall_clock_s": round(time.time() - t0, 1),
+                   "tok_per_s": tok_per_s(), "peak_vram_gib": peak_vram_gib()}
+        log.write(json.dumps({"summary": summary}) + "\n")
+        log.close()
+        print(json.dumps({"summary": summary}))
+        if status == "ABORTED-instability" and gcs_ckpt:
+            subprocess.run(["bash", str(ROOT / "scripts" / "ap24_abort.sh"),
+                            run_name, str(completed), gcs_ckpt, str(log_path)])
+        raise SystemExit(EXIT_DIVERGED if status == "DIVERGED" else EXIT_AP24)
 
     t0 = time.time()
     rec = {"step": start_step, "val_loss": float("nan"), "val_bpc": float("nan")}
@@ -341,7 +399,10 @@ def main(path: str, resume_flag: bool, dry_run: bool = False):
         total = loss + cfg.p3.lambda_lb * lb if torch.is_tensor(lb) else loss
         opt.zero_grad(set_to_none=True)
         total.backward()
-        torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+        # clip_grad_norm_ computes and returns the global PRE-clip norm;
+        # capturing it is observability only (M2 Phase 3b §3) — clipping
+        # behavior, loss, optimizer, LR, and data paths are unchanged.
+        grad_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
         opt.step()
         if step >= start_step + MEAS_SKIP:
             train_time += time.perf_counter() - step_t0
@@ -350,6 +411,7 @@ def main(path: str, resume_flag: bool, dry_run: bool = False):
         if diag:
             rec = {"step": step, "train_loss": round(loss.item(), 5),
                    "lr": round(lr_at(step, t), 6),
+                   "grad_norm": round(grad_norm.item(), 5),
                    "elapsed_s": round(time.time() - t0, 1)}
             if tok_per_s() is not None:
                 rec["tok_per_s"] = tok_per_s()
@@ -371,6 +433,8 @@ def main(path: str, resume_flag: bool, dry_run: bool = False):
             log.write(json.dumps(rec) + "\n")
             log.flush()
             print(rec)
+            if rec.get("divergence"):  # NaN/inf: immediate abort (Phase 3 §3)
+                abort_run("DIVERGED", step + 1, rec)
         if step % t["val_every"] == 0 or step == t["steps"] - 1:
             vgen = torch.Generator().manual_seed(val_gen_seed)
             vl = validate(model, val_ids, t, device, vgen, precision)
@@ -379,6 +443,18 @@ def main(path: str, resume_flag: bool, dry_run: bool = False):
             log.write(json.dumps(rec) + "\n")
             log.flush()
             print(rec)
+            if not math.isfinite(vl):  # NaN/inf precedence over AP-24
+                abort_run("DIVERGED", step + 1, rec)
+            ap24_best, ap24_bad = ap24_update(ap24_best, ap24_bad, vl)
+            if ap24_bad >= AP24_CONSECUTIVE:
+                trig = {"ap24": {"step": step, "val_loss": round(vl, 5),
+                                 "running_best": round(ap24_best, 5),
+                                 "consecutive": ap24_bad,
+                                 "margin_nats": AP24_MARGIN_NATS}}
+                log.write(json.dumps(trig) + "\n")
+                log.flush()
+                print(trig)
+                abort_run("ABORTED-instability", step + 1, trig)
         if ckpt_every and (step + 1) % ckpt_every == 0:
             checkpoint(step + 1)  # step+1 = next step to run on resume
 
