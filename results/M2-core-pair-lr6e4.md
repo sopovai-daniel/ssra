@@ -169,17 +169,62 @@ frozen-reference logs. No model code, no spec, no tests, no docs edits.
 Configs and instrumentation are committed BEFORE any launch; no committed
 log or GCS object was overwritten or deleted.
 
-## §i Pre-flight record — pending pod session
+## §i Pre-flight record (2026-07-16)
 
-To be filled at deploy: AP-19 step 0 (Community price capture attempt,
-verbatim, no backfill); booked HW/tier/rate + recomputed 30 EUR break-even
-tok/s at the booked rate; credit ≥ $40 headroom (Daniel, handoff item);
-ECB 1.1430 carried unless top-up; AP-17 sanity gate; AP-23 capability
-check (bootstrap step 7); thread limits = cgroup quota; repo via git
-bundle at the pre-launch commit; terminate-window projection posted
-pre-deploy.
+- **AP-19 step 0 (verbatim, recorded by Daniel at deploy):** "Community
+  price not shown in deploy flow for A100 SXM 80GB, 2026-07-16" —
+  6th occurrence, no backfill.
+- **Booked HW (console 2026-07-16, Pravidlo W):** pod `ne2w6airwb4401`,
+  1× A100 SXM 80 GB Secure on-demand, region US (console "Location" = US;
+  exact datacenter code not captured; EU preference not met — admissible
+  per AP-18, public data / 0 PII). Rate **$1.49/hr GPU + $0.008/hr
+  container disk (60 GB) = $1.50/hr total**; no network volume. Ladder
+  record: A100 PCIe availability at booking not recorded (SXM booked).
+  Console vCPU inconsistent (16 in listing / 24 in details, Xeon Platinum
+  8470); **cgroup quota authoritative**: cpu.cfs_quota 2,040,000 /
+  period 100,000 = 20.4 vCPU ⇒ `OMP_NUM_THREADS=MKL_NUM_THREADS=20`
+  exported for every process.
+- **Early cost gate threshold recomputed at the booked rate:** 30 EUR ×
+  1.1430 / $1.50 = 22.86 h on 850,001,920 tok ⇒ break-even
+  **≈ 10,329 tok/s** (steady-state below ⇒ STOP, ABORTED-cost-gate).
+  ECB 1.1430 carried (no top-up).
+- **Credit check:** $49.49 confirmed by Daniel 2026-07-16 (≥ $40 ✓;
+  ≥ projected session total ≈ $33.6 with ≈ $16 margin).
+- **AP-17:** secret injected as `GCP_SA_KEY_B64` (PID-1 env; SSH-session
+  absence pattern confirmed again); bootstrap decoded key
+  (SA `ssra-runpod@ssra-poc.iam.gserviceaccount.com`), **sanity gate
+  `gsutil ls gs://ssra-poc-ew3` PASSED before any billable work**.
+- **AP-23 capability check (bootstrap step 7): PASSED** — `runpodctl`
+  present, `RUNPOD_POD_ID=ne2w6airwb4401` + pod-scoped `RUNPOD_API_KEY`
+  in `/proc/1/environ` (values sourced from PID-1 env in the terminate
+  step itself, Phase 3 lesson).
+- **Repo:** git bundle at pre-launch commit `a7ea0f5`, cloned on pod,
+  checked out `main` @ `a7ea0f5`.
+- **Terminate window (posted pre-launch, before flat):** session total
+  ≈ 22.4 h [ODHAD] ⇒ AP-23 self-terminate ETA ≈ 07:15–07:30 UTC =
+  09:15–09:30 Bratislava, 2026-07-17; refined after the SSRA cost gate.
+- **Note (git push from pod):** the pod has no git credentials (as in
+  Phase 3) — an unattended AP-24 fire would complete checkpoint + GCS +
+  runs.md mark + local commit, then stop before push and NOT
+  self-terminate (designed AP-23-safe fallback); the supervising session
+  then completes push + terminate. Recorded here, not a deviation.
 
-## §ii Environment + pytest — pending pod session
+## §ii Environment + pytest (2026-07-16, pod `ne2w6airwb4401`)
+
+- Snapshot (`logs/m2-3b-env-snapshot.txt`): A100-SXM4-80GB 81,920 MiB,
+  driver 570.172.08; template "Runpod Pytorch 2.4.0 - SSRA" shipped torch
+  2.4.1+cu124 → bootstrap pinned **torch 2.12.0+cu126** (standing path,
+  CUDA 12.6 on 570-series driver); Google Cloud SDK 576.0.0 (installed by
+  bootstrap); commit `a7ea0f5`; container disk 60 GB (16 % used after
+  shards).
+- Data shards pulled from GCS; integrity enforced by the harness sha256
+  hard gates at run start: **4/4 verified** (`train_bin`, `val_bin`,
+  `eval_bin`, `tokenizer`) in both runs' meta records.
+- **pytest (`logs/m2-3b-pytest.log`): 64 passed, 1 failed in 30.09 s** —
+  the single failure is exactly the known
+  `test_loglinear_integration` (`operator torchvision::nms does not
+  exist`, box-specific text; §B.2 / Phase 3 §ii precedent). No other
+  failure ⇒ gate passed.
 
 ## §iii Run table — pending pod session
 

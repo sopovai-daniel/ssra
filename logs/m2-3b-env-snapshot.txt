@@ -1,0 +1,11 @@
+=== env snapshot 2026-07-16T09:09:22Z pod ne2w6airwb4401 ===
+commit: a7ea0f5
+NVIDIA A100-SXM4-80GB, 81920 MiB, 570.172.08
+torch 2.12.0+cu126 cuda 12.6
+cgroup v1 cpu.cfs_quota_us 2040000 / cpu.cfs_period_us 100000 = 20.4 vCPU -> OMP/MKL threads 20 (console listed 16/24 inconsistent; cgroup authoritative)
+192
+container torch pre-pin: 2.4.1+cu124 (template Runpod Pytorch 2.4.0 - SSRA)
+Google Cloud SDK 576.0.0
+               total        used        free      shared  buff/cache   available
+Mem:             944          73           7          92         863         770
+overlay          60G  9.5G   51G  16% /
