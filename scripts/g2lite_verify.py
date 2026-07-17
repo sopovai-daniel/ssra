@@ -250,6 +250,39 @@ def cmd_v2b(out_dir: Path) -> None:
     write_record(out_dir, "v2b", rec)
 
 
+def cmd_v2b_window(out_dir: Path) -> None:
+    """Verbatim bf16 values for every position of the terminal read-out
+    window at N = 32,768 (V2b addendum). The eval-path positions are
+    1-indexed (`arange(1, n+1)` in flat attention and the read-out), so the
+    last 65-key window of query t = 32,768 is [32704, 32768]; position
+    32,703 is included for the 0-indexed reading. Manual round-to-nearest-
+    even arithmetic predicts the two representable neighbors
+    {32640, 32768} around the window; the verbatim probe values below
+    govern (Pravidlo W)."""
+    lo, hi = 32703, 32768
+    pos = torch.arange(lo, hi + 1, dtype=torch.float64)
+    as_bf16 = pos.to(torch.bfloat16).to(torch.float64)
+    pairs = {int(p): float(v) for p, v in zip(pos.tolist(), as_bf16.tolist())}
+    win_1idx = {p: v for p, v in pairs.items() if p >= 32704}
+    rec = {
+        "verification": "V2b addendum: verbatim bf16 cast of the terminal "
+                        "read-out window positions at N = 32768",
+        "indexing": "eval-path positions are 1-indexed arange(1, n+1); "
+                    "window of query t=32768 (w=64) = [32704, 32768]; "
+                    "32703 recorded for the 0-indexed reading",
+        "manual_prediction": "RNE neighbors {32640, 32768}; 32703 -> 32640 "
+                             "(distance 63 < 65); 32704 is the exact tie "
+                             "32640+64 -> RNE picks the even mantissa "
+                             "32768; 32705..32767 -> nearer 32768; 32768 "
+                             "exact",
+        "verbatim_pos_to_bf16": pairs,
+        "distinct_values_window_1indexed_32704_32768":
+            sorted(set(win_1idx.values())),
+        "distinct_values_incl_32703": sorted(set(pairs.values())),
+    }
+    write_record(out_dir, "v2b-window", rec)
+
+
 # ---- ckpt --------------------------------------------------------------------
 
 def cmd_ckpt(out_dir: Path) -> None:
@@ -358,12 +391,13 @@ def cmd_eregion(out_dir: Path) -> None:
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("subcommand",
-                    choices=("local", "v2b", "ckpt", "eregion"))
+                    choices=("local", "v2b", "v2b-window", "ckpt",
+                             "eregion"))
     ap.add_argument("--out", default="results/g2lite")
     args = ap.parse_args()
     out_dir = ROOT / args.out
-    {"local": cmd_local, "v2b": cmd_v2b, "ckpt": cmd_ckpt,
-     "eregion": cmd_eregion}[args.subcommand](out_dir)
+    {"local": cmd_local, "v2b": cmd_v2b, "v2b-window": cmd_v2b_window,
+     "ckpt": cmd_ckpt, "eregion": cmd_eregion}[args.subcommand](out_dir)
 
 
 if __name__ == "__main__":

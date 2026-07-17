@@ -19,7 +19,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 from baselines.flat import FlatLM  # noqa: E402
 from g2lite_eval import (check_anchor, eval_cell, greedy_generate,  # noqa: E402
-                         run_m0, run_m1, run_m2)
+                         run_m0, run_m1, run_m2, sdpa_backend_gate)
 from needle_gen import generate_suite  # noqa: E402
 from ssra import ModelConfig, SSRALM  # noqa: E402
 from ssra.data import EOT_TOKEN  # noqa: E402
@@ -48,6 +48,13 @@ def tok():
     from tokenizers import Tokenizer
     return Tokenizer.from_file(
         str(ROOT / "artifacts/tokenizer/fineweb-edu-bpe-16384.json"))
+
+
+def test_sdpa_gate_non_cuda_passthrough():
+    """The availability gate applies only on cuda; cpu smoke runs record a
+    note and never abort."""
+    out = sdpa_backend_gate("cpu", "flat", 32768)
+    assert out["device"] == "cpu" and "note" in out
 
 
 def test_anchor_logic():

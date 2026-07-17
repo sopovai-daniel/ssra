@@ -1,0 +1,39 @@
+{
+  "verification": "V2(b,c) + V3 on downloaded checkpoints (first-ever blob read)",
+  "flat": {
+    "gcs": "gs://ssra-poc-ew3/m2/core/m2-core-flat-s2-850m-lr6e4/latest.pt",
+    "local": "checkpoints/g2lite/flat-latest.pt",
+    "bytes": 1011848651,
+    "bytes_expected": 1011848651,
+    "bytes_match": true,
+    "blob_sha256": "559940e74039b5523a5fad3c7984ac5fccb18669f2041183cd9bb00ea6cfba7b",
+    "step": 51880,
+    "run_name": "m2-core-flat-s2-850m-lr6e4",
+    "n_max": 32768,
+    "params": 84301440,
+    "strict_load": "OK (no missing/unexpected keys)"
+  },
+  "ssra": {
+    "gcs": "gs://ssra-poc-ew3/m2/core/m2-core-ssra-s2-850m-lr6e4/latest.pt",
+    "local": "checkpoints/g2lite/ssra-latest.pt",
+    "bytes": 1016124393,
+    "bytes_expected": 1016124393,
+    "bytes_match": true,
+    "blob_sha256": "b0ba9b552fdb62e19b7c8bd0817d696107720b35a650de403b0da4cc11651e01",
+    "step": 51880,
+    "run_name": "m2-core-ssra-s2-850m-lr6e4",
+    "n_max": 32768,
+    "params": 84647040,
+    "strict_load": "OK (no missing/unexpected keys)",
+    "level_emb": {
+      "shape_per_layer": [
+        "(16, 640)"
+      ],
+      "n_tables": 15,
+      "rows_11_15_max_abs_over_all_layers": 0.0,
+      "rows_11_15_exactly_zero": true,
+      "rows_0_10_max_abs_over_all_layers": 4.6381049156188965,
+      "dtype": "torch.float32"
+    }
+  }
+}

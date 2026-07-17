@@ -1,0 +1,19 @@
+{
+  "verification": "V4 E-region statistics",
+  "region": "val.bin[2000000, 4097152)",
+  "val_bin_tokens": 48050671,
+  "val_eval_2M_tokens": 2000000,
+  "prefix_identity": {
+    "statement": "val.bin[:len(val-eval-2M)] == val-eval-2M byte-for-byte; E starts at 2,000,000 >= 2000000 -> zero overlap",
+    "identical": true,
+    "overlap_tokens": 0
+  },
+  "e_tokens": 2097152,
+  "eot_id": 0,
+  "eot_count": 1841,
+  "docs_fully_inside": 1840,
+  "doc_len_mean": 1138.7,
+  "doc_len_median": 666.0,
+  "doc_len_p90": 2152.1000000000004,
+  "doc_len_max": 33513
+}

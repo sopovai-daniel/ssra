@@ -101,15 +101,18 @@ runs at any N. Training/eval call path (`scripts/train.py` `BUILDERS` +
 `final_eval`): same config object, bf16 autocast + fp32 accumulation.
 The §1.2 description is exact.
 
-### V2 — SSRA length mechanics [PARTIAL — checkpoint items pending GCS reauth]
+### V2 — SSRA length mechanics [VERIFIED]
 
 - (a) `n_max` guard: `SSRALM.forward` raises `ValueError` for N > n_max
   (exercised on a tiny model: N = n_max admitted, N = n_max+1 raises);
-  trained `n_max: 32768` admits the whole grid. [VERIFIED]
-- (b) `level_emb` table shape [16, 640] in the SSRA checkpoint — **PENDING**
-  (blob download blocked; see §Status).
-- (c) rows 11–15 exactly 0.0 — **PENDING** (same; any nonzero value =
-  STOP-and-report, not silently accepted).
+  trained `n_max: 32768` (confirmed from the checkpoint's stored
+  `config_raw`) admits the whole grid. [VERIFIED]
+- (b) `level_emb` table shape **[16, 640]** in the SSRA checkpoint, one
+  table per layer × 15 layers. [VERIFIED, `verify-ckpt.json`]
+- (c) rows 11–15 **exactly 0.0**: max |·| over all 15 layers = 0.0
+  (fp32 exact-zero test, not a tolerance); trained rows 0–10 have
+  max |·| = 4.638 — the zero rows are the documented ablation-OFF state,
+  not an artifact of a dead table. [VERIFIED]
 - (d) `readout_cache` builds cleanly for every grid N on CPU [VERIFIED]:
 
 | N | k_max (gather rows) | cache bytes | build s |
@@ -121,7 +124,10 @@ The §1.2 description is exact.
 | 16,384 | 159 | 23,576,576 | 0.22 |
 | 32,768 | 175 | 51,871,744 | 0.46 |
 
-- Blob sha256 of both checkpoints (first-ever read) — **PENDING**.
+- Blob sha256 (first-ever read, 2026-07-17, `verify-ckpt.json`; recorded
+  in the eval YAML):
+  - flat `559940e74039b5523a5fad3c7984ac5fccb18669f2041183cd9bb00ea6cfba7b`
+  - SSRA `b0ba9b552fdb62e19b7c8bd0817d696107720b35a650de403b0da4cc11651e01`
 
 ### V2b — bf16 position quantization [CHARACTERIZED; no code change]
 
@@ -156,6 +162,16 @@ Empirical integer-position quantum per binade (positions cast via
   2^(⌊log2 t⌋−8)" is off by one against this table; the empirical table
   governs (Pravidlo W). The qualitative statement (rounding above 256,
   doubling per binade) is unchanged.
+- Terminal-window addendum (verbatim probe, `verify-v2b-window.json`):
+  at N = 32,768 the eval-path positions are 1-indexed (`arange(1, n+1)`),
+  so the last read-out window of query t = 32,768 is [32704, 32768]. Manual
+  RNE arithmetic predicts the two representable neighbors {32640, 32768};
+  the probe (governing) records: 32703 → 32640.0 (the 0-indexed reading's
+  extra position; distance 63 < 65); 32704 → 32768.0 (exact tie 32640+64,
+  RNE picks the even mantissa 32768); 32705…32767 → 32768.0; 32768 exact.
+  ⇒ every position of the 1-indexed window casts to the single value
+  **32768.0** (the "distinct = 1" row above); the {32640, 32768} pair
+  appears only when 32703 is included.
 - Shared effect, characterized and reported, not suppressed or exploited:
   flat — ALL attention positions quantized above 256; SSRA — read-out
   window/query RoPE only (at N = 32,768 all 65 window positions collapse to
@@ -166,23 +182,37 @@ Empirical integer-position quantum per binade (positions cast via
   certifies function identity. No "fix" is applied (binding handling rule,
   assignment §2 V2b).
 
-### V3 — checkpoint integrity [PARTIAL]
+### V3 — checkpoint integrity [VERIFIED]
 
 - Config sha256/16 of the committed training YAMLs: at `3db45ef` AND at
   HEAD both equal the assignment §1 values `ed606161f99e713a` (flat) /
   `d35a628774f87d65` (SSRA). [VERIFIED, `verify-local.json`]
 - Frozen tokenizer sha256 `019568a2…d669a0` matches. [VERIFIED]
-- GCS object sizes vs §1 table; blob sha256; strict `load_state_dict` into
-  the matching model class — **PENDING** (GCS reauth; `g2lite_verify.py
-  ckpt` runs these the moment the blobs are local).
+- GCS object sizes == §1 table exactly (1,011,848,651 / 1,016,124,393
+  bytes; console listing and downloaded files agree). [VERIFIED]
+- Strict `load_state_dict` into the matching model class: **OK for both**
+  (no missing/unexpected keys); `step` 51,880 and stored `run_name` match
+  the §1 identity (= `step-51880.pt`); parameter counts 84,301,440 (flat) /
+  84,647,040 (SSRA) equal the projection-script counts. [VERIFIED,
+  `verify-ckpt.json`]
 
-### V4 — eval-region statistics [PENDING]
+### V4 — eval-region statistics [VERIFIED]
 
-Requires `data/m2/val.bin` (present only in GCS; local copy blocked on the
-same reauth). `g2lite_verify.py eregion` is committed and will record:
-token count, eot document count, mean/median/p90 doc length, and the
-prefix-identity check (val.bin[:2,000,000] == val-eval-2M byte-for-byte ⇒
-E at offset 2,000,000 has zero overlap).
+`verify-eregion.json` (sha256 gates on both shards passed first):
+
+| quantity | value |
+|---|---|
+| val.bin tokens | 48,050,671 |
+| prefix identity | val.bin[:2,000,000] == val-eval-2M **byte-for-byte** |
+| E region | val.bin[2,000,000, 4,097,152) = 2,097,152 tokens (2^21) |
+| overlap with val-eval-2M | **0 tokens** (E starts exactly at the G1 set's end) |
+| eot markers in E (id 0) | 1,841 |
+| documents fully inside E | 1,840 |
+| doc length mean / median / p90 / max | **1,138.7** / 666 / 2,152 / 33,513 tokens |
+
+The §1.1 [ODHAD] "mean doc length ~1.1k tokens" is confirmed at 1,138.7;
+the honesty statement's framing (at N ≫ 1k most context is earlier,
+unrelated documents) stands.
 
 ### V5 — needle generator + suite [DONE]
 
@@ -263,7 +293,19 @@ Batch tables as committed in `experiments/m2-g2lite-eval.yaml`.
 
 ## §D Deviations
 
-None so far. Two protocol notes recorded before launch (not deviations):
+Declared BEFORE launch (nothing silent):
+
+- **D1 — M1 accumulation precision:** protocol §3 pre-registers "fp32
+  accumulation"; the harness computes per-position cross-entropy in fp32
+  and **accumulates the per-position sums in fp64**
+  (`g2lite_eval.eval_cell`). Strictly more precise than the pre-registered
+  wording, entirely outside the model forward (bf16-autocast forward is
+  untouched), and certifiedly batch-invariant
+  (`test_m1_batching_invariance`). The M0 anchor is unaffected: it runs
+  the imported `final_eval` from `scripts/train.py`, which accumulates in
+  fp32 exactly as trained.
+
+Protocol notes recorded before launch (not deviations):
 
 1. M1 window operationalization (targets at positions 2..N of each
    N-token window) — the only reading consistent with the §3 window count
@@ -272,18 +314,43 @@ None so far. Two protocol notes recorded before launch (not deviations):
    assignment's parenthetical 2^(⌊log2 t⌋−8); characterization only, no
    protocol impact (the handling rule — identical code path, no fix — is
    unchanged).
+3. SDPA backend gate (admissible plumbing, `g2lite_eval.sdpa_backend_gate`):
+   the harness logs flash/mem-efficient/math availability at start and
+   REFUSES to start a flat run with grid ≥ 8,192 if both flash and
+   mem-efficient are disabled (math fallback = +160…+640 GiB, §5 risk
+   table) — routing that state to the §5 de-scope ladder instead of a
+   silent fallback. Dispatch itself is never altered (training default
+   kept).
 
-## §Status (pre-launch)
+## §Status: READY FOR POD (pre-launch complete, 2026-07-17)
 
-Committed and green: needle suite + manifest (V5), harness + smoke tests,
-verify records `verify-local.json` / `verify-v2b.json`, projection table,
-eval YAML. **Blocked on GCS reauthentication (interactive `gcloud auth
-login`; no service key on this machine):** checkpoint downloads → V2(b,c) +
-blob sha256 + V3 strict-load; `val.bin` download → V4; then the two
-`sha256: PENDING-GCS-REAUTH` fields in the eval YAML get filled and this
-section is replaced by the "ready for pod" record. `runs.md` rows are
-appended at launch (assignment §6.1). No pod, no spend, no model-code
-changes in this phase.
+All §6.1 pre-launch deliverables committed: V1–V5 verified (records
+`results/g2lite/verify-{local,v2b,v2b-window,ckpt,eregion}.json`), needle
+suite + manifest, harness + 18 harness/suite tests green (full repo suite
+green), eval YAML complete including both blob sha256 values, projection
+table + GPU rule. Zero pod time, zero spend, zero model-code diffs.
+`runs.md` rows are appended at launch (assignment §6.1).
+
+**Deploy parameters (AP-18 checklist inputs; console values authoritative
+on deploy day, Pravidlo W):**
+
+| item | value |
+|---|---|
+| GPU | cheapest available of {RTX A6000 48 GB, L40S 48 GB, A100 80 GB}, on-demand **Secure** (AP-19 step 0: Community capture attempt first, verbatim record) |
+| image | `runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04` (= template "Runpod Pytorch 2.4.0 - SSRA"; bootstrap pins torch 2.12.0+cu126) |
+| container disk | **40 GB** (Phase 3b measured ~9.6 GB used on the same env incl. m2 shards; + 2×0.95 GiB checkpoints ⇒ ~12 GB, >3× margin), no network volume |
+| env | `GCP_SA_KEY_B64={{ RUNPOD_SECRET_gcp_ssra_runpod_sa }}` |
+| start command | default (bootstrap decodes the key from PID-1 env; AP-17) |
+| session | supervised end-to-end; wall cap 4.0 h → de-scope ladder D1–D4; AP-23 strict self-terminate; terminate-not-stop (AP-18); ECB 1.1430 |
+
+**On-pod sequence:** clone/bundle repo @ the pre-launch commit → `bash
+scripts/pod_bootstrap.sh` (AP-17 gate blocks before any billable work) →
+pytest → `g2lite_verify.py v2b` on cuda (angle-dtype re-probe; new record
+name) → pull both checkpoints from GCS (sha256 gates in the harness) →
+append runs.md rows → micro-benchmark (tok/s + measured VRAM vs projection
+@ N=1,024 and 8,192, both models; flash-dispatch check for flat) → per
+model: m0 (anchor gate) → m1 → m2 → mirror raw JSON to
+`gs://ssra-poc-ew3/m2/g2lite/` → AP-23 terminate.
 
 ## §M0 / §M1 / §M2 Results
 

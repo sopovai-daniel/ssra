@@ -88,6 +88,32 @@ def open_output(path: Path):
     return path
 
 
+# ---- SDPA backend gate ---------------------------------------------------------
+
+def sdpa_backend_gate(device: str, arch: str, grid_max: int) -> dict:
+    """Log SDPA backend availability at harness start (admissible plumbing;
+    dispatch itself is NOT altered — the training default is kept). A
+    math-only SDPA for flat at N >= 8,192 would materialize [B,h,N,N]
+    (+160…+640 GiB, projection risk table) — that is a de-scope-ladder
+    decision (assignment §5), never a silent fallback, so the harness
+    refuses to start the run in that state."""
+    if device != "cuda":
+        return {"device": device, "note": "non-cuda run — availability gate "
+                                          "not applicable"}
+    flags = {"flash": torch.backends.cuda.flash_sdp_enabled(),
+             "mem_efficient": torch.backends.cuda.mem_efficient_sdp_enabled(),
+             "math": torch.backends.cuda.math_sdp_enabled()}
+    print(json.dumps({"sdpa_backends_enabled": flags}))
+    if arch == "flat" and grid_max >= 8192 and not (flags["flash"]
+                                                    or flags["mem_efficient"]):
+        raise SystemExit(
+            "[gate] flash and mem-efficient SDPA both disabled: flat at "
+            "N >= 8192 would run the math fallback (+160…+640 GiB, "
+            "results/M2-g2lite.md §5 risk table) — STOP; apply the §5 "
+            "de-scope ladder, never a silent fallback.")
+    return flags
+
+
 # ---- model loading -----------------------------------------------------------
 
 def load_model(arch: str, ckpt_path: Path, device: str,
@@ -301,6 +327,9 @@ def main() -> None:
             "device": args.device, "precision": precision,
             "torch": torch.__version__}
     print(json.dumps({"meta": meta}))
+
+    grid_max = max(cfg["m1"]["grid"]) if args.mode != "m0" else 1024
+    meta["sdpa_backends"] = sdpa_backend_gate(args.device, arch, grid_max)
 
     if args.mode == "m0":
         a = cfg["anchor"]
