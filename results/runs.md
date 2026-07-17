@@ -152,3 +152,5 @@ M2 = 40.53 + 31.25 = 71.78 EUR ≈ 23.9 % of 300.** Oversight review of
 (independent recomputation from both raw JSONL logs; D-log 2026-07-17,
 second entry — includes the G1 verdict FAIL / formulation B and the
 G2-lite authorization, 10 EUR scoped cap).
+| m2-g2lite-flat | 2026-07-17 | `experiments/m2-g2lite-eval.yaml` (commit e305ad0) | flat lr6e4, frozen ckpt step-51880 (blob 559940e7…) | 84.30M params, inference-only, N ∈ {1k…32k} | RunPod `pktqlt4jys3uiz`, RTX A6000 48GB Secure on-demand, EU-SE-1, $0.49/hr GPU + $0.006/hr disk = $0.50/hr (console verbatim; AP-19 step 0: Community not shown, 7th occurrence) | RUNNING | M0 anchor target 3.19333 ± 1e-3 | `results/g2lite/pod/` | G2-lite inference-only (D-log 2026-07-17 formulation B); no training, cap 10 EUR |
+| m2-g2lite-ssra | 2026-07-17 | `experiments/m2-g2lite-eval.yaml` (commit e305ad0) | SSRA-P1 lr6e4, frozen ckpt step-51880 (blob b0ba9b55…) | 84.65M params, ditto | ditto | RUNNING | M0 anchor target 3.29065 ± 1e-3 | `results/g2lite/pod/` | ditto; e_ℓ rows 11–15 exactly zero (ablation-OFF state, O7) |
