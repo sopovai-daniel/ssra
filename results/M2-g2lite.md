@@ -316,6 +316,15 @@ Declared BEFORE launch (nothing silent):
   (`test_m1_batching_invariance`). The M0 anchor is unaffected: it runs
   the imported `final_eval` from `scripts/train.py`, which accumulates in
   fp32 exactly as trained.
+- **D2 — SSRA batch tables revised at pod pre-flight (commit `e305ad0`,
+  BEFORE any measurement):** the pre-registered YAML batch tables were
+  modified after the pre-flight found that level-1 node SDPA flattens to
+  B·N/2 batch items and CUDA kernel launches fail above ~65,535
+  ("invalid configuration argument", RTX A6000 / torch 2.12.0+cu126);
+  SSRA B capped so B·N/2 ≤ 32,768. Disclosed here (never silent);
+  wall-clock-only — batch-invariance of cell values is test-certified
+  (`test_m1_batching_invariance`); the M0 anchor is unaffected (its batch
+  size 16 was never changed).
 
 Protocol notes recorded before launch (not deviations):
 
@@ -326,14 +335,7 @@ Protocol notes recorded before launch (not deviations):
    assignment's parenthetical 2^(⌊log2 t⌋−8); characterization only, no
    protocol impact (the handling rule — identical code path, no fix — is
    unchanged).
-3. SSRA batch tables revised at pod pre-flight (commit `e305ad0`, BEFORE
-   any measurement): level-1 node SDPA flattens to B·N/2 batch items and
-   CUDA kernel launches fail above ~65,535 ("invalid configuration
-   argument", RTX A6000 / torch 2.12.0+cu126); SSRA B capped so B·N/2 ≤
-   32,768. Batch size affects wall-clock only, never values (§3;
-   batch-invariance certified by test) — plumbing note, not a protocol
-   deviation.
-4. SDPA backend gate (admissible plumbing, `g2lite_eval.sdpa_backend_gate`):
+3. SDPA backend gate (admissible plumbing, `g2lite_eval.sdpa_backend_gate`):
    the harness logs flash/mem-efficient/math availability at start and
    REFUSES to start a flat run with grid ≥ 8,192 if both flash and
    mem-efficient are disabled (math fallback = +160…+640 GiB, §5 risk
