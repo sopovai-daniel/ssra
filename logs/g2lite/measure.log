@@ -1,0 +1,69 @@
+[gate] sha256 OK: checkpoint flat
+{"meta": {"run": "m2-g2lite-flat", "arch": "flat", "mode": "m1", "config": "experiments/m2-g2lite-eval.yaml", "checkpoint": "checkpoints/g2lite/flat-latest.pt", "ckpt_step": 51880, "params": 84301440, "device": "cuda", "precision": "bf16", "torch": "2.12.0+cu126"}}
+{"sdpa_backends_enabled": {"flash": true, "mem_efficient": true, "math": true}}
+[gate] sha256 OK: val_bin
+{"cell": {"arch": "flat", "n": 1024, "windows": 2048, "tokens_scored": 2095104, "mean_nll": 3.164801, "ppl": 23.684, "bucket_mean_nll": {"1-256": 3.323214, "257-512": 3.136845, "513-1024": 3.099882}, "wall_s": 10.3}}
+{"cell": {"arch": "flat", "n": 2048, "windows": 1024, "tokens_scored": 2096128, "mean_nll": 3.614542, "ppl": 37.1343, "bucket_mean_nll": {"1-256": 3.326872, "257-512": 3.14335, "513-1024": 3.092992, "1025-2048": 4.064751}, "wall_s": 10.2}}
+{"cell": {"arch": "flat", "n": 4096, "windows": 512, "tokens_scored": 2096640, "mean_nll": 4.565115, "ppl": 96.0737, "bucket_mean_nll": {"1-256": 3.327398, "257-512": 3.124138, "513-1024": 3.099086, "1025-2048": 4.074692, "2049-4096": 5.511066}, "wall_s": 11.9}}
+{"cell": {"arch": "flat", "n": 8192, "windows": 256, "tokens_scored": 2096896, "mean_nll": 5.413316, "ppl": 224.3745, "bucket_mean_nll": {"1-256": 3.316438, "257-512": 3.1167, "513-1024": 3.089696, "1025-2048": 4.071046, "2049-4096": 5.503906, "4097-8192": 6.268123}, "wall_s": 13.0}}
+{"cell": {"arch": "flat", "n": 16384, "windows": 128, "tokens_scored": 2097024, "mean_nll": 6.095359, "ppl": 443.7932, "bucket_mean_nll": {"1-256": 3.361129, "257-512": 3.18407, "513-1024": 3.130243, "1025-2048": 4.069796, "2049-4096": 5.507253, "4097-8192": 6.267636, "8193-16384": 6.77085}, "wall_s": 15.9}}
+{"cell": {"arch": "flat", "n": 32768, "windows": 64, "tokens_scored": 2097088, "mean_nll": 6.653319, "ppl": 775.3537, "bucket_mean_nll": {"1-256": 3.392957, "257-512": 3.149212, "513-1024": 3.086879, "1025-2048": 4.079767, "2049-4096": 5.516666, "4097-8192": 6.301481, "8193-16384": 6.783281, "16385-32768": 7.196174}, "wall_s": 22.6}}
+{"written": "/root/ssra/results/g2lite/m2-g2lite-flat-m1.json"}
+[gate] sha256 OK: checkpoint ssra
+{"meta": {"run": "m2-g2lite-ssra", "arch": "ssra", "mode": "m1", "config": "experiments/m2-g2lite-eval.yaml", "checkpoint": "checkpoints/g2lite/ssra-latest.pt", "ckpt_step": 51880, "params": 84647040, "device": "cuda", "precision": "bf16", "torch": "2.12.0+cu126"}}
+{"sdpa_backends_enabled": {"flash": true, "mem_efficient": true, "math": true}}
+[gate] sha256 OK: val_bin
+{"cell": {"arch": "ssra", "n": 1024, "windows": 2048, "tokens_scored": 2095104, "mean_nll": 3.2698, "ppl": 26.3061, "bucket_mean_nll": {"1-256": 3.35812, "257-512": 3.244909, "513-1024": 3.238259}, "wall_s": 85.2}}
+{"cell": {"arch": "ssra", "n": 2048, "windows": 1024, "tokens_scored": 2096128, "mean_nll": 4.684137, "ppl": 108.2169, "bucket_mean_nll": {"1-256": 3.356706, "257-512": 3.250993, "513-1024": 3.226624, "1025-2048": 6.101741}, "wall_s": 86.8}}
+{"cell": {"arch": "ssra", "n": 4096, "windows": 512, "tokens_scored": 2096640, "mean_nll": 7.05178, "ppl": 1154.9125, "bucket_mean_nll": {"1-256": 3.359813, "257-512": 3.238453, "513-1024": 3.229193, "1025-2048": 6.10993, "2049-4096": 9.41471}, "wall_s": 88.7}}
+{"cell": {"arch": "ssra", "n": 8192, "windows": 256, "tokens_scored": 2096896, "mean_nll": 8.337826, "ppl": 4178.9936, "bucket_mean_nll": {"1-256": 3.348701, "257-512": 3.228636, "513-1024": 3.219676, "1025-2048": 6.10868, "2049-4096": 9.404961, "4097-8192": 9.63124}, "wall_s": 90.7}}
+{"cell": {"arch": "ssra", "n": 16384, "windows": 128, "tokens_scored": 2097024, "mean_nll": 9.156543, "ppl": 9476.24, "bucket_mean_nll": {"1-256": 3.38686, "257-512": 3.300144, "513-1024": 3.271526, "1025-2048": 6.134258, "2049-4096": 9.390741, "4097-8192": 9.632677, "8193-16384": 9.968136}, "wall_s": 92.9}}
+{"cell": {"arch": "ssra", "n": 32768, "windows": 64, "tokens_scored": 2097088, "mean_nll": 9.600894, "ppl": 14777.9855, "bucket_mean_nll": {"1-256": 3.410336, "257-512": 3.256102, "513-1024": 3.221487, "1025-2048": 6.093247, "2049-4096": 9.418994, "4097-8192": 9.62782, "8193-16384": 9.969418, "16385-32768": 10.046709}, "wall_s": 95.2}}
+{"written": "/root/ssra/results/g2lite/m2-g2lite-ssra-m1.json"}
+[gate] sha256 OK: checkpoint flat
+{"meta": {"run": "m2-g2lite-flat", "arch": "flat", "mode": "m2", "config": "experiments/m2-g2lite-eval.yaml", "checkpoint": "checkpoints/g2lite/flat-latest.pt", "ckpt_step": 51880, "params": 84301440, "device": "cuda", "precision": "bf16", "torch": "2.12.0+cu126"}}
+{"sdpa_backends_enabled": {"flash": true, "mem_efficient": true, "math": true}}
+[gate] sha256 OK: tokenizer
+{"cell": {"arch": "flat", "n": 1024, "depth": 0.1, "accuracy": 0.0, "wall_s": 1.4}}
+{"cell": {"arch": "flat", "n": 1024, "depth": 0.5, "accuracy": 0.95, "wall_s": 1.1}}
+{"cell": {"arch": "flat", "n": 1024, "depth": 0.9, "accuracy": 0.85, "wall_s": 1.1}}
+{"cell": {"arch": "flat", "n": 2048, "depth": 0.1, "accuracy": 0.0, "wall_s": 2.3}}
+{"cell": {"arch": "flat", "n": 2048, "depth": 0.5, "accuracy": 0.0, "wall_s": 2.3}}
+{"cell": {"arch": "flat", "n": 2048, "depth": 0.9, "accuracy": 0.0, "wall_s": 2.3}}
+{"cell": {"arch": "flat", "n": 4096, "depth": 0.1, "accuracy": 0.0, "wall_s": 4.9}}
+{"cell": {"arch": "flat", "n": 4096, "depth": 0.5, "accuracy": 0.0, "wall_s": 4.9}}
+{"cell": {"arch": "flat", "n": 4096, "depth": 0.9, "accuracy": 0.0, "wall_s": 4.9}}
+{"cell": {"arch": "flat", "n": 8192, "depth": 0.1, "accuracy": 0.0, "wall_s": 11.4}}
+{"cell": {"arch": "flat", "n": 8192, "depth": 0.5, "accuracy": 0.0, "wall_s": 11.2}}
+{"cell": {"arch": "flat", "n": 8192, "depth": 0.9, "accuracy": 0.0, "wall_s": 11.2}}
+{"cell": {"arch": "flat", "n": 16384, "depth": 0.1, "accuracy": 0.0, "wall_s": 30.0}}
+{"cell": {"arch": "flat", "n": 16384, "depth": 0.5, "accuracy": 0.0, "wall_s": 28.7}}
+{"cell": {"arch": "flat", "n": 16384, "depth": 0.9, "accuracy": 0.0, "wall_s": 28.7}}
+{"cell": {"arch": "flat", "n": 32768, "depth": 0.1, "accuracy": 0.0, "wall_s": 88.1}}
+{"cell": {"arch": "flat", "n": 32768, "depth": 0.5, "accuracy": 0.0, "wall_s": 83.3}}
+{"cell": {"arch": "flat", "n": 32768, "depth": 0.9, "accuracy": 0.0, "wall_s": 83.3}}
+{"written": "/root/ssra/results/g2lite/m2-g2lite-flat-m2.json"}
+[gate] sha256 OK: checkpoint ssra
+{"meta": {"run": "m2-g2lite-ssra", "arch": "ssra", "mode": "m2", "config": "experiments/m2-g2lite-eval.yaml", "checkpoint": "checkpoints/g2lite/ssra-latest.pt", "ckpt_step": 51880, "params": 84647040, "device": "cuda", "precision": "bf16", "torch": "2.12.0+cu126"}}
+{"sdpa_backends_enabled": {"flash": true, "mem_efficient": true, "math": true}}
+[gate] sha256 OK: tokenizer
+{"cell": {"arch": "ssra", "n": 1024, "depth": 0.1, "accuracy": 0.0, "wall_s": 10.9}}
+{"cell": {"arch": "ssra", "n": 1024, "depth": 0.5, "accuracy": 0.0, "wall_s": 10.0}}
+{"cell": {"arch": "ssra", "n": 1024, "depth": 0.9, "accuracy": 0.0, "wall_s": 10.0}}
+{"cell": {"arch": "ssra", "n": 2048, "depth": 0.1, "accuracy": 0.0, "wall_s": 21.3}}
+{"cell": {"arch": "ssra", "n": 2048, "depth": 0.5, "accuracy": 0.0, "wall_s": 20.2}}
+{"cell": {"arch": "ssra", "n": 2048, "depth": 0.9, "accuracy": 0.0, "wall_s": 20.3}}
+{"cell": {"arch": "ssra", "n": 4096, "depth": 0.1, "accuracy": 0.0, "wall_s": 43.6}}
+{"cell": {"arch": "ssra", "n": 4096, "depth": 0.5, "accuracy": 0.0, "wall_s": 41.4}}
+{"cell": {"arch": "ssra", "n": 4096, "depth": 0.9, "accuracy": 0.0, "wall_s": 41.4}}
+{"cell": {"arch": "ssra", "n": 8192, "depth": 0.1, "accuracy": 0.0, "wall_s": 89.0}}
+{"cell": {"arch": "ssra", "n": 8192, "depth": 0.5, "accuracy": 0.0, "wall_s": 84.4}}
+{"cell": {"arch": "ssra", "n": 8192, "depth": 0.9, "accuracy": 0.0, "wall_s": 84.4}}
+{"cell": {"arch": "ssra", "n": 16384, "depth": 0.1, "accuracy": 0.0, "wall_s": 181.3}}
+{"cell": {"arch": "ssra", "n": 16384, "depth": 0.5, "accuracy": 0.0, "wall_s": 171.6}}
+{"cell": {"arch": "ssra", "n": 16384, "depth": 0.9, "accuracy": 0.0, "wall_s": 171.7}}
+{"cell": {"arch": "ssra", "n": 32768, "depth": 0.1, "accuracy": 0.0, "wall_s": 369.6}}
+{"cell": {"arch": "ssra", "n": 32768, "depth": 0.5, "accuracy": 0.0, "wall_s": 349.6}}
+{"cell": {"arch": "ssra", "n": 32768, "depth": 0.9, "accuracy": 0.0, "wall_s": 349.6}}
+{"written": "/root/ssra/results/g2lite/m2-g2lite-ssra-m2.json"}
+SESSION-MEASUREMENTS-DONE

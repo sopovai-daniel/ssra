@@ -172,6 +172,18 @@ Empirical integer-position quantum per binade (positions cast via
   ⇒ every position of the 1-indexed window casts to the single value
   **32768.0** (the "distinct = 1" row above); the {32640, 32768} pair
   appears only when 32703 is included.
+- **CUDA re-probe (pod pre-flight, RTX A6000, torch 2.12.0+cu126;
+  `results/g2lite/pod/verify-v2b.json`):** x dtype bf16, pos dtype int64 at
+  all three sites — but the **angle tensor is fp32 on CUDA** (vs bf16 in
+  the CPU probe): CUDA autocast's op policy promotes the `pow` in
+  `inv_freq` to fp32, and the bf16-cast positions then multiply into an
+  fp32 result (CPU autocast leaves `pow` in bf16). The explicit
+  `pos.to(x.dtype)` cast happens BEFORE that multiply, so integer
+  positions are still bf16-quantized on CUDA and the quantum table above
+  is device-independent. This fp32-angle path is byte-identical to what
+  training ran on the A100 (same code, same autocast policy) — the M0
+  anchor (§M0: deltas 0.0 / −1e-5) certifies function identity. No code
+  change (binding handling rule).
 - Shared effect, characterized and reported, not suppressed or exploited:
   flat — ALL attention positions quantized above 256; SSRA — read-out
   window/query RoPE only (at N = 32,768 all 65 window positions collapse to
@@ -314,7 +326,14 @@ Protocol notes recorded before launch (not deviations):
    assignment's parenthetical 2^(⌊log2 t⌋−8); characterization only, no
    protocol impact (the handling rule — identical code path, no fix — is
    unchanged).
-3. SDPA backend gate (admissible plumbing, `g2lite_eval.sdpa_backend_gate`):
+3. SSRA batch tables revised at pod pre-flight (commit `e305ad0`, BEFORE
+   any measurement): level-1 node SDPA flattens to B·N/2 batch items and
+   CUDA kernel launches fail above ~65,535 ("invalid configuration
+   argument", RTX A6000 / torch 2.12.0+cu126); SSRA B capped so B·N/2 ≤
+   32,768. Batch size affects wall-clock only, never values (§3;
+   batch-invariance certified by test) — plumbing note, not a protocol
+   deviation.
+4. SDPA backend gate (admissible plumbing, `g2lite_eval.sdpa_backend_gate`):
    the harness logs flash/mem-efficient/math availability at start and
    REFUSES to start a flat run with grid ≥ 8,192 if both flash and
    mem-efficient are disabled (math fallback = +160…+640 GiB, §5 risk
@@ -322,7 +341,7 @@ Protocol notes recorded before launch (not deviations):
    silent fallback. Dispatch itself is never altered (training default
    kept).
 
-## §Status: READY FOR POD (pre-launch complete, 2026-07-17)
+## §Status: EXECUTED (pre-launch record below; session record in §S)
 
 All §6.1 pre-launch deliverables committed: V1–V5 verified (records
 `results/g2lite/verify-{local,v2b,v2b-window,ckpt,eregion}.json`), needle
@@ -352,14 +371,124 @@ append runs.md rows → micro-benchmark (tok/s + measured VRAM vs projection
 model: m0 (anchor gate) → m1 → m2 → mirror raw JSON to
 `gs://ssra-poc-ew3/m2/g2lite/` → AP-23 terminate.
 
-## §M0 / §M1 / §M2 Results
+## §S Session record (2026-07-17, supervised end-to-end)
 
-*(filled during the pod session; one measurement per cell)*
+- Pod `pktqlt4jys3uiz`, 1× RTX A6000 48 GB (49,140 MiB, driver 570.195.03),
+  Secure on-demand, region EU-SE-1, **$0.49/hr GPU + $0.006/hr disk =
+  $0.50/hr (console verbatim)**; AP-19 step 0: Community not shown in the
+  deploy flow (7th occurrence). Image
+  `runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04`, container
+  disk 40 GB; torch pinned 2.12.0+cu126 by bootstrap; commit `5bcbe39`
+  (+ `fef2831` probe --device flag, `e305ad0` batch tables, shipped by scp
+  and committed to main).
+- Gates, in order, all PASSED: **AP-17** sanity gate before any workload
+  (SA `ssra-runpod@…`, `gsutil ls` OK); env snapshot
+  (`logs/g2lite/g2lite-env-snapshot.txt`); SDPA flags flash/mem-efficient/
+  math all enabled; both checkpoint blobs re-hashed ON THE POD ==
+  YAML/§1 sha256; **pytest 83 passed + the single standing known failure**
+  (`test_loglinear_integration`, torchvision::nms pin conflict — identical
+  to Phase 3b, `logs/g2lite/g2lite-pytest.log`); CUDA V2b probe (§V2b
+  addendum above).
+- **Micro-benchmark** (`results/g2lite/pod/microbench.json`; forward-only,
+  measured): flat 228,472 tok/s @ N=1,024/B=64, 180,207 @ 8,192/B=64,
+  98,023 @ 32,768/B=16 (peak 18.36 GiB — **no N² blowup ⇒ flash/
+  mem-efficient dispatch confirmed empirically**; math fallback would need
+  +640 GiB); SSRA 25,238 @ 1,024/B=64, 23,635 @ 8,192/B=8, 22,778 @
+  32,768/B=2 (peak ≤ 5.38 GiB). Recomputed session wall ≈ 1.2 h ≪ 4.0 h
+  cap ⇒ **full grid, no de-scope ladder rung applied**.
+- Timeline (UTC): first SSH 15:32:42 → bootstrap+gates → M0 → M1 → M2 →
+  GCS mirror verified by listing 16:44:41–46 (12 objects,
+  `gs://ssra-poc-ew3/m2/g2lite/`) → **AP-23 self-terminate invoked
+  16:44:59 (pod id + API key sourced from /proc/1/environ), `pod
+  "pktqlt4jys3uiz" removed`, connection refused confirmed 16:45:10** —
+  idle tail ≈ 11 s.
 
-## §O Interpretation criteria applied (O1–O7)
+## §M0 Anchor (gate of everything; O1)
 
-*(mechanical application post-run; no architecture conclusions, spec §16)*
+| model | measured | expected (G1) | Δ nats | tol | verdict |
+|---|---|---|---|---|---|
+| flat | 3.19333 | 3.19333 | **0.0** | 1e-3 | **PASS** |
+| SSRA | 3.29064 | 3.29065 | **−1e-5** | 1e-3 | **PASS** |
+
+Window identity exact in both: 1,953 windows / 1,999,872 tokens / 127
+dropped (`final_eval` imported from `scripts/train.py`, batch 16, AP-16).
+The −1e-5 SSRA delta is A6000-vs-A100 float reassociation, 100× inside
+tolerance.
+
+## §M1 ppl vs length (region E; one measurement per cell)
+
+| N | windows | flat ppl | flat r(N) | SSRA ppl | SSRA r(N) | SSRA/flat |
+|---|---|---|---|---|---|---|
+| 1,024 | 2,048 | 23.684 | 1.000 | 26.3061 | 1.000 | 1.111 |
+| 2,048 | 1,024 | 37.1343 | 1.568 | 108.2169 | 4.114 | 2.914 |
+| 4,096 | 512 | 96.0737 | 4.057 | 1,154.91 | 43.90 | 12.02 |
+| 8,192 | 256 | 224.3745 | 9.474 | 4,178.99 | 158.86 | 18.63 |
+| 16,384 | 128 | 443.7932 | 18.74 | 9,476.24 | 360.23 | 21.35 |
+| 32,768 | 64 | 775.3537 | 32.74 | 14,777.99 | 561.77 | 19.06 |
+
+Per-position bucket means (nats; full values in the committed JSONs;
+curves in `results/M2-g2lite-buckets-{flat,ssra}.png`): for BOTH models
+every bucket ≤ 1,024 stays flat across all N (flat ≈ 3.09–3.39; SSRA ≈
+3.22–3.41) — **the entire degradation lives at target positions >
+1,024**. At N=32,768: flat buckets beyond 1,024 rise 4.08 → 5.52 → 6.30 →
+6.78 → 7.20; SSRA 6.09 → 9.42 → 9.63 → 9.97 → 10.05. (O7: all SSRA cells
+at N ≥ 2,048 run with exactly-zero e_ℓ rows 11–15 = spec ablation-OFF
+state at those levels.)
+
+Plot: `results/M2-g2lite-ppl-vs-n.png` (log-x/log-y).
+
+## §M2 Needle-lite (accuracy, 20 trials/cell, greedy full-forward)
+
+| model | depth | 1,024 | 2,048 | 4,096 | 8,192 | 16,384 | 32,768 |
+|---|---|---|---|---|---|---|---|
+| flat | 0.1 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
+| flat | 0.5 | **0.95** | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
+| flat | 0.9 | **0.85** | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
+| SSRA | 0.1 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
+| SSRA | 0.5 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
+| SSRA | 0.9 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
+
+Heatmaps: `results/M2-g2lite-needle-{flat,ssra}.png`. Per-trial records
+(keys, generated text, extraction) in the committed m2 JSONs. (O7 note as
+above for all SSRA cells at N ≥ 2,048.)
+
+## §O Interpretation criteria applied mechanically (assignment §4; no
+architecture conclusions, spec §16 — all labels are measurement outcomes)
+
+- **O1 anchor: PASS** (both models, §M0).
+- **O2/O3 degradation labels** (r = ppl(N)/ppl(1,024)):
+  - flat: 2,048 `marked` (1.568); 4,096 `marked` (4.057); 8,192 `marked`
+    (9.474); 16,384 `collapse` (18.74); 32,768 `collapse` (32.74).
+  - SSRA: 2,048 `marked` (4.114); 4,096–32,768 `collapse` (43.90 →
+    561.77).
+  - Pre-registered priors: flat was expected to leave `stable` beyond
+    1,024 — confirmed. SSRA was expected `stable`/`mild` if the §1.2
+    structural story holds — **violated at every N ≥ 2,048; reported as a
+    finding** (per §1.3 both directions publishable).
+- **O4 crossover: none.** ppl_SSRA(N) > ppl_flat(N) at every grid N;
+  ratio SSRA/flat: 1.111 → 2.914 → 12.02 → 18.63 → 21.35 → 19.06 (the
+  known +10.22 % G1 gap at the training protocol corresponds to the 1.111
+  starting point on E).
+- **O5 needle floor rule: not triggered** — pooled 1,024 accuracy: flat
+  60 % ≥ 20 % (0.00/0.95/0.85 at depths 0.1/0.5/0.9), so full grids are
+  reported. flat retains 0 % of its own 1,024 accuracy at every N ≥
+  2,048 ⇒ `retrieval-retaining` at no N. SSRA is 0 % in every cell
+  including 1,024 (its own baseline is 0 ⇒ the retention label is not
+  applicable); the copy behavior exists in the flat artifact, so the
+  suite is informative.
+- **O6 per-position signature at N=32,768:** neither model is
+  `positionally graceful` — every bucket > 1,024 exceeds the own
+  513–1,024 bucket mean by ≫ +0.10 nats (flat: +0.99 … +4.11; SSRA:
+  +2.87 … +6.83). Bucket profiles reported without label (§M1).
+- **O7:** stated in §M1 and §M2 wherever SSRA numbers at N ≥ 2,048
+  appear.
 
 ## §L Ledger
 
-*(console-final rows per the ≥ 2 h rule; ECB 1.1430 unless a top-up occurs)*
+- Session window: pod created ≈ 15:29 UTC (console), first SSH 15:32:42,
+  AP-23 terminate 16:44:59, confirmed dead 16:45:10 ⇒ ≈ 1.2–1.3 h ×
+  $0.50/hr ≈ **$0.61–0.65 ≈ 0.53–0.57 EUR [ODHAD]** (ECB 1.1430; ≪ 10 EUR
+  scoped cap, ≈ 18× margin). **Console total ≥ 2 h after termination is
+  FINAL** (2026-07-14 rule) — append row pending Daniel's readout.
+- Cumulative M2 after session [ODHAD]: 71.78 + ≈0.6 ≈ **72.4 EUR ≈ 24 %
+  of 300** (final after console readout).

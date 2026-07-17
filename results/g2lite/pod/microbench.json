@@ -1,0 +1,26 @@
+{
+ "flat-N1024-B64": {
+  "tok_per_s": 228471.6,
+  "peak_gib_fwd_only": 2.714
+ },
+ "flat-N8192-B64": {
+  "tok_per_s": 180207.4,
+  "peak_gib_fwd_only": 18.358
+ },
+ "flat-N32768-B16": {
+  "tok_per_s": 98022.5,
+  "peak_gib_fwd_only": 18.359
+ },
+ "ssra-N1024-B64": {
+  "tok_per_s": 25237.7,
+  "peak_gib_fwd_only": 4.718
+ },
+ "ssra-N8192-B8": {
+  "tok_per_s": 23635.2,
+  "peak_gib_fwd_only": 5.094
+ },
+ "ssra-N32768-B2": {
+  "tok_per_s": 22778.2,
+  "peak_gib_fwd_only": 5.381
+ }
+}

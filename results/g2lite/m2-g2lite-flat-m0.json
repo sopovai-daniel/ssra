@@ -1,0 +1,34 @@
+{
+  "mode": "m0",
+  "arch": "flat",
+  "final_eval": {
+    "eval_loss": 3.19333,
+    "eval_windows": 1953,
+    "eval_tokens": 1999872,
+    "eval_tokens_dropped": 127
+  },
+  "anchor": {
+    "measured": 3.19333,
+    "expected": 3.19333,
+    "delta_nats": 0.0,
+    "tol_nats": 0.001,
+    "pass": true
+  },
+  "meta": {
+    "run": "m2-g2lite-flat",
+    "arch": "flat",
+    "mode": "m0",
+    "config": "experiments/m2-g2lite-eval.yaml",
+    "checkpoint": "checkpoints/g2lite/flat-latest.pt",
+    "ckpt_step": 51880,
+    "params": 84301440,
+    "device": "cuda",
+    "precision": "bf16",
+    "torch": "2.12.0+cu126",
+    "sdpa_backends": {
+      "flash": true,
+      "mem_efficient": true,
+      "math": true
+    }
+  }
+}

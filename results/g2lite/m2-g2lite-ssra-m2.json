@@ -1,0 +1,2706 @@
+{
+  "mode": "m2",
+  "arch": "ssra",
+  "max_new": 12,
+  "cells": [
+    {
+      "n": 1024,
+      "depth": 0.1,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 10.9,
+      "results": [
+        {
+          "trial": 0,
+          "key": 38093,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 90788,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 50746,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 42342,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 59563,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 86518,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 46473,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 30321,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 16336,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 18109,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 29261,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 45222,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 42994,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 88290,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 41843,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 87241,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 77338,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 66441,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 74167,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 15795,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 1024,
+      "depth": 0.5,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 10.0,
+      "results": [
+        {
+          "trial": 0,
+          "key": 47004,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 92540,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 16159,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 81754,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 33678,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 40790,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 49853,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 75983,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 86816,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 81441,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 92369,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 76613,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 10635,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 92047,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 23415,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 92714,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 30409,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 79322,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 18670,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 26490,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 1024,
+      "depth": 0.9,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 10.0,
+      "results": [
+        {
+          "trial": 0,
+          "key": 13479,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 85396,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 13424,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 76008,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 58288,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 83106,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 17731,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 58848,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 77347,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 93325,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 19030,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 23568,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 87729,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 99751,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 45296,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 27447,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 11210,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 62063,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 97189,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 24199,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 2048,
+      "depth": 0.1,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 21.3,
+      "results": [
+        {
+          "trial": 0,
+          "key": 40606,
+          "generated": " aederal or an X and your a)|- a a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 13190,
+          "generated": " aederal or an new possible aaware a a a a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 11782,
+          "generated": " aederal or an X. a and a)| a a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 39741,
+          "generated": " aederal and the a or a and). and po and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 44770,
+          "generated": " aederal or an new possible aaware a a a a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 49105,
+          "generated": " aederal or an X and Aforest- a a a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 44579,
+          "generated": " aederal or an X and Aforest- a a a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 39130,
+          "generated": " aederal or an X. a and a)| a a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 98676,
+          "generated": " aederal or an X. a)| and aincome a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 16709,
+          "generated": " aederal or an X. a)| and aincome a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 12278,
+          "generated": " aederal or an X. a by a b and possible",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 24905,
+          "generated": " aederal or an X. a and a themselves.)|",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 33920,
+          "generated": " aederal or an X and Aforest- a a a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 70710,
+          "generated": " aederal or an X and a themselves and and po and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 35929,
+          "generated": " aederal or an X and aederal or a)| a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 38934,
+          "generated": " aederal or an X. a)| and a)| and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 93010,
+          "generated": " aederal or an X. a and a themselves aederal",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 27433,
+          "generated": " aederal or an X and a)| and aincome a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 74416,
+          "generated": " aederal or an new possible aaware a a a a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 98730,
+          "generated": " aederal and the possible a aaware a a a a",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 2048,
+      "depth": 0.5,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 20.2,
+      "results": [
+        {
+          "trial": 0,
+          "key": 10880,
+          "generated": " a aederal or a)| and aederal or a and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 19945,
+          "generated": "- by and A- a by- by- by-",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 10818,
+          "generated": " aederal or aederal is a by a)| a a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 14380,
+          "generated": " aederal or aederal is a by aincome, a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 85135,
+          "generated": " a by which yourederal or and a air and air-",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 95476,
+          "generated": " a by which yourederal your a a)|- A-",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 81344,
+          "generated": " aederal or aederal is a by aincome, a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 94351,
+          "generated": " a by which your ahealthy)| and your a)|-",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 15545,
+          "generated": " aederal or aederal or a)| and aederal and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 74098,
+          "generated": " a aederal or a and a).).).).).",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 29041,
+          "generated": " a aederal or a)| and aederal or a and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 50911,
+          "generated": " aederal or aederal is a by a)| a a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 86584,
+          "generated": " aederal or aederal is a air and po- a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 14907,
+          "generated": " aederal aederal.)| and a)| and a)|",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 37953,
+          "generated": " aederal or aederal is a by a)| a a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 46974,
+          "generated": " aederal or aederal is a by a)| a a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 81903,
+          "generated": " aederal or aederal is a by a)| a a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 82135,
+          "generated": " aederal and the a)| and aederal) and a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 92757,
+          "generated": " aederal aederal and a andhealthy- X and a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 72196,
+          "generated": " a by which your a a a by a by a by",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 2048,
+      "depth": 0.9,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 20.3,
+      "results": [
+        {
+          "trial": 0,
+          "key": 84558,
+          "generated": " a by which a by a by a by a themselves-",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 31860,
+          "generated": " a by which a by a anhealthy)| a a a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 89548,
+          "generated": " a by which a by a a a a andhealthy or",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 10355,
+          "generated": " a by by which a an a by a by a by",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 61884,
+          "generated": " a by by which a a a a or)| by a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 88284,
+          "generated": " and and and which a or a)| andincome or a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 18755,
+          "generated": " a by which a by a by a by a themselves-",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 71448,
+          "generated": " a by which a by a a a a andhealthy or",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 16053,
+          "generated": " a by by which a a a by a by a by",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 94058,
+          "generated": " a by which a by which- by a themselves- by",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 59241,
+          "generated": " a by which a by a a a a andhealthy or",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 14130,
+          "generated": " a by which a by a by a by a themselves-",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 86402,
+          "generated": " and and and which and- a or a) and a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 69599,
+          "generated": " a by which a by a an by a by a by",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 52713,
+          "generated": " a by which a by a by a by a by a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 27643,
+          "generated": " a by by which a a by a themselves- by a",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 77378,
+          "generated": " a by which a by a by a by a themselves-",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 27810,
+          "generated": " a by which a by a by a by a themselves-",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 62485,
+          "generated": " a by which a by a a a a andhealthy or",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 26473,
+          "generated": " a by which a by a by a by a themselves-",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 4096,
+      "depth": 0.1,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 43.6,
+      "results": [
+        {
+          "trial": 0,
+          "key": 32177,
+          "generated": "Whroduction thatICEFWhroduction\"). that plant that plant plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 61029,
+          "generated": "Whroduction thatICEFWhroduction\"). that plant that plant plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 17390,
+          "generated": "Whroduction thatICEFWhroductionWhroduction that plant plant plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 40999,
+          "generated": "alo thatroductionWhnalupICEF.\" thatforestWhforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 66081,
+          "generated": "Whroduction thatICEFWhroduction\"). that plant that plant that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 11309,
+          "generated": "alo thatroductionWhnalupICEF that plant plant that plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 84056,
+          "generated": "alo thatforest thatICEFWhroduction that plant thatforestICEF",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 96812,
+          "generated": "Whroduction thatICEFWhroduction\"). thatforestWhforest plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 38030,
+          "generated": "Whroduction thatICEFWhroduction\"). that plant that plant that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 47349,
+          "generated": "Whroduction thatICEFWhroduction\"). thatforest that plant plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 78262,
+          "generated": "Whroduction thatICEFWhroductionWhroduction that plant plant plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 60514,
+          "generated": "Whroduction thatICEFWhroduction\"). thatforestWhforest plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 31928,
+          "generated": "Whroduction thatICEFWhroduction\"). that plant that plant that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 71942,
+          "generated": "Whroduction thatICEFWhroductionWhroduction thatforestWh plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 26145,
+          "generated": "Whroduction thatICEFWhroductionWhroduction that plant plant plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 14994,
+          "generated": "alo thatforest thatICEFWhroduction thatforest thatforest that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 98727,
+          "generated": "Whroduction thatICEFWhroduction\"). that plant that plant that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 96136,
+          "generated": "alo thatforest thatICEFWhroduction thatforest thatforest that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 36276,
+          "generated": "Whroduction thatICEFWhroduction\"). that plant that plant plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 26063,
+          "generated": "Whroduction thatICEFWhroduction\"). that plant that plant plant",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 4096,
+      "depth": 0.5,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 41.4,
+      "results": [
+        {
+          "trial": 0,
+          "key": 54523,
+          "generated": "Wh plant that)|Wh plant that plant that plant that plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 33830,
+          "generated": "Wh plant that)|Wh thatforest that plant thatforest plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 96234,
+          "generated": "Wh plant that)|Wh plantup under that plant that plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 89827,
+          "generated": "Wh plant that plantWh thatforest that plant thatforest plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 10779,
+          "generated": "Wh plant that plantWh plant that,\" other plant that plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 18027,
+          "generated": " that that that that that to plant that and that\n that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 75133,
+          "generated": "Wh plant that)|Wh thatforest that plant thatforestICEF",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 53425,
+          "generated": "Wh plant that)|Wh plant that plant that plant that plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 91905,
+          "generated": "Wh plant that,\"\"). thatforest that plant that plant that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 79829,
+          "generated": "Wh plant that)|Wh thatforest that plant thatforest plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 21068,
+          "generated": "m that that that that to plant that and that\n that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 21418,
+          "generated": "Wh plant thatforest thatforest thatICEFgICEF to\").",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 51439,
+          "generated": "Wh plant that plantWh plantup plant that plant that\n",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 99591,
+          "generated": "Wh plant that plantWh thatforest that plant that plant that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 16954,
+          "generated": "Wh plant that)|Wh thatforest that plant thatforestICEF",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 54959,
+          "generated": "Wh plant that)|Wh thatforest that plant that plant that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 86593,
+          "generated": "Wh plant that)|Wh thatforest that plant that plant that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 99937,
+          "generated": "Wh plant that)|Wh thatforest that plant thatforestICEF",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 92082,
+          "generated": "Wh plant that)|Wh thatforest that plant that plant that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 56529,
+          "generated": "Wh plant that)|Wh plant that,\" that plant that\n",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 4096,
+      "depth": 0.9,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 41.4,
+      "results": [
+        {
+          "trial": 0,
+          "key": 11922,
+          "generated": " thatforest that plant thatforest that plant that plant that plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 96071,
+          "generated": " thatforest that plant thatforest that plant that plant that plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 39228,
+          "generated": " thatforest that plant thatforest that plant that plant that plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 18269,
+          "generated": " thatforest that plant thatforest that plant that plant that plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 25570,
+          "generated": " thatforest that plant thatforest that plant that plant that plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 94706,
+          "generated": " thatforest that plant thatforest that plant that plant that plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 69682,
+          "generated": " thatforest that plant thatforest that plant that plant that plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 65843,
+          "generated": " thatforest that plant thatforest that plant that plant that plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 89027,
+          "generated": " thatforest that plant thatforest that plant that plant that plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 27952,
+          "generated": " thatforest that plant thatforest that plant that plant that plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 19013,
+          "generated": " of plant that that that to plant that toced of\n",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 25304,
+          "generated": " thatforest that plant thatforest that plant that plant that plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 51305,
+          "generated": " thatforest that plant that plant that plant that plant that plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 43056,
+          "generated": " thatforest that plant thatforest that plant that plant that plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 48303,
+          "generated": " thatforest that plant thatforest that plant that plant that plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 43426,
+          "generated": " thatforest that plant thatforest that plant that plant that plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 77361,
+          "generated": " thatforest that plant thatforest that plant that plant that plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 51924,
+          "generated": " thatforest that plant thatforest that plant that plant that plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 34748,
+          "generated": " thatforest that plant thatforest that plant that plant that plant",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 25217,
+          "generated": " thatforest that plant thatforest that plant that plant that plant",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 8192,
+      "depth": 0.1,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 89.0,
+      "results": [
+        {
+          "trial": 0,
+          "key": 91636,
+          "generated": "aware that that that thatawareawareaware that that that that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 64481,
+          "generated": "aware that that thatawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 84182,
+          "generated": "aware that that that thatawareawareawareawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 83943,
+          "generated": "aware that that that thatawareawareawareawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 53786,
+          "generated": "aware that that that thatawareawareawareawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 93514,
+          "generated": "aware that that that thatawareawareaware that that that that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 72575,
+          "generated": "aware that that that thatawareawareaware that that that that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 91139,
+          "generated": "aware that that that thatawareawareaware that that that that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 83568,
+          "generated": "aware that that that thatawareawareawareawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 23097,
+          "generated": "aware that that that thatawareawareaware that that that that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 31369,
+          "generated": "aware that that that thatawareawareaware that that that that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 10316,
+          "generated": "aware that that that thatawareawareaware that that that that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 32418,
+          "generated": "aware that that that thatawareawareawareawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 17932,
+          "generated": "aware that that that thatawareawareawareawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 55262,
+          "generated": "aware that that that thatawareawareawareawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 87726,
+          "generated": "aware that that that thatawareawareaware that that that that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 76287,
+          "generated": "aware that that that thatawareawareaware that that that that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 69796,
+          "generated": "aware that that that thatawareawareaware that that that that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 93225,
+          "generated": "aware that that that thatawareawareaware that that that that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 29237,
+          "generated": "aware that that that thatawareawareawareawareawareaware that",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 8192,
+      "depth": 0.5,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 84.4,
+      "results": [
+        {
+          "trial": 0,
+          "key": 64131,
+          "generated": "awareawareaware thatawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 43532,
+          "generated": "awareawareawareawareawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 23062,
+          "generated": "awareawareawareawareawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 89060,
+          "generated": "awareawareawareawareawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 16854,
+          "generated": "awareawareaware thatawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 90772,
+          "generated": "awareawareawareawareawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 70909,
+          "generated": "awareawareawareawareawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 79901,
+          "generated": "awareawareawareawareawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 88567,
+          "generated": "awareawareawareawareawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 86002,
+          "generated": "awareawareaware thatawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 16669,
+          "generated": "awareawareawareawareawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 22966,
+          "generated": "awareawareawareawareawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 88618,
+          "generated": "awareawareaware thatawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 12071,
+          "generated": " that that that that that that that that that that that that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 29692,
+          "generated": "awareawareawareawareawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 59458,
+          "generated": "awareawareawareawareawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 65823,
+          "generated": "awareawareaware thatawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 36620,
+          "generated": "awareawareaware thatawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 25735,
+          "generated": "awareawareaware thatawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 33495,
+          "generated": "awareawareawareawareawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 8192,
+      "depth": 0.9,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 84.4,
+      "results": [
+        {
+          "trial": 0,
+          "key": 17532,
+          "generated": "awareawareawareawareawareawareaware thatawareaware that that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 65831,
+          "generated": "awareawareawareawareawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 61341,
+          "generated": "awareawareawareawareawareawareaware thatawareaware that that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 65957,
+          "generated": "awareawareawareawareawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 78908,
+          "generated": "awareawareawareawareawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 41112,
+          "generated": "awareawareawareawareawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 61813,
+          "generated": "awareawareawareawareawareawareaware thataware that that that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 50850,
+          "generated": "awareawareawareawareawareawareaware thatawareaware that that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 13962,
+          "generated": "awareawareawareawareawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 63508,
+          "generated": "awareawareawareawareawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 53727,
+          "generated": "awareawareawareawareawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 57656,
+          "generated": "awareawareawareawareawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 69329,
+          "generated": "awareawareawareawareawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 42397,
+          "generated": "awareawareawareawareawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 67508,
+          "generated": "awareawareawareawareawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 61244,
+          "generated": "awareawareawareawareawareawareaware thatawareaware that that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 19275,
+          "generated": "awareawareawareawareawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 62211,
+          "generated": "awareawareawareawareawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 14354,
+          "generated": "awareawareawareawareawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 21885,
+          "generated": "awareawareawareawareawareawareaware thatawareawareaware that",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 16384,
+      "depth": 0.1,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 181.3,
+      "results": [
+        {
+          "trial": 0,
+          "key": 79872,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 79256,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 43258,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 34556,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 64913,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 96886,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 89730,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 31105,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 79421,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 96745,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 97302,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 70197,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 29865,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 14363,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 86129,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 90860,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 47792,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 32714,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 66856,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 54437,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 16384,
+      "depth": 0.5,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 171.6,
+      "results": [
+        {
+          "trial": 0,
+          "key": 74351,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 96293,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 21252,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 20538,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 28725,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 57219,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 31084,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 96406,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 87845,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 61002,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 87235,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 27587,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 38075,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 43577,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 51476,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 62197,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 86494,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 17759,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 10429,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 71913,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 16384,
+      "depth": 0.9,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 171.7,
+      "results": [
+        {
+          "trial": 0,
+          "key": 36176,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 33299,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 71636,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 35418,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 46806,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 88318,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 43602,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 66050,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 50820,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 21756,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 23681,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 59187,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 13348,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 12649,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 70813,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 28737,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 26594,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 26775,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 30388,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 16802,
+          "generated": "forestforestforestforestforestforestforestforestforestforestforestforest",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 32768,
+      "depth": 0.1,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 369.6,
+      "results": [
+        {
+          "trial": 0,
+          "key": 16920,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 63750,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 23209,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 38998,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 79947,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 63310,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 17982,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 65858,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 52287,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 25165,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 29263,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 63486,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 13903,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 23412,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 63840,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 40580,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 95147,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 31597,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 34490,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 62334,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 32768,
+      "depth": 0.5,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 349.6,
+      "results": [
+        {
+          "trial": 0,
+          "key": 68763,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 37750,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 96296,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 34638,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 89237,
+          "generated": ", \" \" and to to to to to that as and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 98002,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 32317,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 52157,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 49804,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 22819,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 10271,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 28649,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 54329,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 86345,
+          "generated": " to to \" and \" and \" and \" and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 87309,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 80764,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 10401,
+          "generated": " to to \" and \" and \" and \" and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 79260,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 92168,
+          "generated": ", \" \" and to that \" and and, \" and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 25334,
+          "generated": " to to to to to \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 32768,
+      "depth": 0.9,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 349.6,
+      "results": [
+        {
+          "trial": 0,
+          "key": 75197,
+          "generated": " to to to \" and \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 26716,
+          "generated": " to to to \" and \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 22988,
+          "generated": " to to to \" and \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 22158,
+          "generated": " to to to \" and \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 10958,
+          "generated": " to to to \" and \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 72570,
+          "generated": " to to to \" and \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 40753,
+          "generated": " to to to \" and \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 72540,
+          "generated": " to to to \" and \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 14565,
+          "generated": " and and and and and and and and and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 59114,
+          "generated": " to to to \" and \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 48522,
+          "generated": " to to to \" and \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 18440,
+          "generated": " to to to \" and \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 34670,
+          "generated": " to to to \" and \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 22337,
+          "generated": " to to to \" and \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 29482,
+          "generated": " to to to \" and \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 36101,
+          "generated": " to to to \" and \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 79951,
+          "generated": " to to to \" and \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 75843,
+          "generated": " to to to \" and \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 25957,
+          "generated": " to to to \" and \" and \" and and and and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 79023,
+          "generated": " to to \" and \" and \" and \" and and and",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "run": "m2-g2lite-ssra",
+    "arch": "ssra",
+    "mode": "m2",
+    "config": "experiments/m2-g2lite-eval.yaml",
+    "checkpoint": "checkpoints/g2lite/ssra-latest.pt",
+    "ckpt_step": 51880,
+    "params": 84647040,
+    "device": "cuda",
+    "precision": "bf16",
+    "torch": "2.12.0+cu126",
+    "sdpa_backends": {
+      "flash": true,
+      "mem_efficient": true,
+      "math": true
+    }
+  }
+}

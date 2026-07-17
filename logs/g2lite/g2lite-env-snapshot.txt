@@ -1,0 +1,7 @@
+=== env snapshot ===
+2026-07-17T15:36:37Z
+5bcbe39 Complete M2 G2-lite pre-launch: checkpoint + E-region verifications, blob sha256, SDPA gate; ready for pod
+NVIDIA RTX A6000, 49140 MiB, 570.195.03
+torch 2.12.0+cu126 cuda 12.6
+sdpa flash: True mem_efficient: True math: True
+96

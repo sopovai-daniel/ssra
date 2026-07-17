@@ -1,0 +1,93 @@
+{
+  "verification": "V2b bf16 position quantization (characterization only; code untouched, M0 anchor certifies function identity)",
+  "probe_device": "cuda (autocast bf16; the cpu record is the pre-launch probe, the cuda record is the pod pre-flight re-run)",
+  "angle_dtype_by_site": {
+    "ssra.node_attn(slot RoPE)": {
+      "site": "ssra.node_attn(slot RoPE)",
+      "x_dtype": "torch.bfloat16",
+      "pos_dtype": "torch.int64",
+      "angle_dtype": "torch.float32",
+      "pos_max": 2
+    },
+    "ssra.readout(window/query RoPE)": {
+      "site": "ssra.readout(window/query RoPE)",
+      "x_dtype": "torch.bfloat16",
+      "pos_dtype": "torch.int64",
+      "angle_dtype": "torch.float32",
+      "pos_max": 128
+    },
+    "flat.attention(absolute RoPE)": {
+      "site": "flat.attention(absolute RoPE)",
+      "x_dtype": "torch.bfloat16",
+      "pos_dtype": "torch.int64",
+      "angle_dtype": "torch.float32",
+      "pos_max": 128
+    }
+  },
+  "note_formula": "empirical quantum in binade [2^k, 2^(k+1)) is 2^(k-7) (bf16 stores 7 mantissa bits; integers exact up to 256, first rounding at 257). The assignment's parenthetical 'quantum 2^(floor(log2 t)-8)' is off by one vs this empirical table; the table governs (Pravidlo W). The qualitative statement (rounding above 256, doubling per binade) is unchanged.",
+  "quantization_by_grid_n": {
+    "1024": {
+      "max_abs_rounding_err": 2.0,
+      "positions_exact_frac": 0.5,
+      "quantum_at_top_binade": 4.0,
+      "distinct_bf16_positions_in_last_window_of_65": 17
+    },
+    "2048": {
+      "max_abs_rounding_err": 4.0,
+      "positions_exact_frac": 0.3125,
+      "quantum_at_top_binade": 8.0,
+      "distinct_bf16_positions_in_last_window_of_65": 9
+    },
+    "4096": {
+      "max_abs_rounding_err": 8.0,
+      "positions_exact_frac": 0.1875,
+      "quantum_at_top_binade": 16.0,
+      "distinct_bf16_positions_in_last_window_of_65": 5
+    },
+    "8192": {
+      "max_abs_rounding_err": 16.0,
+      "positions_exact_frac": 0.109375,
+      "quantum_at_top_binade": 32.0,
+      "distinct_bf16_positions_in_last_window_of_65": 3
+    },
+    "16384": {
+      "max_abs_rounding_err": 32.0,
+      "positions_exact_frac": 0.0625,
+      "quantum_at_top_binade": 64.0,
+      "distinct_bf16_positions_in_last_window_of_65": 2
+    },
+    "32768": {
+      "max_abs_rounding_err": 64.0,
+      "positions_exact_frac": 0.03515625,
+      "quantum_at_top_binade": 128.0,
+      "distinct_bf16_positions_in_last_window_of_65": 1
+    }
+  },
+  "empirical_quantum_by_binade": {
+    "[128, 256)": [
+      1.0
+    ],
+    "[256, 512)": [
+      2.0
+    ],
+    "[512, 1024)": [
+      4.0
+    ],
+    "[1024, 2048)": [
+      8.0
+    ],
+    "[2048, 4096)": [
+      16.0
+    ],
+    "[4096, 8192)": [
+      32.0
+    ],
+    "[8192, 16384)": [
+      64.0
+    ],
+    "[16384, 32768)": [
+      128.0
+    ]
+  },
+  "shared_effect": "flat: ALL attention positions quantized above 256; SSRA: read-out window/query RoPE only; SSRA intra-node slot positions <= 32 are exact at every N"
+}

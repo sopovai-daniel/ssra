@@ -1,0 +1,2706 @@
+{
+  "mode": "m2",
+  "arch": "flat",
+  "max_new": 12,
+  "cells": [
+    {
+      "n": 1024,
+      "depth": 0.1,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 1.4,
+      "results": [
+        {
+          "trial": 0,
+          "key": 38093,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 90788,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 50746,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 42342,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 59563,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 86518,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 46473,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 30321,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 16336,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 18109,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 29261,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 45222,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 42994,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 88290,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 41843,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 87241,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 77338,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 66441,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 74167,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 15795,
+          "generated": " the pass key. The pass key is the pass key.",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 1024,
+      "depth": 0.5,
+      "trials": 20,
+      "accuracy": 0.95,
+      "wall_s": 1.1,
+      "results": [
+        {
+          "trial": 0,
+          "key": 47004,
+          "generated": " 49004. The pass key is 49004.",
+          "extracted": "49004",
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 92540,
+          "generated": " 92540. The pass key is 92540.",
+          "extracted": "92540",
+          "correct": true
+        },
+        {
+          "trial": 2,
+          "key": 16159,
+          "generated": " 16159. Remember it. 16159 is the",
+          "extracted": "16159",
+          "correct": true
+        },
+        {
+          "trial": 3,
+          "key": 81754,
+          "generated": " 81754. Remember it. 81754 is the",
+          "extracted": "81754",
+          "correct": true
+        },
+        {
+          "trial": 4,
+          "key": 33678,
+          "generated": " 33678. Remember it. 33678 is the",
+          "extracted": "33678",
+          "correct": true
+        },
+        {
+          "trial": 5,
+          "key": 40790,
+          "generated": " 40790. The pass key is 40790.",
+          "extracted": "40790",
+          "correct": true
+        },
+        {
+          "trial": 6,
+          "key": 49853,
+          "generated": " 49853. The pass key is 49853.",
+          "extracted": "49853",
+          "correct": true
+        },
+        {
+          "trial": 7,
+          "key": 75983,
+          "generated": " 75983. Remember it. 75983 is the",
+          "extracted": "75983",
+          "correct": true
+        },
+        {
+          "trial": 8,
+          "key": 86816,
+          "generated": " 86816. Remember it. 86816 is the",
+          "extracted": "86816",
+          "correct": true
+        },
+        {
+          "trial": 9,
+          "key": 81441,
+          "generated": " 81441. The pass key is 81441.",
+          "extracted": "81441",
+          "correct": true
+        },
+        {
+          "trial": 10,
+          "key": 92369,
+          "generated": " 92369. The pass key is 92369.",
+          "extracted": "92369",
+          "correct": true
+        },
+        {
+          "trial": 11,
+          "key": 76613,
+          "generated": " 76613. Remember it. 76613 is the",
+          "extracted": "76613",
+          "correct": true
+        },
+        {
+          "trial": 12,
+          "key": 10635,
+          "generated": " 10635. The pass key is 10635.",
+          "extracted": "10635",
+          "correct": true
+        },
+        {
+          "trial": 13,
+          "key": 92047,
+          "generated": " 92047. The pass key is 92047.",
+          "extracted": "92047",
+          "correct": true
+        },
+        {
+          "trial": 14,
+          "key": 23415,
+          "generated": " 23415. Remember it. 23415 is the",
+          "extracted": "23415",
+          "correct": true
+        },
+        {
+          "trial": 15,
+          "key": 92714,
+          "generated": " 92714. Remember it. 92714 is the",
+          "extracted": "92714",
+          "correct": true
+        },
+        {
+          "trial": 16,
+          "key": 30409,
+          "generated": " 30409. The pass key is 30409.",
+          "extracted": "30409",
+          "correct": true
+        },
+        {
+          "trial": 17,
+          "key": 79322,
+          "generated": " 79322. Remember it. 79322 is the",
+          "extracted": "79322",
+          "correct": true
+        },
+        {
+          "trial": 18,
+          "key": 18670,
+          "generated": " 18670. The pass key is 18670. The pass",
+          "extracted": "18670",
+          "correct": true
+        },
+        {
+          "trial": 19,
+          "key": 26490,
+          "generated": " 26490. The pass key is 26490.",
+          "extracted": "26490",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "n": 1024,
+      "depth": 0.9,
+      "trials": 20,
+      "accuracy": 0.85,
+      "wall_s": 1.1,
+      "results": [
+        {
+          "trial": 0,
+          "key": 13479,
+          "generated": " 13479. Remember it. 13479 is the",
+          "extracted": "13479",
+          "correct": true
+        },
+        {
+          "trial": 1,
+          "key": 85396,
+          "generated": " 85396. Remember it. 85396 is the",
+          "extracted": "85396",
+          "correct": true
+        },
+        {
+          "trial": 2,
+          "key": 13424,
+          "generated": " 13424. Remember it. 13424 is the",
+          "extracted": "13424",
+          "correct": true
+        },
+        {
+          "trial": 3,
+          "key": 76008,
+          "generated": " 76008. Remember it. 76008 is the",
+          "extracted": "76008",
+          "correct": true
+        },
+        {
+          "trial": 4,
+          "key": 58288,
+          "generated": " 59288. Remember it. 59288 is the",
+          "extracted": "59288",
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 83106,
+          "generated": " 84106. Remember it. 85106 is the",
+          "extracted": "84106",
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 17731,
+          "generated": " 17732. Remember it. 17732 is the",
+          "extracted": "17732",
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 58848,
+          "generated": " 58848. Remember it. 58848 is the",
+          "extracted": "58848",
+          "correct": true
+        },
+        {
+          "trial": 8,
+          "key": 77347,
+          "generated": " 77347. Remember it. 77347 is the",
+          "extracted": "77347",
+          "correct": true
+        },
+        {
+          "trial": 9,
+          "key": 93325,
+          "generated": " 93325. Remember it. 93325 is the",
+          "extracted": "93325",
+          "correct": true
+        },
+        {
+          "trial": 10,
+          "key": 19030,
+          "generated": " 19030. The pass key is 19030. The pass",
+          "extracted": "19030",
+          "correct": true
+        },
+        {
+          "trial": 11,
+          "key": 23568,
+          "generated": " 23568. Remember it. 23568 is the",
+          "extracted": "23568",
+          "correct": true
+        },
+        {
+          "trial": 12,
+          "key": 87729,
+          "generated": " 87729. Remember it. 87729 is the",
+          "extracted": "87729",
+          "correct": true
+        },
+        {
+          "trial": 13,
+          "key": 99751,
+          "generated": " 99751. Remember it. 99751 is the",
+          "extracted": "99751",
+          "correct": true
+        },
+        {
+          "trial": 14,
+          "key": 45296,
+          "generated": " 45296. Remember it. 45296 is the",
+          "extracted": "45296",
+          "correct": true
+        },
+        {
+          "trial": 15,
+          "key": 27447,
+          "generated": " 27447. Remember it. 27447 is the",
+          "extracted": "27447",
+          "correct": true
+        },
+        {
+          "trial": 16,
+          "key": 11210,
+          "generated": " 11210. Remember it. 11210 is the",
+          "extracted": "11210",
+          "correct": true
+        },
+        {
+          "trial": 17,
+          "key": 62063,
+          "generated": " 62063. Remember it. 62063 is the",
+          "extracted": "62063",
+          "correct": true
+        },
+        {
+          "trial": 18,
+          "key": 97189,
+          "generated": " 97189. Remember it. 97189 is the",
+          "extracted": "97189",
+          "correct": true
+        },
+        {
+          "trial": 19,
+          "key": 24199,
+          "generated": " 24199. Remember it. 24199 is the pass key",
+          "extracted": "24199",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "n": 2048,
+      "depth": 0.1,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 2.3,
+      "results": [
+        {
+          "trial": 0,
+          "key": 40606,
+          "generated": " blue. The sky. The sky is blue. The sky",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 13190,
+          "generated": " blue. The sky is green. The sky is blue.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 11782,
+          "generated": " green. The sky is green. The sky is green.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 39741,
+          "generated": " green. The sky is green. The sky is blue.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 44770,
+          "generated": " green. The sky is green. The sky. The sky",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 49105,
+          "generated": " green. The sky is green. The sky is blue.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 44579,
+          "generated": " green. The sky is green. The sky is blue.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 39130,
+          "generated": " green. The sky is green. The sky is blue.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 98676,
+          "generated": " blue. The sky is green. The sky is blue.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 16709,
+          "generated": " green. The sky is green. The sky is blue.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 12278,
+          "generated": " blue. The sky is green. The sky is blue.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 24905,
+          "generated": " green. The sky is green. The sky is blue.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 33920,
+          "generated": " green. The sky is green. The sky is blue.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 70710,
+          "generated": " green. The sky is green. The sky is blue.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 35929,
+          "generated": " green. The sky is green. The sky is blue.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 38934,
+          "generated": " green. The sky is green. The sky is blue.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 93010,
+          "generated": " green. The sky is green. The sky is blue.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 27433,
+          "generated": " green. The sky is green. The sky is blue.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 74416,
+          "generated": " green. The sky is green. The sky is green.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 98730,
+          "generated": " green. The sky is green. The sky is blue.",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 2048,
+      "depth": 0.5,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 2.3,
+      "results": [
+        {
+          "trial": 0,
+          "key": 10880,
+          "generated": " green. The sky is green. The sky is green.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 19945,
+          "generated": " blue. The sky. The sky is blue. The sky",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 10818,
+          "generated": " green. The sky is green. The sky is green.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 14380,
+          "generated": " green. The sky is green. The sky is green.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 85135,
+          "generated": " green. The sky is green. The sky is green.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 95476,
+          "generated": " green. The sky is green. The sky is green.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 81344,
+          "generated": " green. The sky is green. The sky is green.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 94351,
+          "generated": " green. The sky is green. The sky is green.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 15545,
+          "generated": " green. The sky is green. The sky is green.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 74098,
+          "generated": " green. The sky is green. The sky is green.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 29041,
+          "generated": " green. The sky is green. The sky is green.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 50911,
+          "generated": " green. The sky is green. The sky is green.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 86584,
+          "generated": " green. The sky is green. The sky is green.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 14907,
+          "generated": " green. The sky is green. The sky is green.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 37953,
+          "generated": " green. The sky is green. The sky is green.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 46974,
+          "generated": " green. The sky is green. The sky is green.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 81903,
+          "generated": " green. The sky is green. The sky is green.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 82135,
+          "generated": " green. The sky is green. The sky is green.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 92757,
+          "generated": " green. The sky is green. The sky is green.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 72196,
+          "generated": " green. The sky is green. The sky is green.",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 2048,
+      "depth": 0.9,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 2.3,
+      "results": [
+        {
+          "trial": 0,
+          "key": 84558,
+          "generated": " blue. Here. The sky is blue. Here. The",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 31860,
+          "generated": " blue. Here. The sky is blue. Here. The",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 89548,
+          "generated": " blue. Here. The sky is blue. Here. The",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 10355,
+          "generated": " blue. The sky. The sky is blue. The sky",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 61884,
+          "generated": " blue. Here. The sky is blue. Here. The",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 88284,
+          "generated": " blue. Here we go. The sky is blue. The",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 18755,
+          "generated": " blue. The sky. The sky is blue. The sky",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 71448,
+          "generated": " blue. Here. The sky is blue. Here. The",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 16053,
+          "generated": " blue. Here. The sky is blue. Here. The",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 94058,
+          "generated": " blue. Here. The sky is blue. Here. The",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 59241,
+          "generated": " blue. Here. The sky is blue. Here. The",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 14130,
+          "generated": " blue. Here. The sky is blue. Here. The",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 86402,
+          "generated": " blue. Here we go. The sky is blue. The",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 69599,
+          "generated": " blue. Here. The sky is blue. Here. The",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 52713,
+          "generated": " blue. Here. The sky is blue. Here. The",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 27643,
+          "generated": " blue. Here. The sky is blue. Here. The",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 77378,
+          "generated": " green. The sky is green. The sky. The sky",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 27810,
+          "generated": " blue. The sky is blue. The sky. The sky",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 62485,
+          "generated": " blue. Here. The sky is blue. Here. The",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 26473,
+          "generated": " blue. Here. The sky is blue. Here. The",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 4096,
+      "depth": 0.1,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 4.9,
+      "results": [
+        {
+          "trial": 0,
+          "key": 32177,
+          "generated": " blue. Here. Here is blue. The sky is blue",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 61029,
+          "generated": " blue. Here. Here is blue. The sun. Here",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 17390,
+          "generated": " blue. Here. Here is blue. The sun. Here",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 40999,
+          "generated": " blue. Here. Here. Here is blue. Here.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 66081,
+          "generated": " blue. Here. Here is blue. The sun. Here",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 11309,
+          "generated": " blue. Here. Here is blue. The sun. Here",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 84056,
+          "generated": " blue. Here. Here is blue. The sun. Here",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 96812,
+          "generated": " blue. Here. Here is blue. The sky. Here",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 38030,
+          "generated": " blue. Here. Here is blue. The sky is blue",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 47349,
+          "generated": " blue. Here. Here. Here is blue. Here.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 78262,
+          "generated": " blue. The sun. Here is blue. There is blue",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 60514,
+          "generated": " blue. Here. Here is blue. The sky. Here",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 31928,
+          "generated": " blue. Here. Here is blue. The sky. Here",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 71942,
+          "generated": " blue. Here. Here is blue. The sun. Here",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 26145,
+          "generated": " blue. Here. Here is blue. The sky. Here",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 14994,
+          "generated": " blue. Here. Here is blue. The sky. Here",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 98727,
+          "generated": " blue. Here. Here is blue. The sky. Here",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 96136,
+          "generated": " blue. Here. Here is blue. The sky. Here",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 36276,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 26063,
+          "generated": " blue. Here. Here is blue. The sun. Here",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 4096,
+      "depth": 0.5,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 4.9,
+      "results": [
+        {
+          "trial": 0,
+          "key": 54523,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 33830,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 96234,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 89827,
+          "generated": " blue. The sun. Here and the sky. Here.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 10779,
+          "generated": " blue. The sun. Here and the sun. Here.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 18027,
+          "generated": " blue. The sun. The sun. The sun. Here",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 75133,
+          "generated": " blue. The sun. The sun. The sun. Here",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 53425,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 91905,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 79829,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 21068,
+          "generated": " blue. The sun. Here and the sun. Here and",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 21418,
+          "generated": " blue. The sun. The sun. The sun. Here",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 51439,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 99591,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 16954,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 54959,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 86593,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 99937,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 92082,
+          "generated": " blue. The sun. The sun. The sun. Here",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 56529,
+          "generated": " blue. The sun. It is blue. It is blue",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 4096,
+      "depth": 0.9,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 4.9,
+      "results": [
+        {
+          "trial": 0,
+          "key": 11922,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 96071,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 39228,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 18269,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 25570,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 94706,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 69682,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 65843,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 89027,
+          "generated": " blue. Here. Here and the sky. Here and back",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 27952,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 19013,
+          "generated": " blue. The sun. The sun. The sun. Here",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 25304,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 51305,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 43056,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 48303,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 43426,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 77361,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 51924,
+          "generated": " blue. The sun. Here and the sky. Here.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 34748,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 25217,
+          "generated": " blue. It is blue. It is blue. It is",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 8192,
+      "depth": 0.1,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 11.4,
+      "results": [
+        {
+          "trial": 0,
+          "key": 91636,
+          "generated": " the sun.\nThe sun is the sun is the sun",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 64481,
+          "generated": " the sun.\nThe sun.\nThe sun is the",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 84182,
+          "generated": " the sun.\nThe sun is blue is the sun.",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 83943,
+          "generated": " the sun.\nThe sun.\nThe sun is the",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 53786,
+          "generated": " the sun. The sun.\nThe sun.\nThe",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 93514,
+          "generated": " the sun. The sun.\nThe sun is the sun",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 72575,
+          "generated": " the green is the green is the green is the green is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 91139,
+          "generated": " the sun. It is the sun. It is the sun",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 83568,
+          "generated": " the green is the green is the green is the green is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 23097,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 31369,
+          "generated": " the sun.\nThe sun is the sun is the sun",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 10316,
+          "generated": " the green is the green is the green is the green is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 32418,
+          "generated": " the green is the green is the green is the green is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 17932,
+          "generated": " the sun.\nThe sun.\nThe sun is the",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 55262,
+          "generated": " the sun.\nThe sun.\nThe sun is blue",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 87726,
+          "generated": " the sun. The sun.\nThe sun is the sun",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 76287,
+          "generated": " the sun.\nThe sun.\nThe sun is the",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 69796,
+          "generated": " the sun. The sun.\nThe sun.\nThe",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 93225,
+          "generated": " the sun.\nThe sun.\nThe sun is the",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 29237,
+          "generated": " the sun.\nThe sun.\nThe sun is the",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 8192,
+      "depth": 0.5,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 11.2,
+      "results": [
+        {
+          "trial": 0,
+          "key": 64131,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 43532,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 23062,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 89060,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 16854,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 90772,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 70909,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 79901,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 88567,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 86002,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 16669,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 22966,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 88618,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 12071,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 29692,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 59458,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 65823,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 36620,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 25735,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 33495,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 8192,
+      "depth": 0.9,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 11.2,
+      "results": [
+        {
+          "trial": 0,
+          "key": 17532,
+          "generated": " the sun is the sun. The sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 65831,
+          "generated": " the sun is the sun. The sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 61341,
+          "generated": " the sun is the sun. The sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 65957,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 78908,
+          "generated": " the sun is the sun. The sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 41112,
+          "generated": " the sun is the sun. The sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 61813,
+          "generated": " the sun is the sun. The sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 50850,
+          "generated": " the sun is the sun. The sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 13962,
+          "generated": " the sun is the sun. The sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 63508,
+          "generated": " the sun is the sun. The sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 53727,
+          "generated": " the sun is the sun. The sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 57656,
+          "generated": " the sun is the sun. The sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 69329,
+          "generated": " the sun is the sun. The sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 42397,
+          "generated": " the sun is the sun. The sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 67508,
+          "generated": " the sun is the sun. The sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 61244,
+          "generated": " the sun is the sun. The sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 19275,
+          "generated": " the sun is the sun. The sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 62211,
+          "generated": " the sun is the sun. The sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 14354,
+          "generated": " the sun is the sun. The sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 21885,
+          "generated": " the sun is the sun. The sun is the sun is",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 16384,
+      "depth": 0.1,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 30.0,
+      "results": [
+        {
+          "trial": 0,
+          "key": 79872,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 79256,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 43258,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 34556,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 64913,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 96886,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 89730,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 31105,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 79421,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 96745,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 97302,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 70197,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 29865,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 14363,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 86129,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 90860,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 47792,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 32714,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 66856,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 54437,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 16384,
+      "depth": 0.5,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 28.7,
+      "results": [
+        {
+          "trial": 0,
+          "key": 74351,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 96293,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 21252,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 20538,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 28725,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 57219,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 31084,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 96406,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 87845,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 61002,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 87235,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 27587,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 38075,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 43577,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 51476,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 62197,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 86494,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 17759,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 10429,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 71913,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 16384,
+      "depth": 0.9,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 28.7,
+      "results": [
+        {
+          "trial": 0,
+          "key": 36176,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 33299,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 71636,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 35418,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 46806,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 88318,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 43602,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 66050,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 50820,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 21756,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 23681,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 59187,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 13348,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 12649,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 70813,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 28737,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 26594,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 26775,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 30388,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 16802,
+          "generated": " the sun and the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 32768,
+      "depth": 0.1,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 88.1,
+      "results": [
+        {
+          "trial": 0,
+          "key": 16920,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 63750,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 23209,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 38998,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 79947,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 63310,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 17982,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 65858,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 52287,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 25165,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 29263,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 63486,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 13903,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 23412,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 63840,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 40580,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 95147,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 31597,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 34490,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 62334,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 32768,
+      "depth": 0.5,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 83.3,
+      "results": [
+        {
+          "trial": 0,
+          "key": 68763,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 37750,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 96296,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 34638,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 89237,
+          "generated": " the sun is the sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 98002,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 32317,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 52157,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 49804,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 22819,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 10271,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 28649,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 54329,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 86345,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 87309,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 80764,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 10401,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 79260,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 92168,
+          "generated": " the sun is the sun is the sun is the sky is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 25334,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    },
+    {
+      "n": 32768,
+      "depth": 0.9,
+      "trials": 20,
+      "accuracy": 0.0,
+      "wall_s": 83.3,
+      "results": [
+        {
+          "trial": 0,
+          "key": 75197,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 1,
+          "key": 26716,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 2,
+          "key": 22988,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 3,
+          "key": 22158,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 4,
+          "key": 10958,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 5,
+          "key": 72570,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 6,
+          "key": 40753,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 7,
+          "key": 72540,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 8,
+          "key": 14565,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 9,
+          "key": 59114,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 10,
+          "key": 48522,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 11,
+          "key": 18440,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 12,
+          "key": 34670,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 13,
+          "key": 22337,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 14,
+          "key": 29482,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 15,
+          "key": 36101,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 16,
+          "key": 79951,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 17,
+          "key": 75843,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 18,
+          "key": 25957,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        },
+        {
+          "trial": 19,
+          "key": 79023,
+          "generated": " the sun. The sun is the sun is the sun is",
+          "extracted": null,
+          "correct": false
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "run": "m2-g2lite-flat",
+    "arch": "flat",
+    "mode": "m2",
+    "config": "experiments/m2-g2lite-eval.yaml",
+    "checkpoint": "checkpoints/g2lite/flat-latest.pt",
+    "ckpt_step": 51880,
+    "params": 84301440,
+    "device": "cuda",
+    "precision": "bf16",
+    "torch": "2.12.0+cu126",
+    "sdpa_backends": {
+      "flash": true,
+      "mem_efficient": true,
+      "math": true
+    }
+  }
+}
