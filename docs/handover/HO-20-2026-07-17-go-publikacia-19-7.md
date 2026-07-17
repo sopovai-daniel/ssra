@@ -59,3 +59,9 @@ zavazny ramec.
 1. Externé zmeny záznamov (Zenodo a pod.) zachytávať v D-logu v deň vykonania (edit z 9.7. bol zachytený až 17.7.); rozhodujúca verifikácia verejného UI = privátne okno používateľa (screenshot) — Claude web_fetch môže servírovať cache a opakovaný fetch tej istej URL v jednej session nie je nezávislé overenie.
 2. Nezávislý recount per-trial dát (720 flagov) je lacný a definitívny — držať ako štandard oversight pre klasifikačné metriky.
 3. Commit file-list check (GitHub MCP) je efektívny mechanický dôkaz „zero model-code diffs" — držať v oversight šablóne.
+
+---
+
+## Addendum A1 (2026-07-17, M4 kickoff chat)
+
+Oprava referencie: rozhodnutie GO (záznam „Oversight review G2-lite UZAVRETÁ … GO“) je **piaty** zápis D-logu datovaný 2026-07-17, nie štvrtý, ako uvádza hlavička a §2 tohto HO (prvý zápis dňa = uzávierka Phase 3b). Obsah odkazu je jednoznačný; pôvodný text sa v súlade s append-only pravidlom nemení.
