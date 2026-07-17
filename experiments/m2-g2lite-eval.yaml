@@ -89,12 +89,17 @@ m2:                          # needle-lite passkey (§3)
 # for no-grad inference, AP-22 x1.20, gate <= 95 % of 48 GB card = 45.6 GiB;
 # full table in results/M2-g2lite.md §V). Batching affects wall-clock only,
 # never values (§3; certified by test_m1_batching_invariance).
+# SSRA tables additionally respect the empirical CUDA kernel-launch limit
+# found by the pod pre-flight (2026-07-17, RTX A6000, torch 2.12.0+cu126):
+# level-1 node SDPA flattens to B*N/2 batch items and launches fail above
+# ~65,535 ("invalid configuration argument"); SSRA B chosen so
+# B*N/2 <= 32,768. Values are unaffected (batch invariance certified).
 batch_table_m1:
   flat: {1024: 64, 2048: 64, 4096: 64, 8192: 64, 16384: 32, 32768: 16}
-  ssra: {1024: 64, 2048: 64, 4096: 64, 8192: 64, 16384: 32, 32768: 16}
+  ssra: {1024: 64, 2048: 32, 4096: 16, 8192: 8, 16384: 4, 32768: 2}
 batch_table_m2:
   flat: {1024: 20, 2048: 20, 4096: 20, 8192: 20, 16384: 20, 32768: 20}
-  ssra: {1024: 20, 2048: 20, 4096: 20, 8192: 20, 16384: 20, 32768: 10}
+  ssra: {1024: 20, 2048: 20, 4096: 16, 8192: 8, 16384: 4, 32768: 2}
 
 outputs:
   dir: results/g2lite        # per-mode JSON: <run_name>-<mode>.json
