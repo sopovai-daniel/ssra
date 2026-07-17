@@ -160,7 +160,7 @@ def cmd_local(out_dir: Path) -> None:
 
 # ---- v2b ---------------------------------------------------------------------
 
-def cmd_v2b(out_dir: Path) -> None:
+def cmd_v2b(out_dir: Path, device: str = "cpu") -> None:
     import ssra.model as ssra_model
     import ssra.attention as ssra_attention
     import baselines.flat as flat_mod
@@ -188,11 +188,11 @@ def cmd_v2b(out_dir: Path) -> None:
     try:
         cfg = ModelConfig(d=64, h=4, n_layers=1, vocab=64, n_max=128,
                           m=16, w=64)
-        x = torch.randint(0, 64, (1, 128))
+        x = torch.randint(0, 64, (1, 128)).to(device)
         for model in (SSRALM(cfg).eval(), FlatLM(cfg).eval()):
-            with torch.no_grad(), torch.autocast(device_type="cpu",
+            with torch.no_grad(), torch.autocast(device_type=device,
                                                  dtype=torch.bfloat16):
-                model(x)  # the eval path: eval() + no_grad + bf16 autocast
+                model.to(device)(x)  # eval path: eval + no_grad + autocast
     finally:
         ssra_model.rope_rotate = orig_rope
         ssra_attention.rope_rotate = orig_rope
@@ -229,8 +229,9 @@ def cmd_v2b(out_dir: Path) -> None:
         "verification": "V2b bf16 position quantization (characterization "
                         "only; code untouched, M0 anchor certifies function "
                         "identity)",
-        "probe_device": "cpu (autocast bf16; pod pre-flight re-runs this "
-                        "probe on cuda before any billable measurement)",
+        "probe_device": f"{device} (autocast bf16; the cpu record is the "
+                        "pre-launch probe, the cuda record is the pod "
+                        "pre-flight re-run)",
         "angle_dtype_by_site": sites,
         "note_formula": "empirical quantum in binade [2^k, 2^(k+1)) is "
                         "2^(k-7) (bf16 stores 7 mantissa bits; integers "
@@ -394,9 +395,14 @@ def main() -> None:
                     choices=("local", "v2b", "v2b-window", "ckpt",
                              "eregion"))
     ap.add_argument("--out", default="results/g2lite")
+    ap.add_argument("--device", default="cpu",
+                    help="v2b probe device (pod pre-flight: cuda)")
     args = ap.parse_args()
     out_dir = ROOT / args.out
-    {"local": cmd_local, "v2b": cmd_v2b, "v2b-window": cmd_v2b_window,
+    if args.subcommand == "v2b":
+        cmd_v2b(out_dir, args.device)
+        return
+    {"local": cmd_local, "v2b-window": cmd_v2b_window,
      "ckpt": cmd_ckpt, "eregion": cmd_eregion}[args.subcommand](out_dir)
 
 
