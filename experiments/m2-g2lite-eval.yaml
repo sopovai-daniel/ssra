@@ -1,0 +1,117 @@
+# M2 G2-lite: pre-registered inference-only length-extrapolation measurement
+# (docs/cc/M2-g2lite.md; authorized by D-log 2026-07-17, formulation B).
+# One supervised session, scoped cap 10 EUR. No training, no tuning, no
+# model-code changes, no RoPE rescaling, no per-cell retries (§3 prohibitions).
+# AP-21 run names: m2-g2lite-flat / m2-g2lite-ssra; GCS artifact dir
+# gs://ssra-poc-ew3/m2/g2lite/ ; nothing is ever overwritten.
+# Harness: scripts/g2lite_eval.py (modes m0/m1/m2; m0 gates m1/m2).
+
+run_names:
+  flat: m2-g2lite-flat
+  ssra: m2-g2lite-ssra
+precision: bf16              # AP-16: bf16 autocast + fp32 loss accumulation
+
+checkpoints:                 # final lr6e4 pair (= step-51880.pt), spec of §1
+  flat:
+    gcs: gs://ssra-poc-ew3/m2/core/m2-core-flat-s2-850m-lr6e4/latest.pt
+    local: checkpoints/g2lite/flat-latest.pt
+    bytes: 1011848651        # GCS object size (assignment §1 table; V3 gate)
+    sha256: PENDING-GCS-REAUTH   # blob sha256 at first-ever read (V2); MUST
+                                 # be filled before pod deploy (§6.1)
+    config_sha16: ed606161f99e713a  # commit 3db45ef == HEAD (verify-local)
+  ssra:
+    gcs: gs://ssra-poc-ew3/m2/core/m2-core-ssra-s2-850m-lr6e4/latest.pt
+    local: checkpoints/g2lite/ssra-latest.pt
+    bytes: 1016124393
+    sha256: PENDING-GCS-REAUTH
+    config_sha16: d35a628774f87d65
+
+# Shared trained geometry (echo only; the authoritative config is
+# config_raw inside each checkpoint blob, loaded strict — V3):
+# d=640, h=10, L=15, vocab=16384 (tied), train seq_len=1024, rope_base=10000;
+# SSRA: m=16, w=64, pool=p1, n_max=32768, level_emb on, summary_pos none.
+
+anchor:                      # M0 — gates everything else (§3)
+  eval_bin: data/m2/val-eval-2M.bin
+  sha256: bde526d2ee244f44fa0ce9be66d8d561dbc4200ff4ba86ce63bf34336bfef55d
+  seq_len: 1024
+  batch_size: 16             # training batch size -> identical eval schedule
+  expected:                  # G1 final_eval_loss, results/M2-core-pair-lr6e4.md
+    flat: 3.19333
+    ssra: 3.29065
+  tol_nats: 1.0e-3           # expected exact; fail = STOP, no measurement
+
+m1:                          # ppl vs length on region E (§3)
+  val_bin: data/m2/val.bin
+  sha256: 03e0dd1a6fb47b57a41e1c800f593b38cd55c24ddb521ac63d1f65cd9e60f35d
+  offset: 2000000            # E = val.bin[2,000,000, 2,000,000 + 2^21)
+  tokens: 2097152            # 2^21; disjoint from val-eval-2M (V4 verifies)
+  grid: [1024, 2048, 4096, 8192, 16384, 32768]
+  windows_per_cell:          # tokens / N — every cell uses the same tokens
+    1024: 2048
+    2048: 1024
+    4096: 512
+    8192: 256
+    16384: 128
+    32768: 64
+  scoring: >
+    Window = exactly N tokens (disjoint; region.view(-1, N)). Targets exist
+    at 1-indexed window positions 2..N; position 1 of each window has no
+    prediction (this operationalizes the §3 window count tokens/N). Cell
+    metric = token-weighted mean NLL over all targets of all windows, fp32
+    cross-entropy accumulated in fp64 -> ppl = exp(mean NLL). Per-position
+    buckets by 1-indexed target position; one measurement per cell.
+  buckets: [1-256, 257-512, 513-1024, 1025-2048, 2049-4096, 4097-8192,
+            8193-16384, 16385-32768]
+
+m2:                          # needle-lite passkey (§3)
+  suite: artifacts/needles/m2-g2lite/suite.jsonl.gz
+  suite_sha256_gz: 5876f3a46421a7252223cfaccf9d85e70190dde50f2b59bf91298f1dd0b9da89
+  suite_sha256_jsonl: fdb2ec5542ff6d5bc578340b5cb4f32fa917498cf81aa32fedec90bc33d5f440
+  manifest: artifacts/needles/m2-g2lite/manifest.json
+  generator: scripts/needle_gen.py   # Mohtashami & Jaggi arXiv:2305.16300
+  seed: 20260717
+  grid: [1024, 2048, 4096, 8192, 16384, 32768]
+  depths: [0.1, 0.5, 0.9]
+  trials_per_cell: 20
+  headroom: 16               # prompt token budget = N - 16
+  max_new_tokens: 12         # greedy argmax via repeated FULL forward, both
+                             # models (single code path; decode path unused)
+  stop_at: eot
+  metric: exact match of the first \d{5} regex match in the decoded
+    continuation against the trial key
+  tokenizer: artifacts/tokenizer/fineweb-edu-bpe-16384.json
+  tokenizer_sha256: 019568a206fe6ccc4bc2e90c750d660979d3fd3add159e302a0dfa4be0d669a0
+
+# Batch sizes from scripts/g2lite_memory_projection.py (D5 model extended
+# for no-grad inference, AP-22 x1.20, gate <= 95 % of 48 GB card = 45.6 GiB;
+# full table in results/M2-g2lite.md §V). Batching affects wall-clock only,
+# never values (§3; certified by test_m1_batching_invariance).
+batch_table_m1:
+  flat: {1024: 64, 2048: 64, 4096: 64, 8192: 64, 16384: 32, 32768: 16}
+  ssra: {1024: 64, 2048: 64, 4096: 64, 8192: 64, 16384: 32, 32768: 16}
+batch_table_m2:
+  flat: {1024: 20, 2048: 20, 4096: 20, 8192: 20, 16384: 20, 32768: 20}
+  ssra: {1024: 20, 2048: 20, 4096: 20, 8192: 20, 16384: 20, 32768: 10}
+
+outputs:
+  dir: results/g2lite        # per-mode JSON: <run_name>-<mode>.json
+  gcs: gs://ssra-poc-ew3/m2/g2lite/   # mirror; append-only (AP-21)
+
+gpu_selection:               # §5 rule; prices from console on deploy day
+  candidates: [RTX A6000 48GB, L40S 48GB, A100 PCIe/SXM 80GB]
+  rule: cheapest available whose projection passes the gate; all cells pass
+    the 48 GB gate -> A6000 preferred if available (on-demand Secure;
+    AP-19 step 0 Community capture attempt first, verbatim record)
+  wall_cap_hours: 4.0        # then de-scope ladder D1-D4 (§5), never mid-run
+                             # improvisation
+
+pod_preflight:               # before any billable measurement
+  - AP-17: GCP_SA_KEY_B64 secret + `gsutil ls gs://ssra-poc-ew3` sanity gate
+  - re-run scripts/g2lite_verify.py v2b on cuda (angle dtype on-device;
+    expected bf16, matching the CPU probe)
+  - micro-benchmark: forward tok/s + torch.cuda.max_memory_allocated for
+    both models at N=1024 and N=8192, compared against the projection
+    table (flash-SDPA dispatch check for flat) BEFORE any 16k/32k cell;
+    recompute projected session wall vs the 4.0 h cap
+  - AP-23: strict self-terminate at session end (PID-1 env sourcing)

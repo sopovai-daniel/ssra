@@ -1,0 +1,67 @@
+{
+  "verification": "local (V1 pointers, V3 config gate, V2a guard, V2d readout_cache)",
+  "config_sha16": {
+    "experiments/m2-core-flat-s2-850m-lr6e4.yaml": {
+      "expected": "ed606161f99e713a",
+      "at_3db45ef": "ed606161f99e713a",
+      "at_HEAD": "ed606161f99e713a",
+      "pass": true
+    },
+    "experiments/m2-core-ssra-s2-850m-lr6e4.yaml": {
+      "expected": "d35a628774f87d65",
+      "at_3db45ef": "d35a628774f87d65",
+      "at_HEAD": "d35a628774f87d65",
+      "pass": true
+    }
+  },
+  "tokenizer_sha256": {
+    "expected": "019568a206fe6ccc4bc2e90c750d660979d3fd3add159e302a0dfa4be0d669a0",
+    "actual": "019568a206fe6ccc4bc2e90c750d660979d3fd3add159e302a0dfa4be0d669a0",
+    "pass": true
+  },
+  "v1_flat_positional": {
+    "statement": "flat = RoPE at absolute token positions 1..N, same rope_base as SSRA, no learned positional parameters, no length guard",
+    "evidence": [
+      "baselines/flat.py:35-37 (pos=arange(1,n+1), rope_rotate on q,k)",
+      "baselines/flat.py:60-81 (FlatLM: token embedding only; forward has no n_max check)",
+      "scripts/train.py BUILDERS + final_eval (same ModelConfig, autocast bf16, fp32 accumulation)"
+    ]
+  },
+  "v2a_n_max_guard": {
+    "code": "src/ssra/model.py SSRALM.forward: N > n_max -> ValueError",
+    "tiny_model_behavior": "raises at N > n_max: N=65 exceeds n_max=64",
+    "grid_admitted": "trained n_max=32768 admits all grid N [1024, 2048, 4096, 8192, 16384, 32768]"
+  },
+  "v2d_readout_cache_cpu": {
+    "1024": {
+      "k_max": 95,
+      "idx_bytes": 883712,
+      "build_s": 0.01
+    },
+    "2048": {
+      "k_max": 111,
+      "idx_bytes": 2062336,
+      "build_s": 0.02
+    },
+    "4096": {
+      "k_max": 127,
+      "idx_bytes": 4714496,
+      "build_s": 0.05
+    },
+    "8192": {
+      "k_max": 143,
+      "idx_bytes": 10608640,
+      "build_s": 0.13
+    },
+    "16384": {
+      "k_max": 159,
+      "idx_bytes": 23576576,
+      "build_s": 0.22
+    },
+    "32768": {
+      "k_max": 175,
+      "idx_bytes": 51871744,
+      "build_s": 0.46
+    }
+  }
+}
