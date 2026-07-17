@@ -154,3 +154,15 @@ second entry — includes the G1 verdict FAIL / formulation B and the
 G2-lite authorization, 10 EUR scoped cap).
 | m2-g2lite-flat | 2026-07-17 | `experiments/m2-g2lite-eval.yaml` (commit e305ad0) | flat lr6e4, frozen ckpt step-51880 (blob 559940e7…) | 84.30M params, inference-only, N ∈ {1k…32k} | RunPod `pktqlt4jys3uiz`, RTX A6000 48GB Secure on-demand, EU-SE-1, $0.49/hr GPU + $0.006/hr disk = $0.50/hr (console verbatim; AP-19 step 0: Community not shown, 7th occurrence) | **DONE** | M0 anchor PASS Δ 0.0; M1 ppl 23.68→775.35 (r 32.74 @32k); needle 1k: 0/0.95/0.85, 0 beyond | `results/g2lite/` + GCS mirror | G2-lite inference-only (formulation B); session ≈1.2 h ≈0.6 EUR [ODHAD, console final pending]; AP-23 terminate 16:44:59Z confirmed |
 | m2-g2lite-ssra | 2026-07-17 | `experiments/m2-g2lite-eval.yaml` (commit e305ad0) | SSRA-P1 lr6e4, frozen ckpt step-51880 (blob b0ba9b55…) | 84.65M params, ditto | ditto | **DONE** | M0 anchor PASS Δ −1e-5; M1 ppl 26.31→14,778.0 (r 561.77 @32k); needle 0.0 all cells | `results/g2lite/` + GCS mirror | ditto; e_ℓ rows 11–15 exactly zero (O7); priors: flat confirmed, SSRA stable/mild prior violated — finding, reported |
+
+Ledger append (2026-07-17, FINAL): pod `pktqlt4jys3uiz` (ssra-m2-g2lite,
+RTX A6000 48 GB Secure, EU-SE-1) billed console total **$0.6707691363990307
+≈ 0.59 EUR** (ECB 1.1430); read-out per the 2026-07-14 rule (≥ 2 h after the
+16:44:59Z AP-23 self-terminate) ⇒ FINAL, any later correction appends.
+Cross-check (arithmetic): billed 1.3524 h ≈ 1 h 21 min 08 s × $0.496/hr =
+$0.6707 (Δ < 1 s), matching deploy ≈ 15:23:51Z → terminate 16:44:59Z;
+idle tail ≈ 11 s. Supersedes the ≈ 0.6 EUR [ODHAD] in the two rows above.
+G2-lite scoped-cap accounting: **0.59 EUR ≤ 10 EUR cap ✓** (≈ 5.9 %, ~17×
+margin); per-arm split not console-derived and not reconstructed
+(Pravidlo W — single pod, both arms). **Cumulative M2 = 71.78 + 0.59 =
+72.37 EUR ≈ 24.1 % of 300.**
