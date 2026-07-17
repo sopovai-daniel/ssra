@@ -137,3 +137,18 @@ to this run); flat + overhead under unchanged AP-12 ✓. Zero idle: overnight
 supervision gap coincided with productive training; completion→terminate
 window = close-out work. Cumulative M2 ≈ 40.53 + 32.1 ≈ **72.6 EUR ≈ 24 %**
 of 300.
+
+Ledger append (2026-07-17, FINAL): pod `ne2w6airwb4401` billed console
+total **$35.7192305624485 ≈ 31.25 EUR** (ECB 1.1430); read-out ≥ 2 h after
+the 08:45 UTC termination (confirmed by Daniel) ⇒ FINAL per the 2026-07-14
+rule. Session 08:56 UTC 07-16 → 08:45 UTC 07-17 ≈ 23.81 h billed;
+cross-check 23 h 49 min × $1.50/hr = $35.725 (Δ ≈ 14 s). Supersedes the
+≈ 32.1 EUR session [ODHAD] above; arm decomposition stays [ODHAD]
+(flat ≈ 3.84 + SSRA ≈ 26.90 ≤ 30 cap ✓ + overhead ≈ 0.51 EUR = 0.39 h,
+matching the bootstrap + inter-run gap + close-out timestamps). Idle
+tail ≈ 21 s (completion 08:44:25 → terminate ≈ 08:44:46). **Cumulative
+M2 = 40.53 + 31.25 = 71.78 EUR ≈ 23.9 % of 300.** Oversight review of
+`results/M2-core-pair-lr6e4.md`: VERIFIED, 0 substantive corrections
+(independent recomputation from both raw JSONL logs; D-log 2026-07-17,
+second entry — includes the G1 verdict FAIL / formulation B and the
+G2-lite authorization, 10 EUR scoped cap).
