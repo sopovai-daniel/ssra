@@ -226,29 +226,143 @@ log or GCS object was overwritten or deleted.
   exist`, box-specific text; §B.2 / Phase 3 §ii precedent). No other
   failure ⇒ gate passed.
 
-## §iii Run table — pending pod session
+## §iii Run table
 
-Order binding: flat lr6e4 first (~2.0–2.2 h [ODHAD]), then SSRA lr6e4
-with the early cost gate (`scripts/cost_gate.py`, window [1000, 1500],
-cap 30 EUR scoped to the SSRA run; break-even recomputed at the booked
-rate; anchor 12,335 tok/s informative, non-gating; step-tagged upload
-overhead ~52 × O(10 s) [ODHAD] sits outside the pure-train gate — if the
-projection lands within 1 EUR of the cap, surface to Daniel before
-continuing).
+| run | config commit | status | tok/s | peak GiB | final_eval_loss | wall | ≈ EUR [ODHAD] |
+|---|---|---|---|---|---|---|---|
+| m2-core-flat-s2-850m-lr6e4 | 3db45ef (`ed606161f99e713a`) | **DONE, stable** | 137,500.3 | 10.846 | **3.19333** | 10,542.6 s = 2.93 h | 3.84 |
+| m2-core-ssra-s2-850m-lr6e4 | 3db45ef (`d35a628774f87d65`) | **DONE, stable** | 12,383.2 | 41.2 | **3.29065** | 73,794.8 s = 20.50 h | **26.90 ≤ 30 cap ✓** |
 
-## §iv G1 inputs — pending pod session
+- Order per assignment §5: flat first (09:11:44→12:07:13 UTC 2026-07-16),
+  then SSRA (≈ 12:14:30 UTC 2026-07-16 → 08:44:25 UTC 2026-07-17; times
+  from log arithmetic, console billing authoritative).
+- **Early cost gate (SSRA): PASS** — windowed steady-state
+  **12,404.2 tok/s** over steps [1000, 1500] ⇒ projected 19.035 h pure
+  train = 24.98 EUR ≤ 30 EUR cap at the booked $1.50/hr, ECB 1.1430.
+  Margin 5.02 EUR > 1 EUR ⇒ no pre-continuation surface required.
+  Anchor sanity: +0.56 % vs 12,335 tok/s (informative, within ±10 %).
+  Cumulative-meter tok/s at run end 12,383.2 (+0.39 % vs anchor);
+  peak 41.2 GiB = recalibration value exactly.
+- Throughputs are pure-train (checkpoint/val time excluded by the meter).
+  Step-tagged upload overhead observed ≈ 70 s per 1000-step interval
+  (2 × ~0.95 GiB sequential uploads, US pod → EU bucket ≈ 29 MB/s) —
+  above the ~O(10 s) [ODHAD]; absorbed by the cap margin as designed
+  (assignment §5); see §ix.
 
-## §v Plots — pending pod session
+## §iv G1 inputs (fresh pair @ lr 6e-4; verdict is Daniel's)
 
-## §vi P-C diagnostics (`p1_attn_entropy`) — pending pod session
+| model | final_eval_loss (nats/tok, val-eval-2M) | **val ppl @ ctx 1024** |
+|---|---|---|
+| flat lr6e4 | 3.19333 | **24.369** |
+| SSRA-P1 lr6e4 | 3.29065 | **26.860** |
 
-## §vii Cost ledger — pending pod session
+- **Relative gap: SSRA +10.22 % vs flat** (ppl ratio 1.10223;
+  Δ = +0.09732 nats/token). The pre-registered ±5 % band (G1) is not met
+  by these numbers.
+- **Stability evidence (both arms, full 51,880 steps / 850,001,920 tok,
+  identical token stream, seed 1337):** 0 divergence flags; no NaN/inf at
+  any step (neither the §3 trigger nor AP-24 ever fired — **AP-24
+  consecutive counter never left 0** across 261 val evals per arm);
+  maximum single-eval val regression vs the running best:
+  flat **0.00279 nats**, SSRA **0.00334 nats** (trigger margin is
+  2.0 nats); post-warmup grad_norm max flat 0.887 / SSRA 1.237, late-run
+  ranges 0.60–0.76 / 0.69–0.88; monotonically improving val curves to
+  run end (final val = running best in both arms). **Explicit
+  no-divergence statement: the Phase 3 spike did NOT recur at lr 6e-4.**
+  Full evaluation protocol byte-identical: 1,953 windows / 1,999,872
+  tokens / 127 dropped, both arms.
+- Single-variable isolation held: `resumed_from: null`, seed 1337, sha256
+  gates 4/4 in both meta records; configs differ from Phase 3 in lr and
+  names only (§0.1).
+- **CC recommendation (G1 input only, no architecture conclusion, spec
+  §16):** on these inputs the stability criterion reads PASS (both arms
+  stable end-to-end; per the assignment §1 pre-registered rationale, the
+  spike vanishing under lr 6e-4 with everything else held fixed
+  implicates lr for the Phase 3 instability) and the ±5 % ppl-band
+  criterion reads FAIL (+10.22 %). The verdict and its interpretation
+  are Daniel's; per assignment §1 this was the single permitted retune —
+  no further tuning from CC.
 
-## §viii M3 handoff — pending pod session
+## §v Loss-curve plots
 
-## §ix Deviations — pending pod session
+`results/M2-core-lr6e4-curves-flat.png`,
+`results/M2-core-lr6e4-curves-ssra.png` (train faint, val marked),
+committed; mirrored to `gs://ssra-poc-ew3/m2/core/plots/`. Both curves
+are smooth end-to-end; no discontinuity anywhere (contrast: Phase 3 SSRA
+step-6,500 spike).
 
-None in local prep. (The §0.1 header-comment-block diff vs Phase 3 is
-recorded there explicitly, not silently.)
+## §vi P-C summary (informative, non-gating)
 
-## §x Open questions — pending pod session
+**`p1_attn_entropy` ≈ ln(32) = 3.4657 uniformity effectively persists at
+850M tokens at lr 6e-4:** start 3.4657, minimum 3.4287 (step 50,300),
+final 3.4348 — a −0.9 % late drift, never leaving the 3.43–3.47 band
+(contrast: Phase 3 lr 1e-3 drifted to 3.0–3.3 post-spike). Per-query
+participation stayed collapse-free throughout, final band
+[0.0471, 0.1003] around 1/16 = 0.0625. Sequencing input for P-C: at this
+lr there is no spike and no de-uniformization episode.
+
+## §vii Cost ledger (vs 300 EUR envelope)
+
+| item | wall | ≈ EUR @ $1.50/hr, ECB 1.1430 [ODHAD] |
+|---|---|---|
+| bootstrap + pytest + inter-run gap + close-out | ≈ 1.1 h | ≈ 1.5 |
+| flat lr6e4 | 2.93 h | 3.84 |
+| SSRA lr6e4 (scoped 30 EUR cap) | 20.50 h | **26.90 ≤ 30 ✓** |
+| **pod session total** (created 08:56 UTC 07-16 → terminate ≈ 09:2x UTC 07-17) | **≈ 24.5 h** | **≈ 32.1** |
+
+- Scoped-cap accounting: the 30 EUR cap applies exclusively to
+  `m2-core-ssra-s2-850m-lr6e4` (26.90 EUR ✓, incl. its checkpoint-upload
+  overhead inside the run wall); flat + overhead sit under unchanged
+  AP-12 (far below 25 EUR each).
+- Completion→reconnect idle: **none** — supervision reconnected 07:59
+  UTC, before the 08:44:25 UTC SSRA completion; the completion→terminate
+  window is close-out work (ledgered in the overhead line, not the
+  SSRA-arm cap line). The overnight supervision gap (laptop offline
+  ≈ 21:00 UTC → 07:59 UTC) coincided with productive training — zero
+  idle cost.
+- Step-tagged GCS retention: 53 objects × ~0.94/0.95 GiB per arm ≈
+  98 GiB total ≈ $2.25 ≈ 1.97 EUR/month pro-rata (§0.5 pricing);
+  deletion post-analysis is Daniel's decision.
+- Billed console total: to be read by Daniel ≥ 2 h after termination
+  (D-log 2026-07-14 rule); decomposition above is [ODHAD], console total
+  authoritative. Cumulative M2 after this session ≈ 40.53 + 32.1 ≈
+  **72.6 EUR ≈ 24 % of 300** — the 50 % threshold is not approached.
+
+## §viii M3 handoff
+
+| model | final checkpoint (GCS) | config (commit `3db45ef`, sha256/16) |
+|---|---|---|
+| flat lr6e4 | `gs://ssra-poc-ew3/m2/core/m2-core-flat-s2-850m-lr6e4/latest.pt` (= `step-51880.pt`, 1,011,848,651 B) | `ed606161f99e713a` |
+| SSRA-P1 lr6e4 | `gs://ssra-poc-ew3/m2/core/m2-core-ssra-s2-850m-lr6e4/latest.pt` (= `step-51880.pt`, 1,016,124,393 B) | `d35a628774f87d65` |
+
+Plus 52 step-tagged intermediate checkpoints per arm
+(`step-1000.pt` … `step-51000.pt`, `step-51880.pt`) for trajectory
+analysis; retention decision Daniel's.
+
+## §ix Deviations (all explicit, none silent)
+
+1. Step-tagged upload overhead ≈ 70 s/interval, ~7× the ~O(10 s)
+   [ODHAD] (US pod → EU bucket). Non-gating by design (pure-train gate);
+   absorbed by the cap margin; flat wall +≈ 0.9 h vs the pre-deploy
+   projection. Recorded, no action.
+2. EU-region preference not met (US booked; admissible per AP-18,
+   public data / 0 PII) — §i.
+3. Supervision gap overnight (laptop offline): monitors died with the
+   session; run continued detached (§i note); re-established 07:59 UTC
+   before completion. No idle cost, no artifact effect.
+4. AP-24 full pod-autonomy is limited by absent git credentials on the
+   pod (push step; §i note) — designed AP-23-safe fallback, never
+   exercised (AP-24 never fired).
+
+## §x Open questions (with proposed D-log entries)
+
+1. Step-tagged checkpoint retention (~98 GiB ≈ 2 EUR/month): keep until
+   M3 trajectory analysis or delete after the G1 verdict? **Proposed
+   D-log entry:** "2026-07-17: step-tagged ckpts of the lr6e4 pair
+   [kept for M3 / deleted post-verdict] — decision Daniel."
+2. AP-24 terminate tail on credential-less pods: accept the documented
+   fallback (stop-without-terminate ⇒ idle-rate exposure until
+   supervision) or provision a scoped push credential for future pods?
+   **Proposed D-log entry:** "2026-07-17: AP-24 tail on pods without
+   push credentials = [accepted fallback / scoped deploy credential
+   added as AP-25]."
