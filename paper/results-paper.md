@@ -2,7 +2,7 @@
 
 **Full paper (stage 2 of 2).**
 **Author:** Daniel Sopov (SopovAi). ORCID: [0009-0004-8584-5156](https://orcid.org/0009-0004-8584-5156).
-**Status:** DRAFT v0.2, 2026-07-17 — §2/§3/§7 + References drafted (block B1); Abstract/§1/§4–§6/§8 pending; do not cite.
+**Status:** DRAFT v0.3, 2026-07-18 — §2–§7 + References drafted (blocks B1–B2); Abstract/§1/§8 + AI disclosure pending (block B3); do not cite.
 **DOI:** TODO — reserve a **new** Zenodo record (own DOI) before PDF export; this is not a new version of the stage-1 record.
 **Prior version:** SSRA technical note v1.0, DOI [10.5281/zenodo.20647034](https://doi.org/10.5281/zenodo.20647034) — cited as prior version; design and complexity analysis fixed there before any training run.
 **License:** text CC BY 4.0; reference implementation Apache-2.0 (repo public flip on publication day).
@@ -178,34 +178,162 @@ The repository (code Apache-2.0) is public from the publication date and contain
 
 ## 4. Results
 
-TODO(draft, block B2). Every number tagged per rule 1.
-- 4.1 Scaling shape: log-log wall-clock slope SSRA 0.983 vs flat 1.923 (N 1k–8k); shape measurement, not a speed claim; absolutes hardware-specific (MPS). [src: M1-report]
-- 4.2 Hyperparameter sweep: symmetric two-stage lr/dropout sweep, 8/8 runs completed without divergence; within-model selections: both models lr 1e-3, dropout 0.0. No cross-model reading of sweep losses. [src: M2-sweep]
-- 4.3 Core pair @ lr 1e-3: flat final_eval_loss 3.21201 (ppl 24.829), clean end-to-end; SSRA finite loss spike steps 6,475→6,500 without recovery + second instability episode in band 16,675–22,100; final 7.55885 (ppl 1,917.6). Data-window cause disfavoured-not-excluded (exact token-window reconstruction; corpus-typical statistics). [src: M2-core-pair incl. §xi; M2-spike-diagnostics T5]
-- 4.4 Retune @ lr 6e-4 (single permitted iteration; lr the only changed variable, seed + token stream identical): flat 3.19333 (ppl 24.369) vs SSRA 3.29065 (ppl 26.860); **gap +10.22 %**, outside the pre-registered ±5 % band. Both arms stable end-to-end: 0 divergence flags, 261 val evals/arm, max transient val regression 0.0033 nats, final val = running best in both. [src: M2-core-pair-lr6e4]
-- 4.5 lr-stability observation: disappearance of the instability under single-variable isolation implicates lr as the cause of §4.3; SSRA shows an empirically narrower stable lr range than flat at this scale; **mechanism undetermined**. [src: M2-core-pair-lr6e4 §1 pre-registered logic]
-- 4.6 Throughput/memory constant: SSRA ≈ 11.8× lower training throughput than flat at S2 b16 (from 32× before read-out restructuring); constant-factor architectural cost, reported per AP-8 honesty note; peak VRAM figures. [src: M2-recalibration, M2-calibration]
-- 4.7 Length extrapolation (inference-only, region E, N ∈ {1k, 2k, 4k, 8k, 16k, 32k}): table ppl(N) + within-model ratios r(N) — flat 23.68 → 775.4 (r 32.7), SSRA 26.31 → 14,778.0 (r 561.8); binding formulation rule 2; no crossover at any N; cross-region consistency: gap @ 1,024 on E = 11.07 % vs +10.22 % on the parity set. [src: M2-g2lite §M1]
-- 4.8 Needle-lite (passkey, depths 0.1/0.5/0.9 × 20 trials): flat 0.00/0.95/0.85 @ 1,024 (pooled 60 %), 0 % everywhere beyond; SSRA 0 % in all 18 cells including its training length; pre-registered caveat sentence (rule 2). [src: M2-g2lite §M2]
+Results are presented in execution order: the implementation-scale shape measurement (§4.1), the hyperparameter sweep that fixed the training configuration (§4.2), the core pair at the selected learning rate (§4.3), the single permitted retune (§4.4) and the stability observation it isolates (§4.5), the measured throughput and memory constants (§4.6), and the inference-only length-extrapolation (§4.7) and retrieval (§4.8) measurements on the final §4.4 checkpoints. Headline outcomes are negative on every pre-registered axis.
 
-## 5. Diagnostics (descriptive; hard cap ~1.5–2 pages)
+### 4.1 Scaling shape (implementation verification scale)
 
-TODO(draft, block B2). Descriptive only — no mechanism claims.
-- 5.1 Pooling attention uniformity (P-C): p1_attn_entropy ≈ ln(32) throughout training in all SSRA runs (smoke → 850M tokens, both lr); participation without collapse; in §4.3 de-uniformization occurs only after the spike (symptom, not precursor). Honest reading: Q_φ attention ≈ mean pooling + residual at this scale — no specialization observed. [src: P-C rows across reports]
-- 5.2 Level embeddings at extrapolation lengths: e_ℓ rows 11–15 exactly 0.0 (never trained); extrapolation runs with zero level embeddings at new levels. [src: M2-g2lite V2/V3]
-- 5.3 bf16 position quantization (V2b): quantum 2^(⌊log₂ t⌋−7); from N ≈ 8k the position ULP ≥ 64 ≈ w, and the terminal window @ 32k collapses to a single position value; artifact shared by both models; characterized, not modified (anchor replication guarantees function identity with training). [src: M2-g2lite V2b]
-- 5.4 Positional locality of damage: both models degrade exclusively at positions > 1,024; positions ≤ 1,024 hold baseline NLL at every N (flat 3.087–3.393; SSRA 3.220–3.410); per-position penalty @ 32k: SSRA +2.87…+6.83 nats vs flat +0.99…+4.11. [src: M2-g2lite buckets]
-- 5.5 Needle behavioral observations (qualitative): flat degenerates into template-shaped loops without digits; SSRA @ 1,024 continues the template fluently without digits at every depth; SSRA > 1,024 degenerates into non-template token loops. [src: M2-g2lite §M2]
+Before any paid training, the wall-clock scaling shape of the implementation was measured at a small verification scale: d = 192, h = 8, L = 2 (≈ 0.95 M parameters per model), batch 1, fp32, on an Apple-silicon laptop GPU (MPS backend), N ∈ {1,024 … 8,192} — the largest swap-free range on that machine; candidate sizes whose N = 8,192 point paged to swap were rejected, because a paging measurement measures swap, not compute [src: results/M1-report.md §(vi-a)].
+
+**Table — forward+backward wall-clock and peak memory per step (B = 1, fp32, MPS).**
+
+| N | SSRA fwd+bwd (ms) | flat fwd+bwd (ms) | SSRA peak (GiB) | flat peak (GiB) |
+|---|---|---|---|---|
+| 1,024 | 510.8 | 46.3 | 1.17 | 1.12 |
+| 2,048 | 1,053.9 | 160.7 | 2.24 | 1.21 |
+| 4,096 | 1,985.1 | 523.6 | 4.31 | 3.08 |
+| 8,192 | 4,008.9 | 2,654.1 | 7.77 | 11.14 |
+
+[src: results/M1-report.md §(vi-a)] (Figure F1: `results/M1-throughput.png`.)
+
+The fitted log-log wall-clock slopes are **0.983 for SSRA and 1.923 for the flat baseline** [src: results/M1-report.md §(vi-a)]. This is strictly a shape measurement: it is consistent with the sub-quadratic Θ(N·(w + m·log N)·d) class of §2.7 against the baseline's quadratic behavior, and the sub-unit SSRA slope reflects fixed per-level dispatch overheads that still dominate at N = 1,024 — it must not be read as linear scaling. It is also not a speed claim: SSRA's absolute wall-clock is 1.5–11× above flat across the measured range, with a crossover just above N = 8,192 that is specific to this hardware and backend [src: results/M1-report.md §(vi-a)]. At N = 8,192 SSRA's peak memory is already below flat's (7.77 vs 11.14 GiB) on this backend, where flat's quadratic score matrices dominate the backward pass [src: results/M1-report.md §(vi-a)].
+
+### 4.2 Hyperparameter sweep
+
+At a reduced scale S1 (d = 384, h = 6, L = 10; SSRA 24,159,744 / flat 24,021,504 parameters) both models ran a symmetric two-stage sweep: stage 1 over lr ∈ {1e-3, 6e-4, 3e-4} at dropout 0.0, stage 2 over dropout 0.1 at the within-model stage-1 winner; each cell 3,662 steps × 16 × 1,024 = 59,998,208 tokens at seed 1337, otherwise the §3.4 protocol [src: results/M2-sweep.md §B.0/§B.3]. All 8 runs completed without divergence [src: results/M2-sweep.md §B.3]. Selection was mechanical and within-model: minimum final_eval_loss on the §3.4 evaluation set.
+
+**Table — sweep final_eval_loss (nats/token, `val-eval-2M`); winners in bold.**
+
+| model | lr 1e-3, do 0.0 | lr 6e-4, do 0.0 | lr 3e-4, do 0.0 | lr 1e-3, do 0.1 | selected |
+|---|---|---|---|---|---|
+| flat | **4.28121** | 4.42130 | 4.80148 | 4.36339 | (1e-3, 0.0) |
+| SSRA-P1 | **4.23127** | 4.34882 | 4.69499 | 4.35232 | (1e-3, 0.0) |
+
+[src: results/M2-sweep.md §B.3–B.4]
+
+Both models select (lr 1e-3, dropout 0.0); the runner-up learning rate is 6e-4 for both [src: results/M2-sweep.md §B.4]. Sweep losses are read only within a model for selection; no cross-model comparison of sweep losses is made or used as evidence anywhere in this paper.
+
+### 4.3 Core pair at lr 1e-3
+
+Both S2 arms trained the full 51,880 steps (850,001,920 tokens) on the identical token stream under the §3 protocol [src: results/M2-core-pair.md §iii]. The flat arm was clean end-to-end (137,252 tok/s pure-train, peak 10.85 GiB), finishing at final_eval_loss **3.21201** (ppl **24.829**) [src: results/M2-core-pair.md §iii/§iv]. The SSRA arm destabilized: a finite loss spike in the 25-step window **6,475 → 6,500** (train loss 3.97 → 7.45 nats — the largest 25-step train jump of the run, +3.4802 nats), from which the run never recovered over the remaining 45,380 steps [src: results/M2-core-pair.md §iv/§xi]. The post-spike trajectory contains a second instability episode: 155 train records above 9 nats within steps 16,675–22,100 (≈ 71 % of the possible records in that span, in ≈ 5 oscillating sub-blocks), with train maximum 10.351 at step 19,775 and validation maximum 10.088 at step 19,800; the last validation value above 8.0 occurs at step 25,800, and a tight 7.52–7.59 validation band holds only from ≈ step 35,000 [src: results/M2-core-pair.md §xi C1]. No loss was ever non-finite, so the NaN/inf abort — the only in-flight trigger active in this run (§3.4) — never fired, and the run completed by protocol [src: results/M2-core-pair.md §iv]. Final: **7.55885** (ppl **1,917.6**); the cross-model ppl ratio is **77.23×**, outside the pre-registered ±5 % band by three orders of magnitude [src: results/M2-core-pair.md §iv]. (Figure F2: `results/M2-core-curves-flat.png`, `results/M2-core-curves-ssra.png`.)
+
+Data due diligence: because the run was a single continuous process (`resumed_from: null`), the exact token batches of steps 6,450–6,550 are reconstructible by replaying the harness's own seeded sampler, and were reconstructed. Against a 2,048-window corpus baseline they are statistically and qualitatively corpus-typical on document-boundary density, distinct-token fraction, unigram entropy, longest-run, and window-reuse statistics: of 404 batch-mean z-tests, 4 flagged at |z| ≥ 3 (≈ the count expected by chance), all mundane on decode; the only flag inside the spike window proper is a mild document-boundary elevation (z = 3.27 at step 6,487) [src: results/M2-spike-diagnostics.md §3.2–3.3]. The flat arm, which consumed the identical stream, shows only a chance-consistent local wiggle in the same token window [src: results/M2-core-pair.md §xi C2]. A data-window cause is therefore disfavoured, not excluded [src: results/M2-spike-diagnostics.md §3.3]. Mechanism-level localization was not possible for this run: gradient norms were not logged, and per-step checkpoints were not retained (the checkpoint mirror kept a single, repeatedly overwritten object), leaving log-only evidence; both instrumentation gaps were closed for §4.4 [src: results/M2-core-pair.md §xi C3; results/M2-spike-diagnostics.md §1/§5].
+
+### 4.4 Retune at lr 6e-4 (single permitted iteration)
+
+The pre-registered plan allowed at most one retune, changing exactly one variable (§3.4). The retune set lr 1e-3 → 6e-4 — the sweep runner-up for both models, declared before launch — holding seed 1337 and therefore initialization draws and token stream identical to §4.3; a machine-verified diff of the parsed configurations shows the learning rate and run names as the only deltas [src: results/M2-core-pair-lr6e4.md §0.1]. Instrumentation added for this pair (pre-clip gradient-norm logging, step-tagged checkpoint retention, and the sustained-instability abort of §3.4) is observability and run-control only; a frozen-reference smoke run reproduced all per-step losses bit-identically across the instrumentation change [src: results/M2-core-pair-lr6e4.md §0.3–0.4].
+
+Both arms were stable end-to-end over all 51,880 steps: zero divergence flags, no non-finite loss at any step, the sustained-instability counter never left 0 across 261 validation evaluations per arm, and the maximum single-evaluation validation regression against the running best was 0.00279 nats (flat) / 0.00334 nats (SSRA) against the 2.0-nat trigger margin; final validation loss equals the running best in both arms [src: results/M2-core-pair-lr6e4.md §iv]. Post-warmup pre-clip gradient norms peaked at 0.887 (flat) / 1.237 (SSRA), with late-run ranges 0.60–0.76 / 0.69–0.88 [src: results/M2-core-pair-lr6e4.md §iv]. **The §4.3 spike did not recur.** (Figure F3: `results/M2-core-lr6e4-curves-flat.png`, `results/M2-core-lr6e4-curves-ssra.png`.)
+
+**Table — final quality of the retuned pair (Gate inputs).**
+
+| model | final_eval_loss (nats/token, `val-eval-2M`) | val ppl @ ctx 1,024 |
+|---|---|---|
+| flat | 3.19333 | **24.369** |
+| SSRA-P1 | 3.29065 | **26.860** |
+
+[src: results/M2-core-pair-lr6e4.md §iv]
+
+The gap is **+10.22 %** in SSRA's disfavor (ppl ratio 1.10223; Δ = +0.09732 nats/token) [src: results/M2-core-pair-lr6e4.md §iv]. The pre-registered parity criterion (±5 %) is **not met**; the stability criterion is met. This pair is the paper's headline parity result, and the retune budget of the plan is exhausted.
+
+### 4.5 Learning-rate stability observation
+
+Under the pre-registered single-variable logic of the retune — identical initialization, token stream, schedule shape, and step count, with the learning rate as the only change — the disappearance of the §4.3 instability at lr 6e-4 implicates the learning rate as the cause of that instability [src: results/M2-core-pair-lr6e4.md §1/§iv]. Stated as an empirical observation: at this scale the flat baseline trains cleanly at lr 1e-3 while SSRA does not, and both train cleanly at lr 6e-4 — SSRA exhibits an empirically narrower stable learning-rate range than the flat baseline. The mechanism is undetermined, and no architectural conclusion is drawn from this observation. One scoping fact: the sweep that selected lr 1e-3 for both models ran 3,662 steps (≈ 60M tokens) per cell without incident [src: results/M2-sweep.md §B.3], while the §4.3 instability appeared at step 6,475 (≈ 106M tokens into the run) [src: results/M2-core-pair.md §iv; token count derived as 6,475 × 16,384] — the selection procedure's horizon ended before the instability's onset, so the sweep could not have detected it.
+
+### 4.6 Throughput and memory constants
+
+The complexity class of §2.7 says nothing about constants; the constants below are measured properties of this implementation on the stated hardware, reported under the §3.2 rule (FLOPs and wall-clock reported, not matched).
+
+An initial batched training realization of the §2.5 read-out materialized the per-query gathered key/value cover as dense [B, h, N, k_max, d_head] tensors (k_max = 95 rows at N = 1,024, the exact Fenwick worst-case count), which autograd retains across layers; at the S2 scale this ran out of memory on an 80 GB device at every batch size tried [src: results/M2-calibration.md §3; results/M2-g2lite.md §V2]. Restructuring the same read-out as per-level block cross-attention over the contiguous consumer intervals implied by the §2.6 retention rule — logit-equivalent by construction, certified by frozen-reference A/B equivalence tests against the prior realization and by the verification suite — removed the blow-up [src: results/M2-recalibration.md §2–3; D-log 2026-07-13; results/M2-readout-optimization.md].
+
+**Table — measured pure-train throughput and peak VRAM (bf16 autocast, ctx 1,024, seed 1337).**
+
+| configuration (device) | SSRA tok/s | flat tok/s | flat/SSRA | SSRA peak GiB | flat peak GiB |
+|---|---|---|---|---|---|
+| S1 b16, initial read-out realization (A100 PCIe 80 GB) | 9,457 | 300,978 | 31.8× | 54.67 | 6.35 |
+| S1 b16, restructured read-out (A100 SXM 80 GB) | 27,079 | 319,945 | **11.8×** | 18.56 | 6.35 |
+| S2 b16, training runs of §4.4 (A100 SXM 80 GB) | 12,383 | 137,500 | 11.1× | 41.2 | 10.85 |
+
+[src: row 1 results/M2-calibration.md §3; row 2 results/M2-recalibration.md §3; row 3 results/M2-core-pair-lr6e4.md §iii]
+
+After restructuring, SSRA at S1 b16 is 2.86× faster and uses 2.95× less memory than before on the same device class, and the SSRA-vs-flat training-throughput gap at S1 b16 narrows from ≈ 32× to **11.8×** (the flat anchor's +6.3 % between rows is the SXM-vs-PCIe hardware delta, not architecture) [src: results/M2-recalibration.md §3]. In the production S2 runs of §4.4 the realized pure-train ratio is **11.1×**, with peak memory 41.2 vs 10.85 GiB (≈ 3.8×) [src: results/M2-core-pair-lr6e4.md §iii]. SSRA S2 b32 goes out of memory on 80 GB (consistent with the analytic projection of ≈ 86 GiB), while the flat model runs S2 at batch 64 in 40.01 GiB [src: results/M2-recalibration.md §3; results/M2-calibration.md §3]. Consequently, the equal-token comparisons of §4.3–§4.4 favor SSRA on the compute axis by roughly an order of magnitude; this is stated, not corrected (§3.2). No wall-clock advantage is claimed at any measured size (§2.7).
+
+### 4.7 Length extrapolation (inference-only)
+
+The final §4.4 checkpoints were evaluated as-is (no weight, configuration, or tokenizer modification; no positional rescaling of any kind) on region E (§3.3), disjoint from the parity evaluation set, at N ∈ {1,024, 2,048, 4,096, 8,192, 16,384, 32,768}: per cell exactly 2^21/N disjoint N-token windows, cell metric = token-weighted mean NLL over targets at window positions 2..N [src: results/M2-g2lite.md §P/§M1]. A replication anchor gates the measurement: re-running the §3.4 final-metric protocol on the evaluation set reproduced §4.4 exactly (flat Δ = 0.0 nats; SSRA Δ = −1e-5 nats; tolerance 1e-3), certifying that the evaluation harness computes the identical function the models were trained and scored with [src: results/M2-g2lite.md §M0]. Because region E consists of packed short documents (mean 1,138.7 tokens; §3.3), at N ≫ 1,024 most of each window is earlier, unrelated documents: the grid measures **degradation robustness at unseen absolute lengths, not long-range modeling benefit** (§6) [src: results/M2-g2lite.md §P.1/§V4].
+
+Pre-registered priors: the flat baseline (RoPE at absolute positions, no extrapolation mechanism) was expected to degrade beyond its training length — the known behavior of this positional family [27] — so flat degradation is not evidence of an SSRA advantage. SSRA's positional scheme is length-invariant by construction except for two trained inputs: the level-embedding rows for levels 11–15 (untrained and exactly zero at these lengths; §5.2) and a longer Fenwick key list in the single read-out softmax (≤ 321 keys at N = 32,768 vs 225 at N = 1,024); its pre-registered prior under the §2 structural account was stable-to-mild degradation [src: results/M2-g2lite.md §P.2].
+
+**Table T1 — perplexity vs. context length N on region E (one measurement per cell); r(N) = ppl(N)/ppl(1,024) within model.**
+
+| N | windows | flat ppl | flat r(N) | SSRA ppl | SSRA r(N) | SSRA/flat |
+|---|---|---|---|---|---|---|
+| 1,024 | 2,048 | 23.684 | 1.000 | 26.306 | 1.000 | 1.111 |
+| 2,048 | 1,024 | 37.134 | 1.568 | 108.217 | 4.114 | 2.914 |
+| 4,096 | 512 | 96.074 | 4.057 | 1,154.91 | 43.90 | 12.02 |
+| 8,192 | 256 | 224.375 | 9.474 | 4,178.99 | 158.86 | 18.63 |
+| 16,384 | 128 | 443.793 | 18.74 | 9,476.24 | 360.23 | 21.35 |
+| 32,768 | 64 | 775.354 | 32.74 | 14,778.0 | 561.77 | 19.06 |
+
+[src: results/M2-g2lite.md §M1; raw `results/g2lite/m2-g2lite-flat-m1.json`, `results/g2lite/m2-g2lite-ssra-m1.json`]
+
+Under the pre-registered degradation labels (stable r ≤ 1.10 < mild ≤ 1.50 < marked ≤ 10 < collapse), flat reads *marked* at N = 2,048–8,192 and *collapse* at 16,384/32,768; SSRA reads *marked* at 2,048 and *collapse* from 4,096 onward [src: results/M2-g2lite.md §O2/O3]. The priors therefore resolve as: **the flat prior is confirmed; the SSRA prior is violated**, from N = 2,048 onward [src: results/M2-g2lite.md §O2/O3]. There is **no crossover at any N** — SSRA perplexity exceeds flat perplexity in every cell; the cross-model ratio rises 1.111 → 21.35 (N = 16,384) and reads 19.06 at N = 32,768, and the 21.35 → 19.06 movement at the top of the grid is reported without interpretation [src: results/M2-g2lite.md §O4]. Cross-region consistency: the ratio at the shared training length on E is 1.111 (+11.07 %), matching the +10.22 % parity-set gap of §4.4 [src: results/M2-g2lite.md §O4/§M0]. All SSRA cells at N ≥ 2,048 execute with the exactly-zero level-embedding rows described in §5.2 [src: results/M2-g2lite.md §O7]. (Figure F4a: `results/M2-g2lite-ppl-vs-n.png`.)
+
+### 4.8 Needle-lite retrieval
+
+A committed passkey suite in the canonical format [28] — filler sentences, one embedded 5-digit key, a closing retrieval query — was generated once (360 prompts: 6 lengths × depths {0.1, 0.5, 0.9} × 20 trials; byte-deterministic; prompt budget N − 16) and evaluated identically on both models: greedy argmax via repeated full forward (a single code path; the incremental decode path deliberately unused), at most 12 new tokens, success iff the first 5-digit group in the generation equals the key [src: results/M2-g2lite.md §P/§V5].
+
+**Table T2 — needle-lite accuracy (20 trials per cell).**
+
+| model | depth | 1,024 | 2,048 | 4,096 | 8,192 | 16,384 | 32,768 |
+|---|---|---|---|---|---|---|---|
+| flat | 0.1 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
+| flat | 0.5 | **0.95** | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
+| flat | 0.9 | **0.85** | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
+| SSRA | 0.1 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
+| SSRA | 0.5 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
+| SSRA | 0.9 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
+
+[src: results/M2-g2lite.md §M2; per-trial raw `results/g2lite/m2-g2lite-flat-m2.json`, `results/g2lite/m2-g2lite-ssra-m2.json`]
+
+The pooled flat accuracy at N = 1,024 is 60 %, above the pre-registered 20 % floor, so the grid is informative rather than floor-limited [src: results/M2-g2lite.md §O5]. The flat model's copy behavior is depth-local even at its training length (0.00 / 0.95 / 0.85 at depths 0.1 / 0.5 / 0.9) and none of it is retained at any N ≥ 2,048 [src: results/M2-g2lite.md §M2/§O5]. **SSRA scores 0 % in every cell, including its own training length**; a retrieval-retention label is therefore not applicable to SSRA [src: results/M2-g2lite.md §O5]. Pre-registered caveat (binding): an 85M-parameter model trained on 850M tokens need not exhibit copy behavior at all — the needle suite is informative, not decisive, and H2 was not tested in its planned M3 form (§6); beyond N = 1,024 the needle result is additionally confounded by the positional collapse measured in §4.7. Behavioral characterization of the failure modes is in §5.5. (Figures F4d/F4e: `results/M2-g2lite-needle-flat.png`, `results/M2-g2lite-needle-ssra.png`.)
+
+## 5. Diagnostics (descriptive)
+
+The observations in this section are descriptive; none carries a mechanism claim.
+
+### 5.1 Pooling-attention uniformity
+
+A standing diagnostic logs the entropy of the P1 latent-query (Q_φ) attention maps over the 32 slots of a lossy node (`p1_attn_entropy`; maximum = ln 32 ≈ 3.4657) together with per-query participation. The metric is live, not dead: it responds to artificially non-uniform attention (scaling Q_φ ×100 at initialization drops it to ≈ 3.25) and decreases measurably on a toy run, but only in the 4th–6th decimal [src: results/M1-report.md §(vi-c)]. Across every SSRA run of this paper the map stays near-uniform: in [3.4655, 3.4657] through the full 60M-token sweep in all cells [src: results/M2-sweep.md §B.6], and in the stable 850M-token run start 3.4657 → minimum 3.4287 (step 50,300) → final 3.4348, never leaving a 3.43–3.47 band, with collapse-free participation ending in [0.0471, 0.1003] around the uniform value 1/16 [src: results/M2-core-pair-lr6e4.md §vi]. In the unstable §4.3 run the entropy held textbook-uniform through the spike onset itself (3.4645 at step 6,500) and de-uniformized only afterwards (3.0–3.3 band; participation spreading to [0.03, 0.23]) — a post-spike symptom, not a precursor [src: results/M2-core-pair.md §vi]. Honest reading: with Q_φ initialized ≈ N(0, 0.02²) against LayerNormed keys, pooling scores stay near zero, and at this scale P1 operates ≈ as mean pooling with a residual — no query collapse, but no query specialization was observed at any point in any run [src: results/M1-report.md §(vi-c)].
+
+### 5.2 Level embeddings at extrapolation lengths
+
+The e_ℓ table is sized for n_max = 32,768 ([16, 640] per layer × 15 layers), but training at sequence length 1,024 exercises only levels ≤ 10. In the trained checkpoint, rows 11–15 are exactly 0.0 in every layer (fp32 exact-zero test, not a tolerance; trained rows have max |·| = 4.638), i.e. the documented ablation-OFF state at those levels [src: results/M2-g2lite.md §V2]. Every SSRA measurement at N ≥ 2,048 in §4.7–§4.8 therefore runs with zero level embeddings at the newly reached levels.
+
+### 5.3 bf16 position quantization
+
+On the bf16-autocast path used in training and evaluation, integer token positions are cast to bf16 inside the rotary embedding at all three call sites. The empirical quantum in binade [2^k, 2^(k+1)) is 2^(k−7) (integers exact through 256): 4 at N = 1,024, 64 at N = 16,384, 128 in the top binade; by N ≈ 8,192 the position ULP reaches the window size w = 64, and at N = 32,768 all 65 positions of the last read-out window cast to the single value 32,768.0 — window-relative offsets are effectively constant in the top binade [src: results/M2-g2lite.md §V2b]. The effect is device-independent (a CUDA re-probe shows the angle tensor in fp32 via autocast promotion, but positions are bf16-cast before the multiply) and is shared by both models: flat has all attention positions quantized above 256, SSRA its read-out window/query positions (intra-node slot positions ≤ 32 are exact at every N) [src: results/M2-g2lite.md §V2b]. The training function at sequence length 1,024 already contained this quantization (quantum ≤ 4); it is characterized, not modified — the §4.7 anchor replication certifies function identity with training.
+
+### 5.4 Positional locality of the degradation
+
+Per-position bucket means show that for both models every bucket at target positions ≤ 1,024 holds baseline NLL at every N (flat 3.087–3.393 nats; SSRA 3.220–3.410 nats): the entire §4.7 degradation lives at target positions > 1,024 [src: results/M2-g2lite.md §M1; raw m1 JSONs]. At N = 32,768 the buckets beyond 1,024 rise 4.08 → 5.52 → 6.30 → 6.78 → 7.20 nats (flat) and 6.09 → 9.42 → 9.63 → 9.97 → 10.05 nats (SSRA); the penalty against each model's own 513–1,024 bucket spans +0.99 … +4.11 nats (flat) and +2.87 … +6.83 nats (SSRA) [src: results/M2-g2lite.md §M1/§O6]. Under the pre-registered +0.10-nat rule, neither model is positionally graceful [src: results/M2-g2lite.md §O6]. (Figures F4b/F4c: `results/M2-g2lite-buckets-flat.png`, `results/M2-g2lite-buckets-ssra.png`.)
+
+### 5.5 Needle behavioral observations (qualitative)
+
+From the per-trial generation records: beyond N = 1,024 the flat model degenerates into template-shaped loops that contain no digits; SSRA at N = 1,024 continues the filler template fluently but produces no digits at any depth; SSRA beyond 1,024 degenerates into non-template token loops [src: per-trial generations in `results/g2lite/m2-g2lite-flat-m2.json` / `m2-g2lite-ssra-m2.json`; characterization per HO-20 §4]. These are qualitative observations on committed raw records; no mechanism is inferred.
 
 ## 6. Limitations
 
-TODO(draft, block B2).
-- Single scale (≈85M params / 850M tokens); conclusions scoped to it.
-- Single pair per configuration @ seed 1337 — by design (budget + single-variable isolation), not a seed study.
-- Packed short-document corpus (mean doc ≈ 1.1k tokens in E): the length grid measures **degradation robustness beyond training length**, not long-range dependency benefit.
-- V2b quantization + untrained e_ℓ rows shape the extrapolation regime for both models.
-- G1a absolute wall-clock MPS-specific; throughput constant hardware-specific.
-- H3 (top-down path) and axis C (content hierarchy) not tested — deferred branches (note §7).
+**Scale and seeds.** Every result is at one scale — ≈ 84–85M parameters, 850M training tokens, training context 1,024 — with a single pair per configuration at one seed (1337). The single seed is by design (budget, and the single-variable isolation between §4.3 and §4.4 requires a fixed seed), but it means this is not a seed study: seed sensitivity of the parity gap, of the lr-stability boundary, and of the extrapolation behavior is unquantified, and no conclusion extends beyond this scale.
+
+**Unexecuted pre-registered comparisons.** The plan's later stages — the Log-Linear-family baseline (GatedDeltaNet) as the empirical comparator on the retrieval axis (§7, [2]), the MEGABYTE-style two-level baseline, and the registered ablations (P2/P3 pooling operators and the P1×P3 hybrid, window w, summary schedule, separate read-out parameters, level embeddings OFF, tree arity k = 4) — did not run, because the pre-registered gate before them (§4.4) failed and the plan's stop-loss ended the branch. Their absence is a consequence of the protocol, and it leaves the mechanism-level questions they were designed to answer open.
+
+**Corpus and evaluation regime.** Region E consists of packed short documents (mean 1,138.7 tokens), so the §4.7 grid measures degradation robustness beyond the training length, not long-range dependency benefit. Two evaluation-regime artifacts additionally shape the extrapolation measurements: the bf16 position quantization (§5.3; shared by both models) and the untrained level-embedding rows (§5.2; SSRA only). Neither was corrected, per the pre-registered identical-function rule; their contributions are not separable from architecture within this design.
+
+**Hardware-specific constants.** The §4.1 absolute wall-clock numbers are specific to the Apple-silicon MPS backend, and the §4.6 constants (32×, 11.8×, 11.1×) to one A100-class device and this implementation. They are properties of implementation-on-hardware, not of the asymptotics in §2.7.
+
+**Instability evidence depth.** For the §4.3 run, gradient norms were not logged and per-step checkpoints were not retained, so the instability evidence is log-only and no module- or layer-level localization was possible; the §4.4 instrumentation closes both gaps prospectively but cannot deepen §4.3 retroactively.
+
+**Untested design branches.** H3 (the top-down pass) and axis C (content-based hierarchy) were deferred by design [26] and remain untested. H2 was not tested in its planned M3 form: needle-lite (§4.8) is the only retrieval evidence in this paper, and beyond the training length it is confounded by the positional collapse measured in §4.7.
 
 ## 7. Related work
 
@@ -273,9 +401,13 @@ URLs [1]–[25] retrieved 2026-06-09 / 2026-06-11 (verification records with per
 
 ## INTERNAL — figures & tables inventory (existing artifacts only; delete before export)
 
-- T1 ppl(N) grid + ratios — build as a table from `results/` G2-lite CSV (no new plot).
-- T2 needle 18-cell grid — table from raw JSON.
-- F1 scaling shape — `results/M1-throughput.png` [verify path at B2].
-- F2/F3 loss curves Phase 3 / Phase 3b — committed plots in `results/` [verify exact filenames at B2].
-- F4 G2-lite plots — committed in `results/` [verify at B2].
-- Any gap → author decision; new composite figures are v1.1 scope.
+Verified against `results/` on 2026-07-18 (B2): all referenced artifacts exist as committed files — no gap, no author escalation needed.
+
+- T1 ppl(N) grid + ratios — in-text table in §4.7, built from raw `results/g2lite/m2-g2lite-{flat,ssra}-m1.json` (values cross-checked against `results/M2-g2lite.md` §M1 at B2: 12/12 cells match).
+- T2 needle 18-cell grid — in-text table in §4.8, from `results/M2-g2lite.md` §M2; per-trial raw `results/g2lite/m2-g2lite-{flat,ssra}-m2.json` (oversight full recount of 720 trials, D-log 2026-07-17).
+- F1 scaling shape — `results/M1-throughput.png` ✔ exists.
+- F2 loss curves Phase 3 — `results/M2-core-curves-flat.png`, `results/M2-core-curves-ssra.png` ✔ exist.
+- F3 loss curves Phase 3b — `results/M2-core-lr6e4-curves-flat.png`, `results/M2-core-lr6e4-curves-ssra.png` ✔ exist.
+- F4a ppl vs N — `results/M2-g2lite-ppl-vs-n.png` ✔; F4b/F4c per-position buckets — `results/M2-g2lite-buckets-flat.png`, `results/M2-g2lite-buckets-ssra.png` ✔; F4d/F4e needle heatmaps — `results/M2-g2lite-needle-flat.png`, `results/M2-g2lite-needle-ssra.png` ✔.
+- Optional, not referenced in text (author's call whether to include): sweep curves `results/M2-sweep-curves-{flat,ssra}.png`, G1b micro-gate curves `results/M1-g1b-curves.png`.
+- New composite figures remain v1.1 scope (D-log 2026-07-17).
