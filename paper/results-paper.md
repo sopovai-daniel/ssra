@@ -2,7 +2,7 @@
 
 **Full paper (stage 2 of 2).**
 **Author:** Daniel Sopov (SopovAi). ORCID: [0009-0004-8584-5156](https://orcid.org/0009-0004-8584-5156).
-**Status:** DRAFT v0.3, 2026-07-18 — §2–§7 + References drafted (blocks B1–B2); Abstract/§1/§8 + AI disclosure pending (block B3); do not cite.
+**Status:** DRAFT v0.4, 2026-07-18 — full text drafted (B1–B3: Abstract, §1–§8, AI disclosure, captions); Sunday reviewer pass (B4) pending; do not cite.
 **DOI:** TODO — reserve a **new** Zenodo record (own DOI) before PDF export; this is not a new version of the stage-1 record.
 **Prior version:** SSRA technical note v1.0, DOI [10.5281/zenodo.20647034](https://doi.org/10.5281/zenodo.20647034) — cited as prior version; design and complexity analysis fixed there before any training run.
 **License:** text CC BY 4.0; reference implementation Apache-2.0 (repo public flip on publication day).
@@ -39,20 +39,33 @@ Framework: HO-20 §2–§4 (binding), D-log 2026-07-17 (GO entry), spec v1.2 §1
 | §4.7–4.8, §5.2–5.5 | `results/M2-g2lite.md` (+ raw JSON/CSV in results/ and GCS mirror) |
 | §5.1 | P-C rows in `results/M1-report.md`, `M2-sweep.md`, `M2-core-pair.md`, `M2-core-pair-lr6e4.md` |
 | §7 | `docs/02-prior-art-mapa.md` (#1–#25) + note §6 |
+| Abstract, §1, §8, captions | no independent sources — recap of values already tagged in §2–§6; B4 cross-checks them against the same reports |
 
 ---
 
 ## Abstract
 
-TODO(draft, block B3). Must contain: one-sentence mechanism recap + complexity class (same as Log-Linear Attention, no better-class claim); pre-registered evaluation at matched parameters + tokens; **negative results stated plainly** — parity criterion (±5 % val ppl @ ctx 1,024) not met (+10.22 %); training instability at lr 1e-3 with a stable retune at 6e-4 (narrower empirical lr range, mechanism undetermined); length extrapolation: flat prior confirmed, SSRA prior violated, no crossover; needle-lite 0 % for SSRA in all cells; throughput constant 11.8×. Framing: pre-registered falsification plan of note v1.0 executed; either outcome was declared publishable.
+SSRA (Scale-Shared Recursive Attention) is a causal language-modeling block in which a single weight-shared rule per layer — one softmax attention block and one learned pooling operator, applied at every level of a binary tree over the sequence and reused by the token-level read-out — replaces the attention sublayer, at Θ(N·(w + m·log N)·d) training cost per layer: the same complexity class as Log-Linear Attention, and explicitly not a better one [src: §2.7]. A technical note (the stage-1 record of this work) fixed the design, its causality proof, its derived complexity, and a falsification plan before any training run; this paper executes that pre-registered plan, and the outcome is negative on every measured axis. The comparison is SSRA in its P1 (latent-query pooling) configuration against a flat Transformer baseline at matched parameters (≈ 84–85M [src: results/M2-core-pair.md §0.2]) and matched tokens (850M; identical token stream, order, step count, and seed), with FLOPs and wall-clock reported, not matched [src: docs/cc/M2-assignment.md AP-8]. Parity: SSRA finishes +10.22 % above the baseline on validation perplexity at the training context length 1,024 (26.860 vs 24.369), outside the pre-registered ±5 % band [src: results/M2-core-pair-lr6e4.md §iv]. Stability: at the sweep-selected learning rate 1e-3 the SSRA arm suffered an unrecovered finite loss spike while the flat arm was clean on the identical token stream [src: results/M2-core-pair.md §iv]; the single permitted retune to 6e-4 — the only changed variable — trained cleanly in both arms, implicating the learning rate and leaving SSRA with an empirically narrower stable learning-rate range at this scale, mechanism undetermined [src: results/M2-core-pair-lr6e4.md §iv]. Length extrapolation (inference-only, N = 1,024 … 32,768): the flat baseline's pre-registered degradation prior is confirmed; SSRA's stable-to-mild prior is violated from N = 2,048; there is no crossover at any measured length [src: results/M2-g2lite.md §O2–O4]. Retrieval (needle-lite passkey): SSRA scores 0 % in every length × depth cell, including its own training length, while the flat baseline shows depth-local copy behavior at the training length only; a pre-registered caveat records that an 85M-parameter model trained on 850M tokens need not exhibit copy behavior at all [src: results/M2-g2lite.md §M2/§O5]. Measured training-throughput constants on A100-class hardware favor the baseline by 11.8× at the reduced sweep scale (S1) and 11.1× in the production runs (S2), so the equal-token protocol favored SSRA on the compute axis [src: results/M2-recalibration.md §3; results/M2-core-pair-lr6e4.md §iii]. The repository releases the frozen implementation specification, the append-only decision log, the pre-registered assignments, per-run configurations, raw logs, and the verification suite. Either outcome was declared publishable in advance; this is the negative one.
 
 ## 1. Introduction
 
-TODO(draft, block B3).
-- Motivation recap from note §1: self-similar statistics of language (Hurst H ≈ 0.7, [1]); flat Transformers do not encode this architecturally.
-- H1 / H2 restated, wording consistent with note §1.
-- Two-stage publication: note v1.0 fixed design + complexity before any run; this paper reports the pre-registered evaluation.
-- Contributions: (i) executed pre-registered plan at matched parameters + tokens; (ii) negative headline results (§4); (iii) descriptive diagnostics (§5); (iv) full methodology artifacts public with the repo (decision log, pre-registered assignments, configs, raw logs).
+Natural language exhibits self-similar, long-range-dependent statistics: Alabdulmohsin et al. estimate a Hurst parameter of H ≈ 0.7 for language and connect this fractal structure to next-token prediction [1]. Standard Transformers do not encode this property architecturally: every layer attends over a flat token sequence, and the hierarchical variants surveyed in §7 typically introduce *per-level* parameters over a small, fixed number of levels. SSRA tests a sharper inductive bias: **if language is self-similar, one rule should suffice at every scale.** Concretely, a single attention block and a single learned compressor per layer process pairs of tokens, pairs of summaries of pairs, and so on up a binary tree — and the very same attention block performs the final token-level read-out (§2).
+
+The design operationalizes two hypotheses, restated from the technical note [26] §1:
+
+- **H1 (scale-shared rule):** cross-scale weight sharing is an inductive bias matched to the self-similarity of language [1], yielding better length extrapolation at equal parameter budget than a flat baseline.
+- **H2 (learned node compression):** m-slot learned compression at tree nodes preserves retrieval ability (measured by needle-in-a-haystack tests) at Θ(N·(w + m·log N)·d) training cost.
+
+The work is published in two stages. The technical note [26] fixed the design, the causality proof, the derived complexity, and the falsification plan before any training run, and declared in advance that either outcome — positive or negative — answers the hypotheses and is intended for publication. This paper is the second stage: it reports the pre-registered evaluation. The outcome is negative on every measured axis (§4): H1's length-extrapolation prediction is contradicted by the measurements of §4.7 [src: results/M2-g2lite.md §O2–O4], and H2 obtains no positive evidence in the needle-lite form actually run (§4.8) and was not tested in its planned multi-needle M3 form, because the pre-registered gate before that stage failed (§6).
+
+Contributions:
+
+1. **Executed pre-registered plan** at matched parameters + matched tokens (identical token stream, order, steps, and seed; FLOPs and wall-clock reported, not matched — §3.2), with the falsification criteria fixed in [26] before any run.
+2. **Negative headline results, stated plainly** (§4): a +10.22 % parity gap at the training context [src: results/M2-core-pair-lr6e4.md §iv]; a training instability at lr 1e-3 removed by a single-variable retune to 6e-4, leaving SSRA with an empirically narrower stable learning-rate range at this scale, mechanism undetermined [src: results/M2-core-pair-lr6e4.md §iv]; no length-extrapolation crossover at any measured N [src: results/M2-g2lite.md §O4]; 0 % needle-lite retrieval for SSRA in every cell [src: results/M2-g2lite.md §M2].
+3. **Descriptive diagnostics** (§5), characterizing without mechanism claims: pooling-attention uniformity across all runs, exactly-zero level-embedding rows at extrapolation lengths, a bf16 position-quantization artifact shared by both models, and the positional locality of the degradation.
+4. **Public methodology artifacts** (§3.6): the frozen implementation specification, the append-only decision log, the pre-registered assignments committed before each run, one committed configuration per run, raw training logs, and the verification suite.
+
+The paper additionally corrects one error of [26] found during implementation: the decoder retention rule of the note's §2.6/§3 is amended by the in-paper erratum of §2.8; the headline decoding class is unaffected.
 
 ## 2. Mechanism
 
@@ -355,13 +368,21 @@ The novelty claim of [26] rests on the combination — cross-scale weight sharin
 
 ## 8. Conclusion and future work
 
-TODO(draft, block B3).
-- Pre-registered questions answered negatively at this scale; per the project's declared success definition, a negative answer at matched parameters + tokens is the publishable outcome.
-- Future work (proposals, not commitments): stabilization/schedule ablations, scale, SSRA-TD (top-down branch), axis C (content hierarchy), trajectory analysis on retained step-tagged checkpoints (possible note/paper v1.1 material).
+The pre-registered questions of [26] are answered, and at this scale the answers are negative. At matched parameters and matched tokens, SSRA-P1 does not reach parity with the flat baseline at the training context (+10.22 %, outside the pre-registered ±5 % band; §4.4); it exhibits an empirically narrower stable learning-rate range, mechanism undetermined (§4.5); its length-extrapolation prior is violated from N = 2,048 with no crossover at any measured length (§4.7); and it shows no needle-lite copy behavior in any cell, including its own training length (§4.8). The measured throughput constants (§4.6) mean that the equal-token protocol favored SSRA on the compute axis by roughly an order of magnitude; per §3.2 this is stated, not corrected. No architectural conclusion beyond the measured configuration and scale is drawn (§6): what is established is that the specific pre-registered success criteria were not met by this implementation at ≈ 84–85M parameters and 850M training tokens.
+
+The project's declared success definition, fixed before any run, was a clear publishable answer to H1–H2 in either direction at matched budget; this paper is that answer for the negative direction. What survives the outcome: the mechanism's verified causal correctness (§2.4), the corrected decoding-state analysis and the in-paper erratum to [26] (§2.6, §2.8), the restructured read-out with its measured constants (§4.6), the descriptive characterization of the trained models (§5), and the audit trail that lets each result be checked or re-run (§3.6).
+
+Future work — proposals, not commitments; none is scheduled, and each would require its own pre-registered plan:
+
+- **Stabilization and schedule ablations** targeting the §4.5 observation (warmup shape, schedule variants, per-module learning rates), turning "mechanism undetermined" into a testable question.
+- **Scale.** A single point at ≈ 84–85M parameters and 850M tokens cannot separate a mechanism-level negative from an underscaled one; a larger matched pair would sharpen either reading.
+- **The registered, unexecuted comparisons and ablations** listed in §6: the Log-Linear-family and MEGABYTE-style baselines, the P2/P3 pooling operators and the P1×P3 hybrid, window w, the summary schedule, separate read-out parameters, level embeddings OFF, and tree arity k = 4.
+- **Deferred design branches:** SSRA-TD (the top-down pass, H3) and axis C (content-based hierarchy), both excluded from this version by design [26].
+- **Trajectory analysis** on the retained step-tagged checkpoints of the §4.4 pair — executable without new training compute — as candidate material for a v1.1 of this record.
 
 ## AI Assistance Disclosure
 
-TODO(draft, block B3). Equivalent to the v1.0 record-level disclosure, refined: experiments were executed by Claude Code on infrastructure operated and paid for by the author, under the author's supervision; the verification suite includes causality, equivalence and gradient-flow checks; all decisions, verdicts and reviews are the author's. AI tools are not authors; the author takes full responsibility for all content (COPE position statement).
+This work used AI assistance throughout, under the author's direction. Design triage, formalization, drafting, and independent verification passes were assisted by Anthropic's Claude; the experiments were executed by Claude Code, an AI coding agent, on infrastructure operated and paid for by the author, under the author's supervision. The AI-executed work runs against machine-checkable guards: a frozen implementation specification as the normative reference for all code, one configuration committed before each launch, and a verification suite that includes causality (shift and completion), equivalence (frozen-reference A/B), and gradient-flow checks (§2.4, §3.6). All decisions, verdicts, and reviews are the author's. Consistent with the COPE position statement on authorship and AI tools, AI tools are not authors of this work; the author takes full responsibility for all content, including AI-generated portions. This section refines the record-level disclosure added to the stage-1 note's Zenodo record [26].
 
 ## References
 
@@ -399,15 +420,23 @@ URLs [1]–[25] retrieved 2026-06-09 / 2026-06-11 (verification records with per
 
 ---
 
-## INTERNAL — figures & tables inventory (existing artifacts only; delete before export)
+## INTERNAL — figures & tables inventory + captions (existing artifacts only; inventory scaffolding deleted before export, captions move to final placement at PDF export)
 
-Verified against `results/` on 2026-07-18 (B2): all referenced artifacts exist as committed files — no gap, no author escalation needed.
+Verified against `results/` on 2026-07-18 (B2): all referenced artifacts exist as committed files — no gap, no author escalation needed. Captions drafted in B3; final placement (two-panel composition for F2/F3, pairing for F4b/c and F4d/e) happens at PDF export (B5). Caption numbers are recaps of values already tagged in §4–§5; B4 cross-checks them against the same source reports.
 
 - T1 ppl(N) grid + ratios — in-text table in §4.7, built from raw `results/g2lite/m2-g2lite-{flat,ssra}-m1.json` (values cross-checked against `results/M2-g2lite.md` §M1 at B2: 12/12 cells match).
+  **Caption T1:** "Table T1 — Perplexity vs. evaluation context length N on region E. One measurement per cell over disjoint N-token windows (2^21 tokens per cell); r(N) = ppl(N)/ppl(1,024) is the within-model degradation ratio, SSRA/flat the cross-model ratio at each N. Final §4.4 checkpoints evaluated as-is. The 21.35 → 19.06 movement at the top of the grid is reported without interpretation (§4.7)."
 - T2 needle 18-cell grid — in-text table in §4.8, from `results/M2-g2lite.md` §M2; per-trial raw `results/g2lite/m2-g2lite-{flat,ssra}-m2.json` (oversight full recount of 720 trials, D-log 2026-07-17).
+  **Caption T2:** "Table T2 — Needle-lite passkey accuracy (fraction of 20 trials per cell). One embedded 5-digit key per prompt (prompt budget N − 16); success iff the first 5-digit group of a greedy generation of at most 12 new tokens equals the key; identical prompts for both models, single code path via repeated full forward (§4.8)."
 - F1 scaling shape — `results/M1-throughput.png` ✔ exists.
+  **Caption F1:** "Figure F1 — Wall-clock scaling shape at the implementation-verification scale. Forward+backward time per step vs. N ∈ {1,024 … 8,192} (d = 192, h = 8, L = 2; batch 1, fp32, Apple-silicon MPS backend), log-log; fitted slopes 0.983 (SSRA) vs. 1.923 (flat). A shape measurement only: the sub-unit SSRA slope reflects fixed per-level dispatch overheads still dominant at these N, not linear scaling, and absolute wall-clock here is not a speed claim (§4.1)."
 - F2 loss curves Phase 3 — `results/M2-core-curves-flat.png`, `results/M2-core-curves-ssra.png` ✔ exist.
+  **Caption F2:** "Figure F2 — Training and validation loss of the core pair at lr 1e-3 (§4.3); two panels: flat, SSRA. Identical token stream in both arms. The flat arm is clean end-to-end; the SSRA arm shows the finite spike in the 25-step window 6,475 → 6,500 without recovery, and a second instability episode within steps 16,675–22,100."
 - F3 loss curves Phase 3b — `results/M2-core-lr6e4-curves-flat.png`, `results/M2-core-lr6e4-curves-ssra.png` ✔ exist.
+  **Caption F3:** "Figure F3 — Training and validation loss of the retuned pair at lr 6e-4 (§4.4); two panels: flat, SSRA. The learning rate is the only change against F2 (seed, initialization, and token stream identical). Both arms are stable over all 51,880 steps; final validation loss equals the running best in both; the §4.3 spike does not recur."
 - F4a ppl vs N — `results/M2-g2lite-ppl-vs-n.png` ✔; F4b/F4c per-position buckets — `results/M2-g2lite-buckets-flat.png`, `results/M2-g2lite-buckets-ssra.png` ✔; F4d/F4e needle heatmaps — `results/M2-g2lite-needle-flat.png`, `results/M2-g2lite-needle-ssra.png` ✔.
+  **Caption F4a:** "Figure F4a — Perplexity vs. context length N on region E (log-log), final §4.4 checkpoints evaluated as-is. The flat baseline follows its pre-registered degradation prior [27]; SSRA violates its stable-to-mild prior from N = 2,048; no crossover at any measured N (§4.7; values in Table T1)."
+  **Caption F4b/F4c:** "Figures F4b/F4c — Per-position bucket mean NLL at each evaluation length N (F4b flat, F4c SSRA). For both models, buckets at target positions ≤ 1,024 hold baseline NLL at every N; the entire §4.7 degradation lives at target positions > 1,024. Under the pre-registered +0.10-nat rule, neither model is positionally graceful (§5.4)."
+  **Caption F4d/F4e:** "Figures F4d/F4e — Needle-lite accuracy over the length × depth grid (F4d flat, F4e SSRA), 20 trials per cell. Flat: depth-local copy behavior at the training length only (0.00 / 0.95 / 0.85 at depths 0.1 / 0.5 / 0.9), 0 % at every N ≥ 2,048. SSRA: 0 % in every cell including its training length; the pre-registered §4.8 caveat applies (values in Table T2)."
 - Optional, not referenced in text (author's call whether to include): sweep curves `results/M2-sweep-curves-{flat,ssra}.png`, G1b micro-gate curves `results/M1-g1b-curves.png`.
 - New composite figures remain v1.1 scope (D-log 2026-07-17).
