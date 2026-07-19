@@ -166,3 +166,11 @@ G2-lite scoped-cap accounting: **0.59 EUR ≤ 10 EUR cap ✓** (≈ 5.9 %, ~17×
 margin); per-arm split not console-derived and not reconstructed
 (Pravidlo W — single pod, both arms). **Cumulative M2 = 71.78 + 0.59 =
 72.37 EUR ≈ 24.1 % of 300.**
+
+Ledger append (2026-07-20): V11 session 1 — S0 (inventories + price
+verification via Cloud Billing Catalog API, EUR) + K3 (unified plots) + K2
+descope note; local CPU + read-only gsutil/gcloud only, **0.00 EUR**;
+commits 5e16d90 + db9a181, oversight PASS (D-log 2026-07-20). K1 remains
+the only paid V11 step: gate G-V11-2 PASS, worst-case projection
+**0.727 EUR ≤ 3.00 scoped cap** (e2-standard-4 @ europe-west3, realistic
+≈ 0.47 EUR). Cumulative unchanged: **72.37 EUR ≈ 24.1 % of 300**.
