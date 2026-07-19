@@ -1,0 +1,89 @@
+{
+  "note": "verbatim greedy outputs, most frequent first, of 360 trials per model",
+  "top10": {
+    "flat": [
+      {
+        "count": 80,
+        "output": " the sun. The sun is the sun is the sun is"
+      },
+      {
+        "count": 60,
+        "output": " the sun and the sun is the sun is the sun is"
+      },
+      {
+        "count": 30,
+        "output": " blue. It is blue. It is blue. It is"
+      },
+      {
+        "count": 21,
+        "output": " green. The sky is green. The sky is green."
+      },
+      {
+        "count": 20,
+        "output": " the pass key. The pass key is the pass key."
+      },
+      {
+        "count": 19,
+        "output": " the sun is the sun. The sun is the sun is"
+      },
+      {
+        "count": 14,
+        "output": " blue. Here. The sky is blue. Here. The"
+      },
+      {
+        "count": 13,
+        "output": " green. The sky is green. The sky is blue."
+      },
+      {
+        "count": 7,
+        "output": " blue. Here. Here is blue. The sun. Here"
+      },
+      {
+        "count": 7,
+        "output": " blue. Here. Here is blue. The sky. Here"
+      }
+    ],
+    "ssra": [
+      {
+        "count": 60,
+        "output": " the pass key. The pass key is the pass key."
+      },
+      {
+        "count": 60,
+        "output": "forestforestforestforestforestforestforestforestforestforestforestforest"
+      },
+      {
+        "count": 36,
+        "output": " to to to to to \" and \" and and and and"
+      },
+      {
+        "count": 27,
+        "output": "awareawareawareawareawareawareaware thatawareawareaware that"
+      },
+      {
+        "count": 18,
+        "output": " thatforest that plant thatforest that plant that plant that plant"
+      },
+      {
+        "count": 18,
+        "output": " to to to \" and \" and \" and and and and"
+      },
+      {
+        "count": 11,
+        "output": "aware that that that thatawareawareaware that that that that"
+      },
+      {
+        "count": 8,
+        "output": "aware that that that thatawareawareawareawareawareaware that"
+      },
+      {
+        "count": 7,
+        "output": "awareawareaware thatawareawareaware thatawareawareaware that"
+      },
+      {
+        "count": 6,
+        "output": " a by which a by a by a by a themselves-"
+      }
+    ]
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "source_table": "results/M2-g2lite.md V2b erratum (empirical, governing)",
+  "method": "CPU torch.bfloat16 round-trip of integer positions 1..32768 (standalone; no model code)",
+  "torch": "2.12.0",
+  "all_match": true,
+  "binades": [
+    {
+      "binade_lo": 128,
+      "binade_hi": 256,
+      "quantum_empirical": 1,
+      "max_rounding_err": 0.0,
+      "distinct_positions_last_window": 65,
+      "committed": {
+        "quantum": 1,
+        "max_err": 0,
+        "distinct_last_window": 65
+      },
+      "match_committed": true
+    },
+    {
+      "binade_lo": 256,
+      "binade_hi": 512,
+      "quantum_empirical": 2,
+      "max_rounding_err": 1.0,
+      "distinct_positions_last_window": 33,
+      "committed": {
+        "quantum": 2,
+        "max_err": 1,
+        "distinct_last_window": null
+      },
+      "match_committed": true
+    },
+    {
+      "binade_lo": 512,
+      "binade_hi": 1024,
+      "quantum_empirical": 4,
+      "max_rounding_err": 2.0,
+      "distinct_positions_last_window": 17,
+      "committed": {
+        "quantum": 4,
+        "max_err": 2,
+        "distinct_last_window": 17
+      },
+      "match_committed": true
+    },
+    {
+      "binade_lo": 1024,
+      "binade_hi": 2048,
+      "quantum_empirical": 8,
+      "max_rounding_err": 4.0,
+      "distinct_positions_last_window": 9,
+      "committed": {
+        "quantum": 8,
+        "max_err": 4,
+        "distinct_last_window": 9
+      },
+      "match_committed": true
+    },
+    {
+      "binade_lo": 2048,
+      "binade_hi": 4096,
+      "quantum_empirical": 16,
+      "max_rounding_err": 8.0,
+      "distinct_positions_last_window": 5,
+      "committed": {
+        "quantum": 16,
+        "max_err": 8,
+        "distinct_last_window": 5
+      },
+      "match_committed": true
+    },
+    {
+      "binade_lo": 4096,
+      "binade_hi": 8192,
+      "quantum_empirical": 32,
+      "max_rounding_err": 16.0,
+      "distinct_positions_last_window": 3,
+      "committed": {
+        "quantum": 32,
+        "max_err": 16,
+        "distinct_last_window": 3
+      },
+      "match_committed": true
+    },
+    {
+      "binade_lo": 8192,
+      "binade_hi": 16384,
+      "quantum_empirical": 64,
+      "max_rounding_err": 32.0,
+      "distinct_positions_last_window": 2,
+      "committed": {
+        "quantum": 64,
+        "max_err": 32,
+        "distinct_last_window": 2
+      },
+      "match_committed": true
+    },
+    {
+      "binade_lo": 16384,
+      "binade_hi": 32768,
+      "quantum_empirical": 128,
+      "max_rounding_err": 64.0,
+      "distinct_positions_last_window": 1,
+      "committed": {
+        "quantum": 128,
+        "max_err": 64,
+        "distinct_last_window": 1
+      },
+      "match_committed": true
+    }
+  ]
+}
