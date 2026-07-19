@@ -1,0 +1,190 @@
+{
+  "source": "Cloud Billing Catalog API (cloudbilling.googleapis.com/v1), currencyCode=EUR",
+  "skus": {
+    "7A7B-EA46-2897": {
+      "description": "Storage PD Capacity in Frankfurt",
+      "why": "Storage PD Capacity in Frankfurt (pd-standard, EUR/GiB-month)",
+      "service_regions": [
+        "europe-west3"
+      ],
+      "usage_type": "OnDemand",
+      "resource_group": "PDStandard",
+      "effective_time": "2026-07-19T07:00:00Z",
+      "unit": "gibibyte month",
+      "tiered_rates_eur": [
+        {
+          "start_usage_amount": 0,
+          "price_eur": 0.0420144
+        }
+      ]
+    },
+    "7D80-F9E4-6A44": {
+      "description": "E2 Instance Ram running in Frankfurt",
+      "why": "E2 Instance Ram running in Frankfurt (on-demand, EUR/GiB-hour)",
+      "service_regions": [
+        "europe-west3"
+      ],
+      "usage_type": "OnDemand",
+      "resource_group": "RAM",
+      "effective_time": "2026-07-19T07:00:00Z",
+      "unit": "gibibyte hour",
+      "tiered_rates_eur": [
+        {
+          "start_usage_amount": 0,
+          "price_eur": 0.003296397
+        }
+      ]
+    },
+    "B1B5-0BAA-CB31": {
+      "description": "Balanced PD Capacity in Frankfurt",
+      "why": "Balanced PD Capacity in Frankfurt (pd-balanced, EUR/GiB-month)",
+      "service_regions": [
+        "europe-west3"
+      ],
+      "usage_type": "OnDemand",
+      "resource_group": "SSD",
+      "effective_time": "2026-07-19T07:00:00Z",
+      "unit": "gibibyte month",
+      "tiered_rates_eur": [
+        {
+          "start_usage_amount": 0,
+          "price_eur": 0.105036
+        }
+      ]
+    },
+    "B8D1-7028-A009": {
+      "description": "Network Internet Data Transfer Out from Frankfurt to Western Europe",
+      "why": "Network Internet Data Transfer Out from Frankfurt to Western Europe (GCE egress, EUR/GiB)",
+      "service_regions": [
+        "europe-west3"
+      ],
+      "usage_type": "OnDemand",
+      "resource_group": "PremiumInternetEgress",
+      "effective_time": "2026-07-19T07:00:00Z",
+      "unit": "gibibyte",
+      "tiered_rates_eur": [
+        {
+          "start_usage_amount": 0,
+          "price_eur": 0.105036
+        },
+        {
+          "start_usage_amount": 1024,
+          "price_eur": 0.096283
+        },
+        {
+          "start_usage_amount": 10240,
+          "price_eur": 0.070024
+        }
+      ]
+    },
+    "C921-088E-792A": {
+      "description": "E2 Instance Core running in Frankfurt",
+      "why": "E2 Instance Core running in Frankfurt (on-demand, EUR/vCPU-hour)",
+      "service_regions": [
+        "europe-west3"
+      ],
+      "usage_type": "OnDemand",
+      "resource_group": "CPU",
+      "effective_time": "2026-07-19T07:00:00Z",
+      "unit": "hour",
+      "tiered_rates_eur": [
+        {
+          "start_usage_amount": 0,
+          "price_eur": 0.024599168
+        }
+      ]
+    },
+    "E7A9-CA47-A3E3": {
+      "description": "Network Internet Data Transfer Out from Frankfurt to EMEA",
+      "why": "Network Internet Data Transfer Out from Frankfurt to EMEA (GCE egress, EUR/GiB)",
+      "service_regions": [
+        "europe-west3"
+      ],
+      "usage_type": "OnDemand",
+      "resource_group": "PremiumInternetEgress",
+      "effective_time": "2026-07-19T07:00:00Z",
+      "unit": "gibibyte",
+      "tiered_rates_eur": [
+        {
+          "start_usage_amount": 0,
+          "price_eur": 0.105036
+        },
+        {
+          "start_usage_amount": 1024,
+          "price_eur": 0.096283
+        },
+        {
+          "start_usage_amount": 10240,
+          "price_eur": 0.070024
+        }
+      ]
+    },
+    "22EB-AAE8-FBCD": {
+      "description": "Download Worldwide Destinations (excluding Asia & Australia)",
+      "why": "GCS Download Worldwide Destinations excl. Asia & Australia (GCS internet egress, EUR/GiB)",
+      "service_regions": [
+        "global"
+      ],
+      "usage_type": "OnDemand",
+      "resource_group": "PremiumInternetEgress",
+      "effective_time": "2026-07-19T07:00:00Z",
+      "unit": "gibibyte",
+      "tiered_rates_eur": [
+        {
+          "start_usage_amount": 0,
+          "price_eur": 0.0
+        },
+        {
+          "start_usage_amount": 100,
+          "price_eur": 0.105036
+        },
+        {
+          "start_usage_amount": 1024,
+          "price_eur": 0.096283
+        },
+        {
+          "start_usage_amount": 10240,
+          "price_eur": 0.070024
+        }
+      ]
+    },
+    "68F8-91DC-CFA9": {
+      "description": "Network Data Transfer GCP Inter Region within Europe",
+      "why": "GCS Network Data Transfer GCP Inter Region within Europe (EUR/GiB; same-region has NO SKU = free per docs)",
+      "service_regions": [
+        "global"
+      ],
+      "usage_type": "OnDemand",
+      "resource_group": "InterregionEgress",
+      "effective_time": "2026-07-19T07:00:00Z",
+      "unit": "gibibyte",
+      "tiered_rates_eur": [
+        {
+          "start_usage_amount": 0,
+          "price_eur": 0.017506
+        }
+      ]
+    },
+    "7870-010B-2763": {
+      "description": "Regional Standard Class B Operations",
+      "why": "GCS Regional Standard Class B Operations (EUR/operation; ~104 GETs in K1)",
+      "service_regions": [
+        "global"
+      ],
+      "usage_type": "OnDemand",
+      "resource_group": "RegionalOps",
+      "effective_time": "2026-07-19T07:00:00Z",
+      "unit": "count",
+      "tiered_rates_eur": [
+        {
+          "start_usage_amount": 0,
+          "price_eur": 0.0
+        },
+        {
+          "start_usage_amount": 50000,
+          "price_eur": 3.5e-07
+        }
+      ]
+    }
+  }
+}

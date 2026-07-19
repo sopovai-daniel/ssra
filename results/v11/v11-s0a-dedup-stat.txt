@@ -1,0 +1,25 @@
+== gs://ssra-poc-ew3/m2/core/m2-core-ssra-s2-850m-lr6e4/latest.pt
+    Creation time:          Fri, 17 Jul 2026 08:37:53 GMT
+    Content-Length:         1016124393
+    Hash (crc32c):          R6K2pQ==
+    Hash (md5):             7i3KV6nCjdHVDTQodr4VnA==
+== gs://ssra-poc-ew3/m2/core/m2-core-ssra-s2-850m-lr6e4/step-51880.pt
+    Creation time:          Fri, 17 Jul 2026 08:38:29 GMT
+    Content-Length:         1016124393
+    Hash (crc32c):          R6K2pQ==
+    Hash (md5):             7i3KV6nCjdHVDTQodr4VnA==
+== gs://ssra-poc-ew3/m2/core/m2-core-ssra-s2-850m-lr6e4/latest.pt/latest.pt
+    Creation time:          Fri, 17 Jul 2026 15:36:40 GMT
+    Content-Length:         1011848651
+    Hash (crc32c):          OquJ9g==
+    Hash (md5):             y/6p2ErYa0vr09dZeSNZSA==
+== gs://ssra-poc-ew3/m2/core/m2-core-flat-s2-850m-lr6e4/latest.pt
+    Creation time:          Thu, 16 Jul 2026 12:07:45 GMT
+    Content-Length:         1011848651
+    Hash (crc32c):          OquJ9g==
+    Hash (md5):             y/6p2ErYa0vr09dZeSNZSA==
+== gs://ssra-poc-ew3/m2/core/m2-core-flat-s2-850m-lr6e4/step-51880.pt
+    Creation time:          Thu, 16 Jul 2026 12:08:27 GMT
+    Content-Length:         1011848651
+    Hash (crc32c):          OquJ9g==
+    Hash (md5):             y/6p2ErYa0vr09dZeSNZSA==
