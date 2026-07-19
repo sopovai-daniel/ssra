@@ -3,7 +3,7 @@
 **Full paper (stage 2 of 2).**
 **Author:** Daniel Sopov (SopovAi). ORCID: [0009-0004-8584-5156](https://orcid.org/0009-0004-8584-5156).
 **Status:** v1.0, 2026-07-19 — publication release (reviewer-pass gate PASS, 2026-07-18).
-**DOI:** [10.5281/zenodo.21432587](https://doi.org/10.5281/zenodo.21432587)
+**DOI:** [10.5281/zenodo.21439493](https://doi.org/10.5281/zenodo.21439493)
 **Prior version:** SSRA technical note v1.0, DOI [10.5281/zenodo.20647034](https://doi.org/10.5281/zenodo.20647034) — cited as prior version; design and complexity analysis fixed there before any training run.
 **License:** text CC BY 4.0; reference implementation Apache-2.0 (repo public flip on publication day).
 

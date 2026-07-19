@@ -4,7 +4,7 @@
 # Run from the repository root; figures resolve via --resource-path=. (results/*.png).
 # Rebuilds are content-identical but NOT byte-identical (embedded PDF timestamps);
 # the published artifact of record is paper/ssra-results-paper-v1.0.pdf,
-# md5 7e7d243b0447babe664885a9729d295e (v1.0, built 2026-07-18).
+# md5 a0177d2334b30adc552ed8d80f4a9509 (v1.0, built 2026-07-19).
 set -euo pipefail
 TEXINPUTS="paper/export:" pandoc -f markdown+autolink_bare_uris \
   paper/ssra-results-paper-v1.0.md \

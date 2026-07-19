@@ -15,7 +15,7 @@ append-only methodology record backing both publications.
    falsification plan, fixed before any training run):
    DOI [10.5281/zenodo.20647034](https://doi.org/10.5281/zenodo.20647034)
 2. **Results paper** (stage 2 — pre-registered empirical evaluation, negative
-   results): DOI [10.5281/zenodo.21432587](https://doi.org/10.5281/zenodo.21432587)
+   results): DOI [10.5281/zenodo.21439493](https://doi.org/10.5281/zenodo.21439493)
    — PDF: `paper/ssra-results-paper-v1.0.pdf`, source: `paper/results-paper.md`
 
 Headline results (stated plainly): +10.22 % validation-perplexity gap against a
