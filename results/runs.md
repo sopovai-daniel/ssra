@@ -174,3 +174,16 @@ commits 5e16d90 + db9a181, oversight PASS (D-log 2026-07-20). K1 remains
 the only paid V11 step: gate G-V11-2 PASS, worst-case projection
 **0.727 EUR ≤ 3.00 scoped cap** (e2-standard-4 @ europe-west3, realistic
 ≈ 0.47 EUR). Cumulative unchanged: **72.37 EUR ≈ 24.1 % of 300**.
+
+Ledger append (2026-07-20, K1): V11 K1 VM window executed — e2-standard-4
+@ europe-west3-c, wall 0:19:30 (create 10:23:45 → delete 10:43:15 CEST;
+4.0 h cap, G-V11-3 PASS), 104/104 manifest objects extracted, both NPZs +
+log verified on the Mac; executor amendment: D3/D4 run by CC immediately
+after C5 (Daniel: D1/D2 + console post-verification). Init validation
+DROPPED both arms (rel drift ≈ 1.136 ≥ 0.5 at S_min; pre-registered rule,
+S_min-reference columns only). Cost **≈ 0.06 EUR [ODHAD]** from committed
+S0-C EUR SKUs (instance €0.0491 + disk €0.0014 + egress 0.0495 GiB
+€0.0052; GCS same-region free) ≤ 0.727 projection ≤ **3.00 scoped cap**;
+console-authoritative correction pending (≥ 2 h rule). Cumulative
+[ODHAD]: **72.43 EUR ≈ 24.1 % of 300**. Report §K1 + §Deviations (5
+operational items) in results/V11-exploitation.md.
