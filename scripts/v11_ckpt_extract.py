@@ -131,10 +131,12 @@ def cmd_smoke_fixture(args):
         arm_dir = out / arch
         arm_dir.mkdir(parents=True, exist_ok=True)
         torch.save({"model": model.state_dict(), "seed": 1337, "arch": arch,
+                    "trainable": [n for n, _ in model.named_parameters()],
                     "torch": str(torch.__version__)}, arm_dir / "init.pt")
         torch.manual_seed(4242)
         wrong = builders[arch](cfg)
         torch.save({"model": wrong.state_dict(), "seed": 4242, "arch": arch,
+                    "trainable": [n for n, _ in wrong.named_parameters()],
                     "torch": str(torch.__version__)}, arm_dir / "init-wrong.pt")
         opt = torch.optim.AdamW(model.parameters(), lr=6e-4,
                                 weight_decay=0.01, betas=(0.9, 0.95))
@@ -176,6 +178,7 @@ def cmd_reconstruct_init(args):
     torch.manual_seed(t["seed"])
     model = builders[arch](cfg)
     torch.save({"model": model.state_dict(), "seed": t["seed"], "arch": arch,
+                "trainable": [n for n, _ in model.named_parameters()],
                 "config": str(args.config), "torch": str(torch.__version__)},
                Path(args.out))
     n = sum(p.numel() for p in model.parameters())
@@ -238,16 +241,21 @@ def cmd_extract(args):
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
 
-    init_sd, init_meta = None, None
+    init_sd, init_meta, init_trainable = None, None, None
     if args.init:
         blob = torch.load(Path(args.init), map_location="cpu",
                           weights_only=True)
         init_sd = blob["model"]
         init_meta = {k: blob.get(k) for k in ("seed", "arch", "torch")}
+        # C-T1 is over trainable parameter tensors: carry the explicit
+        # named_parameters() list (alias-deduped) regardless of the
+        # validation verdict — validation gates only delta/cos columns
+        init_trainable = blob.get("trainable")
 
-    names, meta = None, None
+    names, meta, alias_groups = None, None, None
     l2, dref, cref, dinit, cinit, upd, timings = [], [], [], [], [], [], []
-    full = {}
+    full, full_init = {}, {}
+    init_l2_row = None
     steps_done = []
     ref_sd = prev_sd = None
     init_ok, init_rels = False, {}
@@ -267,6 +275,8 @@ def cmd_extract(args):
                 "s_min_step": manifest[0][0],
                 "torch": str(torch.__version__), "numpy": np.__version__,
                 "weights_only": True,
+                "alias_groups": alias_groups,
+                "trainable": init_trainable,
                 "init": init_meta,
                 "init_validated": init_ok if args.init else None,
                 "init_rel_drift_at_smin": init_rels,
@@ -276,6 +286,12 @@ def cmd_extract(args):
         if args.init and init_ok:
             arrays["delta_init_l2"] = np.array(dinit)
             arrays["cos_init"] = np.array(cinit)
+        if init_l2_row is not None:
+            # init reference survives VM deletion: norms for every key +
+            # full phi/e_l init tensors (rho denominators, phi-vs-init)
+            arrays["init_l2"] = np.array(init_l2_row)
+            for k, v in full_init.items():
+                arrays[f"full_init/{k}"] = v
         for k, v in full.items():
             arrays[f"full/{k}"] = np.stack(v)
         _save_npz(out, arrays)
@@ -309,6 +325,18 @@ def cmd_extract(args):
         if names is None:
             names = sorted(sd.keys())
             meta = {k: sd[k].numel() for k in names}
+            # F1: alias groups by tensor identity (shared attention appears
+            # under layers.i.attn.*, layers.i.pool.attn.*,
+            # layers.i.readout_attn.*). Per-key series stay as-is (raw
+            # fidelity); this map drives downstream dedup — the C-T1
+            # median is over tensors, not state-dict keys.
+            ident: dict = {}
+            for k in names:
+                ident.setdefault(
+                    (sd[k].data_ptr(), tuple(sd[k].shape)), []).append(k)
+            alias_groups = sorted(g for g in ident.values() if len(g) > 1)
+            print(f"[extract] alias groups (>1 key per tensor): "
+                  f"{len(alias_groups)}; canonical = first sorted member")
             phi_keys = sorted(k for k in names if PHI_KEY_RE.match(k))
             if args.arm == "ssra":
                 by = {"latent_q": 0, "ln_pool": 0, "level_emb": 0}
@@ -340,14 +368,17 @@ def cmd_extract(args):
                       f"(max rel drift {worst:.4f}, threshold "
                       f"{REL_DRIFT_MAX}); no silent switching — "
                       f"recorded in NPZ meta")
-                if not init_ok:
-                    init_sd = None
+                # F1b: persist the init reference itself either way (norms
+                # for all keys, full tensors for phi/e_l) — the verdict
+                # gates only the delta_init/cos_init columns
+                init_l2_row = [_norm(init_sd[k]) for k in names]
+                full_init = {k: init_sd[k].numpy().copy() for k in full}
 
         l2.append([_norm(sd[k]) for k in names])
         dref.append([_norm(sd[k].double() - ref_sd[k].double())
                      for k in names])
         cref.append([_cos(sd[k], ref_sd[k]) for k in names])
-        if init_sd is not None:
+        if init_sd is not None and init_ok:
             dinit.append([_norm(sd[k].double() - init_sd[k].double())
                           for k in names])
             cinit.append([_cos(sd[k], init_sd[k]) for k in names])
