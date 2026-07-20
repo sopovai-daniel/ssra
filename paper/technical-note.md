@@ -2,9 +2,9 @@
 
 **Technical note (stage 1 of 2).**
 **Author:** Daniel Sopov (SopovAi). ORCID: [0009-0004-8584-5156](https://orcid.org/0009-0004-8584-5156).
-**Status:** v1.0, 2026-06-11 — approved by the author; stage-1 publication.
-**DOI:** [10.5281/zenodo.20647034](https://doi.org/10.5281/zenodo.20647034)
-**Versioning:** This note fixes the design and its complexity analysis *before* any training run. A stage-2 paper with experimental results will follow the evaluation plan in §8 and will cite this note as the prior version.
+**Status:** v1.1, 2026-07-20 — approved by the author. Changes from v1.0 (2026-06-11): an AI-assistance disclosure section, a decode-retention erratum (§2.6), and a stage-2 follow-up pointer; design and complexity class unchanged.
+**DOI:** [10.5281/zenodo.21462145](https://doi.org/10.5281/zenodo.21462145) (this version); v1.0: [10.5281/zenodo.20647034](https://doi.org/10.5281/zenodo.20647034).
+**Versioning:** This note fixes the design and its complexity analysis *before* any training run. The stage-2 paper with experimental results followed the evaluation plan in §8 and cites this note as the prior version: DOI [10.5281/zenodo.21439493](https://doi.org/10.5281/zenodo.21439493); see "Status of empirical follow-up" below.
 **License:** text CC BY 4.0; the reference implementation (to be released with the stage-2 paper) Apache-2.0.
 
 ---
@@ -104,6 +104,8 @@ The Fenwick prefix structure itself is taken from Log-Linear Attention [2]; we c
 
 Per layer, the decoder maintains a ring buffer of the last w+1 token states and a node store governed by an explicit retention rule: at time t, retain node u iff u ∈ Frontier(t) = fenwick_blocks(t) (needed to build future parents) **or** u ∈ Fenwick(t−w−1) (needed by the read-out now). The naive rule "free children when the parent forms" is incorrect: the read-out frontier lags the tree frontier by w+1 positions, so children remain consumable for w+1 steps after their parent completes. Both sets have ≤ ⌊log₂ t⌋ + 1 members, giving per-layer state ≤ (w+1)·d + 2·m·d·(⌊log₂ N⌋ + 1) = O(m·d·log N). Amortized, one internal node completes per generated token; the worst case at t = 2^k is a chain of k sequential completions — an O(log N) latency spike, accepted for the proof of concept and documented as a limitation.
 
+**Erratum (v1.1).** This section states the retention rule in pointwise form — retain u iff u ∈ Frontier(t) ∪ Fenwick(t−w−1) — and, with §3, gives the decode-state bound with an explicit constant 2 on the log term. The pointwise rule is incorrect: u ∈ fenwick_blocks(p) holds exactly for p ∈ [e, e + 2^ℓ − 1], where e = end(u), so for levels with 2^ℓ ≤ w the Frontier interval and the read-out interval are disjoint, and the rule evicts u inside the gap [e + 2^ℓ, e + w] although the read-out requires it again at t = e + w + 1 — at w = 64 this affects every level ℓ ≤ 6, including level-0 blocks one step after leaving the local window. The corrected rule is the interval closure: retain u iff t ∈ [e, e + 2^ℓ + w]. The fault was found during the first implementation milestone, after v1.0 of this note, and its correction is certified by the completion test of §2.4. The constant-2 form of the decode-state bound held only for levels with 2^ℓ > w; the corrected explicit bound is O((m·log N + w·log m)·d), ≈ 1.5× the v1.0 estimate at m = 16, w = 64, N = 8k by direct count. The headline decoding class O(m·d·log N) at fixed w, m is unaffected (the w-dependent term is constant in N). This erratum mirrors §2.8 of the stage-2 record (DOI 10.5281/zenodo.21439493), which first published the correction; the v1.0 file of this note remains unmodified under its version DOI for provenance.
+
 ## 3. Complexity (derived; per layer, ×L for the model)
 
 Score-operation accounting, binary tree, pass-through schedule s_ℓ = min(2^ℓ, m):
@@ -162,6 +164,21 @@ A second output-path variant — a full top-down cascade in which coarse states 
 ## 9. Limitations
 
 Small scale only (≤ ~85M parameters); a single text domain; no scaling laws. No experimental results exist at the time of this note — every empirical statement above is a pre-registered plan, not a finding. The top-down branch (SSRA-TD, §7) and content-based hierarchies are untested deferrals. The complexity statements count score operations; QKVO projection terms are of comparable magnitude at the planned widths, so wall-clock conclusions await measurement (§3). Decoding has an O(log N) worst-case latency spike at power-of-two positions. Activation memory of the tree is ≈ 5× flat token activations at m = 16 (score-matrix memory is, however, far below the flat N² term at the planned lengths). Pure-NoPE summary keys in the read-out rest on an adjacent rather than exact precedent (§2.3) and carry a specified fallback.
+
+## Status of empirical follow-up (v1.1)
+
+A stage-2 record, *SSRA: Scale-Shared Recursive Attention — Empirical Evaluation and Negative Results* (DOI [10.5281/zenodo.21439493](https://doi.org/10.5281/zenodo.21439493)), reports the pre-registered evaluation of §8 at ≈ 85M parameters. The gate of §8 — short-context perplexity within ±5 % of the compute-matched flat baseline — was not met, so H1 is not supported at that scale and configuration, and the later baselines and ablations of §8 did not run, per the plan's stop-loss. The stage-2 record reports this as a pre-registered negative result, together with an erratum to this note (its §2.8, mirrored in §2.6 above) and descriptive diagnostics of the trained models. It does not revise the design or the complexity derivations of this note, which are analytical.
+
+## AI Assistance Disclosure
+
+This research was conducted as a human-directed AI collaboration. The research goal and the underlying inspiration (a fractal, tree-like structure over the sequence context as a path to more efficient attention) come from the author. The specific architecture design, its mathematical formulation, the complexity analysis, and the PyTorch implementation were generated by AI systems (Anthropic Claude, primarily through Claude Code) under the author's direction. The author defined the research goal and requirements, reviewed and tested the generated work, ran the experiments and measurements, and takes responsibility for the published content. An automated verification suite (causality, equivalence and gradient-flow checks) and empirical measurements were used to validate the AI-generated components.
+
+The prior-art review was likewise conducted by AI under the author's direction. The text of this report was written by AI and reviewed by the author. This disclosure was added to this record's Zenodo metadata on 9 July 2026; the original publication did not state the extent of AI involvement. Version 1.1 incorporates this section into the note file itself; the stage-2 record (DOI 10.5281/zenodo.21439493) carries an equivalent disclosure with refined execution details.
+
+## Version history
+
+- **v1.0** (2026-06-11): stage-1 publication. DOI [10.5281/zenodo.20647034](https://doi.org/10.5281/zenodo.20647034).
+- **v1.1** (2026-07-20): adds the AI Assistance Disclosure section, the §2.6 decode-retention erratum (mirroring §2.8 of the stage-2 record), and the "Status of empirical follow-up" section; header updated accordingly. Design and complexity class unchanged; the explicit decode-state constant of §2.6/§3 is corrected by the erratum.
 
 ## References
 
