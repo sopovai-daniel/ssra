@@ -187,3 +187,12 @@ S0-C EUR SKUs (instance €0.0491 + disk €0.0014 + egress 0.0495 GiB
 console-authoritative correction pending (≥ 2 h rule). Cumulative
 [ODHAD]: **72.43 EUR ≈ 24.1 % of 300**. Report §K1 + §Deviations (5
 operational items) in results/V11-exploitation.md.
+
+Ledger append (2026-07-24, K1 correction): K1 VM window console-final
+billing = **0.05 EUR** (console reading by Daniel, 2026-07-24; GCP ~T+1
+report lag settled at T+4). Replaces the provisional ≈ 0.06 EUR [ODHAD]
+above; delta −0.01 vs the committed S0-C SKU estimate (0.0557),
+consistent with console rounding — no backfill analysis. Actual 0.05 ≤
+0.727 worst-case projection ≤ **3.00 scoped cap** (60× margin; G-V11-2
+status unchanged). Cumulative FINAL: **72.42 EUR ≈ 24.1 % of 300**
+(72.37 + 0.05); the pending-correction annotation is hereby closed.

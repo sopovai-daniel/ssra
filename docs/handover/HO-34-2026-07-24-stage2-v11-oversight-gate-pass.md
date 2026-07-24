@@ -43,3 +43,8 @@ Stage-2 v1.1 publish session (0 EUR, AP-25). Cez Filesystem MCP precitaj docs/ha
 ```
 
 (`<HASH>` doplň = SHA close-batch commitu po tvojom pushi.)
+
+## Addendum A1 (2026-07-24)
+
+- **Billing korekcia K1 uzavretá:** konzolová fakturácia K1 okna = 0,05 EUR [OVERENÉ konzolou 2026-07-24] ⇒ kumulatív FINÁLNE **72,42 EUR ≈ 24,1 %** z 300. Superseduje „(+ pending K1 korekcia ≈ 0,06 [ODHAD])“ v §1 a prvú odrážku §3. Záznam: D-log 2026-07-24 (druhý riadok) + ledger append v `results/runs.md`.
+- Close batch tohto HO = commit `8a46421`; `<HASH>` v prompte §4 = SHA najnovšieho commitu = HEAD po pushi korekčného commitu (dolný riadok D-logu).
